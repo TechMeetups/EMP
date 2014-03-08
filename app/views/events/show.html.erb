@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @event.user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+
+<p>
+  <strong>S date:</strong>
+  <%= @event.s_date %>
+</p>
+
+<p>
+  <strong>E date:</strong>
+  <%= @event.e_date %>
+</p>
+
+<p>
+  <strong>S time:</strong>
+  <%= @event.s_time %>
+</p>
+
+<p>
+  <strong>E time:</strong>
+  <%= @event.e_time %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Twitter hash tag:</strong>
+  <%= @event.twitter_hash_tag %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
