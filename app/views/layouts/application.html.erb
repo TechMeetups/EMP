@@ -9,9 +9,25 @@
 	<body>
 		<%= render 'layouts/header' %>
 
-		<div class="container">
-			<%= yield %>
+		<div class="row">
+		  
+		  <div class="col-md-9 col-md-push-3">
+		  	<%= yield %>
+		  </div>
+		  <div class="col-md-3 col-md-pull-9">
+		  	<div class="jumbotron">
+		      <h4>Events</h4>
+		      <div class="list-group">
+		        </a>
+		        <a href="#" class="list-group-item active">
+		          All
+		        </a>
+		        <a href="#" class="list-group-item">City
+		        </a>
+		      </div>
+		    </div>
+		  </div>
+		  
 		</div>
-
 	</body>
 </html>

@@ -1,77 +1,79 @@
-<div class="row">
 
-  <div class="col-md-9 col-md-push-3">
-  <div style="float:left;font-weight:bold;font-size:25px;margin-right:20px;">
-    <%= current_user.name %><%= link_to(image_tag("edit1.png", :style=>"width: 15px;float: right;"),  edit_user_registration_path, :remote=>true ) %>
-    </br>
-    </br>
-    <%= image_tag @user.avatar.url(:medium),:style=>"width: 230px;" %>
-    <%= link_to(image_tag("edit1.png", :style=>"width: 15px;float: right;"),  edit_user_registration_path, :remote=>true ) %>
-  </div>
-    <div>
-      <table width="200px" height="300px">
-        <tr>
-          <th>Tag</th>
-          <td>           
-            <% if !current_user.tag_list_on(:offer_tags).blank?%>
-            <div class="label-tags">
-              <ul>
-                <li>
-                  <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
-                </li>
-              </ul> 
-            </div>
-            <%end%>
-          </td>
-        </tr>
-        <tr>
-          <th>Company</th>
-          <td><%= current_user.company %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr>
-      </table>
-    </div>
-    <div style="float:left;margin-top:-90px;">
-      <table width="200px" height="150px">
-        <tr>
-          <th>Description</th>
-          <td ><%= current_user.description %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr></br>
-        
-      <hr width="80%" size="30">
-        
-          <th>Email</th>
-          <td><%= current_user.email %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr></br>
-          <th>Password</th>
-          <td><%= current_user.password %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr></br>
-          <th>Address</th>
-          <td><%= current_user.address %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr></br>
-          <th>City</th>
-          <td><%= current_user.city %></td>
-          <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
-        </tr>  
-      </table>
-    </div>
-  </div>
-  <div class="col-md-3 col-md-pull-9">
-    <div class="jumbotron">
-      <h4>Events</h4>
-      <div class="list-group">
-        </a>
-        <a href="#" class="list-group-item active">
-          All
-        </a>
-        <a href="#" class="list-group-item">City
-        </a>
-      </div>
-    </div>
-  </div>
+<div style="float:left;font-weight:bold;font-size:25px;margin-right:20px;">
+  <%= best_in_place current_user,:name,:path=> "/users" %>
+  </br>
+  </br>
+  <%= image_tag @user.avatar.url(:thumb) %>
+  <%= link_to(image_tag("edit1.png", :style=>"width: 15px;float: right;"),  edit_user_registration_path, :remote=>true ) %>
 </div>
+<div>
+  <table>
+    <tr>
+      <th>I can offer</th>
+      <td>           
+        <% if !current_user.tag_list_on(:offer_tags).blank?%>
+        <div class="label-tags">
+          <ul>
+            <li>
+              <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+            </li>
+          </ul> 
+        </div>
+        <%end%>
+      </td>
+    </tr>
+    <tr>
+      <th>I'm looking for</th>
+      <td>           
+        <% if !current_user.tag_list_on(:looking_for_tags).blank?%>
+        <div class="label-tags">
+          <ul>
+            <li><%= current_user.tag_list_on(:looking_for_tags).join("</li><li>").html_safe %>
+            </li>
+          </ul> 
+        </div>
+        <%end%>
+      </td>
+    </tr>
+  </table><br><br>
+  <table width="200px">
+    <tr>
+      <th>Company</th>
+      <td><%= best_in_place current_user, :company,:path=> "/users" %></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr>
+  </table>
+</div>
+<div style="margin-top: 160px;font-weight:bold;">
+  <table>
+    <tr>
+      <th></th>
+      <td ><%= best_in_place current_user, :description,:path=> "/users"%></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr></br>
+  </table>
+</div>
+<div style="margin-top: 24px;margin-bottom: 151px;">  
+  <hr size="100" width="70%" align="left">
+  <table width="200px">
+    <tr>
+      <th>Email</th>
+      <td><%= best_in_place current_user ,:email,:path=> "/users" %></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr></br>
+      <th>Password</th>
+      <td><%= best_in_place current_user, :password,:path=> "/users"%></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr></br>
+      <th>Address</th>
+      <td><%= best_in_place current_user, :address,:path=> "/users"%></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr></br>
+      <th>City</th>
+      <td><%= best_in_place current_user, :city,:path=> "/users"%></td>
+      <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"),  edit_user_registration_path, :remote=>true ) %>
+    </tr>  
+  </table>
+</div>
+
 

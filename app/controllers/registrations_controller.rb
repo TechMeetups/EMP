@@ -3,7 +3,6 @@ class RegistrationsController < Devise::RegistrationsController
 		super
 	end
   def create 
-    
   	@user = User.new(user_params)
     @user.set_tag_list_on(:offer_tags,params[:offer])
     @user.set_tag_list_on(:looking_for_tags,params[:looking_for])
@@ -14,7 +13,19 @@ class RegistrationsController < Devise::RegistrationsController
     else
       flash[:notice] = "Please enter valid information in fields."
   	end
-redirect_to new_user_session_path  end
+redirect_to new_user_session_path 
+ end
+
+ def update
+  @user = current_user
+    respond_to do |format|
+      if @user.update(user_params)
+        format.json { head :no_content }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+ end
 
   private
 
