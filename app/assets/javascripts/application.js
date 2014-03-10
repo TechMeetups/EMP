@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require best_in_place
+//= require dataTables/jquery.dataTables
 //= require bootstrap
 //= require_tree .
 $(document).ready(function() {

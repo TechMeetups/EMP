@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
-  end
+    end
 
   # GET /events/1
   # GET /events/1.json
@@ -58,6 +58,19 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to events_url }
       format.json { head :no_content }
+    end
+  end
+
+  def event_search
+    if !params[:checked].blank?
+       @events=Event.find(params[:checked])
+    elsif params[:all_checked]=="checked"     
+      @events=Event.all  
+    elsif !params[:unchecked].blank?
+
+      @events = Event.find(params[:unchecked])
+    else  params[:unchecked]=="all"
+        @events=Event.all 
     end
   end
 

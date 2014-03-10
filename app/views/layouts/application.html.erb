@@ -17,10 +17,23 @@
 		  <div class="col-md-3 col-md-pull-9">
 		  	<div class="jumbotron">
 		      <h4>Events</h4>
+		     
 		      <div class="list-group">
 		        </a>
 		        <a href="#" class="list-group-item active">
-		          All
+		          <label>			     
+		             <input type="checkbox" id="selecctall"/><b>All</b>		    
+					     </label> 
+		          <% if params[:controller]=="home" && params[:action]=="index"%>
+		            <%@events.each do |event|%>		           
+						    <div class="checkbox">
+							    <label>      
+							    	<%= check_box_tag "event[]", event.id, false, :id => "#{event.id}",:class=>'checkbox1' -%> <b><%= event.title%></b>
+							     </label>
+						    </div>
+
+					    <%end%>
+					    <%end%>
 		        </a>
 		        <a href="#" class="list-group-item">City
 		        </a>
@@ -31,3 +44,61 @@
 		</div>
 	</body>
 </html>
+
+<script>
+$('#selecctall').click(function(event) {
+      $('#selectall').attr('checked', false);  //on click
+          if(this.checked) { // check select status         
+            $.ajax({
+                type: "POST",
+                url: "/events/event_search",
+                data: { id: $(this).data('post-id'), all_checked: "checked" }
+             });  
+              $('.checkbox1').each(function() { //loop through each checkbox
+                  this.checked = true;  //select all checkboxes with class "checkbox1"                          
+
+              });
+          }else{
+              $('.checkbox1').each(function() { //loop through each checkbox
+                  this.checked = false;
+                   //deselect all checkboxes with class "checkbox1" 
+                  $.ajax({
+                  type: "POST",
+                  url: "/events/event_search",
+                  data: { id: $(this).data('post-id'), unchecked: "unchecked" }
+                 });                         
+              });        }
+            }); 
+        
+$('.checkbox1').click(function(event) {	
+      
+      $('#selectall').attr('checked', false); //on click
+          if(this.checked) { // check select status         
+          checked_id = []
+          checked_count = 0
+          $('.checkbox1:checked').each(function() { 
+            checked_id[checked_count] = $('.checkbox1:checked')[checked_count].id
+            checked_count = checked_count+1
+          });
+            $.ajax({
+                type: "POST",
+                url: "/events/event_search",
+                data: { id: $(this).data('post-id'), checked: checked_id}
+             });            
+          }else{
+              checked_id = []
+             checked_count = 0
+             $('.checkbox1:checked').each(function() { 
+              checked_id[checked_count] = $('.checkbox1:checked')[checked_count].id
+              checked_count = checked_count+1
+             });           
+            $.ajax({
+
+                type: "POST",
+                url: "/events/event_search",
+                data: { id: $(this).data('post-id'), unchecked:checked_id }
+             });  
+            }
+
+           });
+</script>
