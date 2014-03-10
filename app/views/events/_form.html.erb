@@ -11,10 +11,11 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :user_name %><br>
-    <%= f.select("user", "user_id", User.all.collect {|p| [ p.name, p.id ] })%>
-  </div>
+<!--   <div class="field">
+    <%#= f.label :user_name %><br>
+
+    <%#= f.select("user", "user_id", User.all.collect {|p| [ p.name, p.id ] })%>
+  </div> -->
   <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
