@@ -10,8 +10,9 @@ TechMeetsUp::Application.routes.draw do
   root 'home#index'
   post 'events/event_search'
   get 'events/event_search'
-  post 'events/delete'
-
+  post 'events/new'
+  get 'events/edit/:id' => 'events#edit', as: :events_edit
+  get 'events/delete/:id' => 'events#delete', as: :events_delete
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

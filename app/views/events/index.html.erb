@@ -1,6 +1,6 @@
 <h1>Listing events</h1>
 
-<table id ="events" class="display" %>">
+<table id ="events" class="display">
   <thead>
     <tr>
       <th>User</th>
@@ -29,16 +29,14 @@
         <td><%= event.description %></td>
         <td><%= event.twitter_hash_tag %></td>
         <td><%= link_to 'Show', event %></td>
-        <td>
-          <%= link_to(image_tag("edit.png", :style=>"width: 15px;"), edit_event_path(:id=>event.id) %>
-        </td>
-        <%#= link_to(image_tag("edit.png", :style=>"width: 15px;"), activity_edit_path(:id=>activity.id), :remote=>true )
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <td><%= link_to(image_tag("edit.png", :style=>"width: 15px;"), events_edit_path(event)) %></td>
+        <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), events_delete_path(event)) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Event', new_event_path %>
+<div style="float:right">
+<%= button_to 'New Event', new_event_path,:method=>"post", :class=>"btn btn-danger" %>
+</div>

@@ -71,7 +71,7 @@
     <div class="form-group">
     	<label for="inputEmail" class="col-lg-2 control-label">City</label>
       <div class="col-lg-10">
-        <%= f.select :city, City.all.map{ |c| [c.name, c.id] }, {}, {:class=>"form-control"} %>
+        <%= f.select :city, City.all.map{ |c| [['Lisbon', 1], ['Madrid', 2]]}, {:class=>"form-control"} %>
       </div>
     </div>
 

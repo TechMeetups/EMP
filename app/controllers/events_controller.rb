@@ -19,11 +19,14 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+debugger
+    @event = Event.find(params[:id])
   end
 
   # POST /events
   # POST /events.json
   def create
+    debugger
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -74,7 +77,7 @@ class EventsController < ApplicationController
     end
   end
   def delete    
-    @events = Activity.find(params[:id])
+    @events = Event.find(params[:id])
     @events.destroy
     flash[:notice] = "Activity Succesfully Deleted"
     redirect_to :back
