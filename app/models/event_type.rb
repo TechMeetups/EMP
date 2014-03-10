@@ -1,3 +1,3 @@
 class EventType < ActiveRecord::Base
-	belong_to :event
+	belongs_to :event
 end
