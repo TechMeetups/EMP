@@ -29,8 +29,9 @@
         <td><%= event.description %></td>
         <td><%= event.twitter_hash_tag %></td>
         <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to(image_tag("edit.png", :style=>"width: 15px;"), edit_event_path(:id=>event.id) %></td>
+        <%#= link_to(image_tag("edit.png", :style=>"width: 15px;"), activity_edit_path(:id=>activity.id), :remote=>true )
+        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
       </tr>
     <% end %>
   </tbody>

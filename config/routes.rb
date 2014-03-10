@@ -9,7 +9,8 @@ TechMeetsUp::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
   post 'events/event_search'
-   get 'events/event_search'
+  get 'events/event_search'
+  post 'events/delete'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

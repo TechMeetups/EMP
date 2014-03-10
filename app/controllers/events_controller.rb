@@ -73,6 +73,12 @@ class EventsController < ApplicationController
         @events=Event.all 
     end
   end
+  def delete    
+    @events = Activity.find(params[:id])
+    @events.destroy
+    flash[:notice] = "Activity Succesfully Deleted"
+    redirect_to :back
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
