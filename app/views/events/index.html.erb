@@ -1,17 +1,12 @@
 <h1>Listing events</h1>
 
-<table id ="events" class="display">
+<table id="events" class="display">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Title</th>
-      <th>S date</th>
-      <th>E date</th>
-      <th>S time</th>
-      <th>E time</th>
-      <th>Description</th>
-      <th>Twitter hash tag</th>
-      <th></th>
+      <th>Start Date & Time</th>
+      <th>End Date & Time</th>
+      <th>Event</th>
+      <th>City</th>
       <th></th>
       <th></th>
     </tr>
@@ -20,15 +15,10 @@
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= event.user_id %></td>
+        <td><%= event.s_date.to_formatted_s(:rfc822)  %>   <%= event.s_time.strftime("%I:%M%p") %></td>
+        <td><%= event.e_date.to_formatted_s(:rfc822) %><%= event.e_time.strftime("%I:%M%p") %></td>
         <td><%= event.title %></td>
-        <td><%= event.s_date %></td>
-        <td><%= event.e_date %></td>
-        <td><%= event.s_time %></td>
-        <td><%= event.e_time %></td>
-        <td><%= event.description %></td>
-        <td><%= event.twitter_hash_tag %></td>
-        <td><%= link_to 'Show', event %></td>
+        <td><%= City.find(User.find(event.user_id).city_id).name %></td>
         <td><%= link_to(image_tag("edit.png", :style=>"width: 15px;"), events_edit_path(event)) %></td>
         <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), events_delete_path(event)) %></td>
       </tr>
@@ -38,5 +28,5 @@
 
 <br>
 <div style="float:right">
-<%= button_to 'New Event', new_event_path,:method=>"post", :class=>"btn btn-danger" %>
+  <%= link_to( image_tag("plus.png"), new_event_path ,:title=>"Add a new Event") %>
 </div>

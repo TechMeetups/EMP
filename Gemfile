@@ -17,6 +17,10 @@ gem "paperclip", "~> 3.0"
 
 gem 'acts-as-taggable-on'
 
+gem 'masonry-rails'
+
+gem 'modernizr-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

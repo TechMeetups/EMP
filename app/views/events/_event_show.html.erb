@@ -1,29 +1,40 @@
-<div>
-	<div>
+<div id="masonry-container" class="transitions-enabled clearfix masonry-brick">
+
 	<% if !@events.blank? %>
 		<% @events.each do |event| %>
-		  <div class="col-sm-6 col-md-6">
-		    <div class="thumbnail">
-		      <h3><%= event.title %></h3>
-		      <img data-src="holder.js/300x200" alt="...">
-		      <div class="caption">
-		        
-		        <p><%= event.description %></p>
-				<p><b><%= Date %></b>
-			   	<%= event.s_date %>           
-			    <div style="margin-top: -30px; margin-left: 230px"><b><%= Time %></b>
-					<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
-					<%= event.e_time.strftime("%I:%M%p") %></p>
-			   	</div>
-			   
-		        <p><a href="#" class="btn btn-info" role="button" style="margin-left: 350px;">Learn More</a> </p>
-		      </div>
-		    </div>
-		  </div>
+			<div class="box col5">
+			  <div>
+			    <div class="thumbnail">
+			      <h3><%= event.title %></h3>
+			      <% if !event.event_banners.blank? %>
+			      	<%= image_tag event.event_banners.first.file.url(:medium), :style=>"height: 200px;" %>
+			      <%else%>
+			      	<%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"height: 200px;" %>
+			      <% end %>
+			      <div class="caption">
+			        
+				     
+					    <p><b> Date </b>
+					   	<%= event.s_date %>           
+					    <div style="margin-top: -30px; margin-left: 230px">
+					    	<b> Time </b>
+								<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
+								<%= event.e_time.strftime("%I:%M%p") %></p>
+				   		</div>
+				   		<p><b> City </b>
+					   	<%= City.find(User.find(event.user_id).city_id).name %>       
+				   		 <p><%= event.description %></p>
+			        <p>
+			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 350px;"%>
+					</p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		<% end %>
 	<% end %>
-	</div>
-	<div style="display:block;" >
-		<%= button_to 'New Event', new_event_path,:method=>"post", :class=>"btn btn-danger" %>
-	</div>
+</div>
+
+<div style="display:block;" >
+	<%= link_to 'Submit Event',nil,  :class=>"btn btn-danger" %>
 </div>

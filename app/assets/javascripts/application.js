@@ -15,7 +15,17 @@
 //= require best_in_place
 //= require dataTables/jquery.dataTables
 //= require bootstrap
+//= require masonry/jquery.masonry
+//= require masonry/jquery.event-drag
+//= require masonry/jquery.imagesloaded.min
+//= require masonry/jquery.infinitescroll.min
+//= require masonry/modernizr-transitions
+//= require masonry/box-maker
+//= require modernizr
+//= require masonry/jquery.loremimages.min
 //= require_tree .
+
+
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();

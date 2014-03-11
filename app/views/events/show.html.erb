@@ -1,44 +1,166 @@
-<p id="notice"><%= notice %></p>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Note to Event Organiser</h4>
+      </div>
+      <%= form_for @interaction, :url=>root_url do |f| %>
+        <div class="modal-body">
+          <label class="col-lg-2 control-label" style="margin-top:10px">Subject </label>
+          <%= f.text_field :action,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
+          <%= f.hidden_field :event_id, :value=>@event.id %>
+          <label class="col-lg-2 control-label" style="width: 93px;margin-top:10px">Event </label> 
+          <%= text_field_tag "event_id", @event.title,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
+          <br/>
+          <br/>
+          <br/>
+          <%= f.text_area :memo , :style=>"width: 566px; height: 95px;"%>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit "Send", :class=>"btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @event.user_id %>
-</p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+<div style="float: left; width: 72%;">
+  <div class="event_box">
+    <h2>  <%= @event.title %> </h2>
 
-<p>
-  <strong>S date:</strong>
-  <%= @event.s_date %>
-</p>
+    <div id="slideshow">
+      <% @banners.each_with_index do |banner, index| %>
+        <% if index == 0 %>
+          <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
+        <% else %>
+          <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
+        <% end %>
+      <% end %>
+    </div>
+    <p><b> Start </b>
+    <%= @event.s_date.to_formatted_s(:rfc822)  %>   <%= @event.s_time.strftime("%I:%M%p") %>
+    <b style="margin-left: 50px"> to </b>       
+    <div style="margin-top: -27px; margin-left: 265px">
+      <b>  End </b>
+      <%= @event.e_date.to_formatted_s(:rfc822) %>
+      <%= @event.e_time.strftime("%I:%M%p") %></p>
+    </div>
 
-<p>
-  <strong>E date:</strong>
-  <%= @event.e_date %>
-</p>
+    <p><%= @event.description %></p>
+  </div>
 
-<p>
-  <strong>S time:</strong>
-  <%= @event.s_time %>
-</p>
+  <div class="event_box">
+    <h4>  Speakers/Mentors </h4>
+    <div class="col-xs-12 col-md-8">No Speakers/Mentors</div>
+    <div class="col-xs-6 col-md-4">
+    <!-- Button trigger modal -->
+    <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Speaker" >
+      Apply
+    </button>
+    </div>
 
-<p>
-  <strong>E time:</strong>
-  <%= @event.e_time %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
 
-<p>
-  <strong>Twitter hash tag:</strong>
-  <%= @event.twitter_hash_tag %>
-</p>
+  </div>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+  <div  class="event_box">
+    <h4> Partner  </h4>
+    <div class="col-xs-12 col-md-8">No Partners</div>
+    <div class="col-xs-6 col-md-4"> <%= link_to 'Partner',nil,  :class=>"btn btn-primary" %></div>
+  </div>
+
+  <div  class="event_box">
+    <h4> Attendees </h4>
+    <div class="col-xs-12 col-md-8">No Attendees </div>
+    <div class="col-xs-6 col-md-4"> <%= link_to 'Attend',nil,  :class=>"btn btn-success" %></div>
+  </div>
+</div>
+
+<div style="float: right; width: 25%; border-left: 1px solid; text-align:center">
+  <div style="margin-left:20px">
+    <div class="event_box">
+      <h4>  Host </h4>
+      <%= current_user.name %><br/><br/>
+      <%= image_tag current_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" %><br/><br/>
+      <%= link_to 'Contact',nil,  :class=>"btn btn-info" %>
+    </div>
+
+    <div class="event_box">
+      <h4>  Venue </h4>
+      <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %>   
+
+      <h5> Address </h5> 
+      <b> City </b>
+              <%= City.find(User.find(@event.user_id).city_id).name %> 
+              <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+    </div>
+  </div>
+</div>
+
+<style>
+
+.event_box{
+  border-bottom: 1px solid;
+}
+
+.col-md-9{
+   border: 1px solid !important;
+}
+
+
+#slideshow {
+    position:relative;
+    height:350px;
+}
+
+#slideshow IMG {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:8;
+}
+
+#slideshow IMG.active {
+    z-index:10;
+}
+
+#slideshow IMG.last-active {
+    z-index:9;
+}
+
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  function slideSwitch() {
+    var $active = $('#slideshow IMG.active');
+
+    if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
+
+    var $next =  $active.next().length ? $active.next()
+        : $('#slideshow IMG:first');
+
+    $active.addClass('last-active');
+        
+    $next.css({opacity: 0.0})
+        .addClass('active')
+        .animate({opacity: 1.0}, 1000, function() {
+            $active.removeClass('active last-active');
+        });
+  }
+
+  $(function() {
+      setInterval( "slideSwitch()", 2000 );
+  });
+
+
+  $(document).on("click", ".open_my_modal", function () {
+     var myModalAction = $(this).attr('id');
+     $("#interaction_action").val(myModalAction);
+  });
+
+</script>
+

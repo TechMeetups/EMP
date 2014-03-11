@@ -1,50 +1,100 @@
-<%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<%= form_for(@event, :html=>{:class=>"form-horizontal", :multipart=>true}) do |f| %>
+  <fieldset>
+    <legend>Add a New Event</legend>
+     <% if @event.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-      <% @event.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :user_id, :value=>current_user.id %>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Title</label>
+      <div class="col-lg-10">
+        <%= f.text_field :title, :class=>"form-control"%>
+      </div>
     </div>
-  <% end %>
+ 
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Start Date</label>
+      <div class="col-lg-10">
+        <%= f.date_select :s_date ,{} , {:class=>"form-control dropdown_form"} %>
+      </div>
+    </div>
 
-<!--   <div class="field">
-    <%#= f.label :user_name %><br>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">End Date</label>
+      <div class="col-lg-10">
+        <%= f.date_select :e_date ,{} , {:class=>"form-control dropdown_form"} %>
+      </div>
+    </div>
 
-    <%#= f.select("user", "user_id", User.all.collect {|p| [ p.name, p.id ] })%>
-  </div> -->
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :s_date %><br>
-    <%= f.date_select :s_date %>
-  </div>
-  <div class="field">
-    <%= f.label :e_date %><br>
-    <%= f.date_select :e_date %>
-  </div>
-  <div class="field">
-    <%= f.label :s_time %><br>
-    <%= f.time_select :s_time %>
-  </div>
-  <div class="field">
-    <%= f.label :e_time %><br>
-    <%= f.time_select :e_time %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :twitter_hash_tag %><br>
-    <%= f.text_field :twitter_hash_tag %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Start Time</label>
+      <div class="col-lg-10">
+        <%= f.time_select :s_time ,{} , {:class=>"form-control dropdown_form"}%>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">End Time</label>
+      <div class="col-lg-10">
+        <%= f.time_select :e_time ,{} , {:class=>"form-control dropdown_form" } %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Description</label>
+      <div class="col-lg-10">
+        <%= f.text_area :description , :class=>"form-control"  %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Twitter Hash Tag</label>
+      <div class="col-lg-10">
+        <%= f.text_field :twitter_hash_tag , :class=>"form-control"  %>
+      </div>
+    </div>
+
+    <legend>Add banners to the event</legend>
+    <div class="col-lg-10 add_more_block" >
+      <label class="col-lg-2 control-label">Upload Image : </label>
+      <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 36%;" %>
+      <label class="col-lg-2 control-label" style="width: 93px;">Featured : </label> <%= select_tag("banner[][feature]", options_for_select([["Yes",1],["No",0]]), :class=>"form-control dropdown_form" )%>
+      <%= image_tag "plus.png", :style=>"margin-top: 7px; margin-left: 30px;",:title=>"Add more banners", :class=>"add_more" %>
+    </div>
+
+    <legend></legend>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <%= f.submit :class=>"btn btn-primary" %>
+      </div>
+    </div>
+
+  </fieldset>
 <% end %>
+
+<style>
+.dropdown_form{
+  width: 250px !important;
+  float:left;
+}
+.add_more_block{
+  width: 86%;
+}
+</style>
+
+<script>
+$(".add_more").click(function(){
+  $(".add_more_block").append('<label class="col-lg-2 control-label">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 36%;" name="banner[][file]"> <label class="col-lg-2 control-label"style="width: 93px;">Featured : </label><select id="banner_feature" class="form-control dropdown_form" name="banner[][feature]"><option value="1">Yes</option><option value="0">No</option></select>');
+})
+</script>

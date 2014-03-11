@@ -2080,7 +2080,7 @@ fieldset[disabled] .btn-default.active {
   background-color: #ffffff;
 }
 .btn-primary {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #dd4814;
   border-color: #dd4814;
 }
@@ -2121,7 +2121,7 @@ fieldset[disabled] .btn-primary.active {
   background-color: #ffffff;
 }
 .btn-success {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #38b44a;
   border-color: #38b44a;
 }
@@ -2162,7 +2162,7 @@ fieldset[disabled] .btn-success.active {
   background-color: #ffffff;
 }
 .btn-info {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #772953;
   border-color: #772953;
 }
@@ -2244,7 +2244,7 @@ fieldset[disabled] .btn-warning.active {
   background-color: #ffffff;
 }
 .btn-danger {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #df382c;
   border-color: #df382c;
 }

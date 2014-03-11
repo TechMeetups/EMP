@@ -5,11 +5,13 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
-    end
+  end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @banners = @event.event_banners
+    @interaction = Interaction.new
   end
 
   # GET /events/new
@@ -19,18 +21,21 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-debugger
     @event = Event.find(params[:id])
   end
 
   # POST /events
   # POST /events.json
   def create
-    debugger
     @event = Event.new(event_params)
 
     respond_to do |format|
       if @event.save
+        if !params[:banner].blank?
+          params[:banner].each do |banner|
+            EventBanner.create(:event_id=> @event.id, :file=>banner["file"],:featured=> banner["feature"].to_i)
+          end
+        end
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }
       else
@@ -65,15 +70,24 @@ debugger
   end
 
   def event_search
-    if !params[:checked].blank?
-       @events=Event.find(params[:checked])
-    elsif params[:all_checked]=="checked"     
-      @events=Event.all  
-    elsif !params[:unchecked].blank?
+    if params[:id] == "all"
+      @events=Event.all
+    else 
+      if !params[:checked].blank?
+        @user = User.find_by_city_id(params["id"])
+        if @user.nil?
+          @events = []
+        else
+          @events = @user.events
+        end
+      elsif params[:all_checked]=="checked"     
+        @events=Event.all  
+      elsif !params[:unchecked].blank?
 
-      @events = Event.find(params[:unchecked])
-    else  params[:unchecked]=="all"
-        @events=Event.all 
+        @events = User.find_by_city_id(params["id"]).events
+      else  params[:unchecked]=="all"
+          @events=Event.all 
+      end
     end
   end
   def delete    

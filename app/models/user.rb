@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   acts_as_taggable # Alias for acts_as_taggable_on :tags
   acts_as_taggable_on :offer, :looking_for
+
+  has_many :events
   belongs_to :city
 
 end
