@@ -21,6 +21,8 @@ gem 'masonry-rails'
 
 gem 'modernizr-rails'
 
+gem 'rails_12factor', group: [:production]
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
