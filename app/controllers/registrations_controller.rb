@@ -30,6 +30,6 @@ redirect_to new_user_session_path
   private
 
   def user_params
-    params.require(:user).permit(:email,:name,:password,:password_confirmation,:company,:city,:address,:user_type,:description,:offer, :looking_for,:twitter,:facebook,:linkedin,:avatar)
+    params.require(:user).permit(:email,:name,:password,:password_confirmation,:company,:city_id,:address,:user_type,:description,:offer, :looking_for,:twitter,:facebook,:linkedin,:avatar)
   end
 end
