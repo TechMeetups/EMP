@@ -12,7 +12,7 @@
           <%= f.text_field "action",:class=>"form-control dynamic_action", :style=>"float:left; width: 30%;", :disabled=>true %>
           <%= f.hidden_field :action, :class=>"dynamic_action" %>
           <%= f.hidden_field :event_id, :value=>@event.id %>
-          <%= f.hidden_field :user_id, :value=>current_user.id %>
+          <%= f.hidden_field :user_id, :value=>@event_user.id if user_signed_in? %> 
           <label class="col-lg-2 control-label" style="width: 93px;margin-top:10px">Event </label> 
           <%= text_field_tag "event_id", @event.title,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
           <br/>
@@ -78,9 +78,11 @@
     <% end %>
     
     <!-- Button trigger modal -->
+    <% if user_signed_in? %>
       <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Speaker" >
         Apply
       </button>
+    <% end %>
     </div>
   </div>
 
@@ -106,9 +108,11 @@
     <% else %>  
       <div class="button_block" style="margin-top:-100px">
     <% end %>
+    <% if user_signed_in? %>
       <button class="btn btn-primary open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Partner" >
         Partner
       </button>
+    <% end %>
     </div>
   </div>
   <br/>
@@ -133,9 +137,11 @@
     <% else %>  
       <div class="button_block" style="margin-top:-100px">
     <% end %>
+    <% if user_signed_in? %>
       <button class="btn btn-success open_my_modal" data-toggle="modal" data-target="#myModal" id="Attend event" >
         Attend
       </button>
+    <% end %>
     </div>
   </div>
 </div>
@@ -144,11 +150,13 @@
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
-      <%= current_user.name %><br/><br/>
-      <%= image_tag current_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" %><br/><br/>
-      <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Contact Host" >
-        Contact
-      </button>
+      <%= @event_user.name %><br/><br/>
+      <%= image_tag @event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" %><br/><br/>
+      <% if user_signed_in? %>
+        <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Contact Host" >
+          Contact
+        </button>
+      <% end %>
       <br/>
       <br/>
     </div>
@@ -157,9 +165,9 @@
       <h4>  Venue </h4>
       <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
       <%= @event.twitter_hash_tag %><br/><br/>
-      <b> Address </b> <br/><%= current_user.address %><br/><br/>
+      <b> Address </b> <br/><%= @event_user.address %><br/><br/>
       <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
-      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(@event_user.city_id).name %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
   </div>
 </div>
