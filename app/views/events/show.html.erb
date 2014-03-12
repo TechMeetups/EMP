@@ -44,7 +44,7 @@
       <% end %>
     </div>
     <p><b> Start </b>
-    <%= @event.s_date.to_formatted_s(:rfc822)  %>   <%= @event.s_time.strftime("%I:%M%p") %>
+    <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %>   <%= @event.s_time.strftime("%I:%M%p") %>
     <b style="margin-left: 50px"> to </b>       
     <div style="margin-top: -27px; margin-left: 265px">
       <b>  End </b>
