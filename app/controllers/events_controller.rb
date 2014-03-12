@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     @speakers = @event.event_users.find_all_by_event_type("Speaker")
     @partners = @event.event_users.find_all_by_event_type("Partner")
     @attendee = @event.event_users.find_all_by_event_type("Attendee")
-    @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id)
+    @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
   end
 
   # GET /events/new
