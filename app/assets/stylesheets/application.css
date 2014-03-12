@@ -19,6 +19,8 @@
  *= require 'masonry/infinitescroll'
  *= require 'masonry/right-to-left'
  *= require 'masonry/transitions'
+ *= require bootstrap-datepicker
+ *= require bootstrap-timepicker
  *= require_tree .
  */
 

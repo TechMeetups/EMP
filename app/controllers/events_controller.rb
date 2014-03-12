@@ -12,6 +12,9 @@ class EventsController < ApplicationController
   def show
     @banners = @event.event_banners
     @interaction = Interaction.new
+    @speakers = @event.event_users.find_all_by_event_type("Speaker")
+    @partners = @event.event_users.find_all_by_event_type("Partner")
+    @attendee = @event.event_users.find_all_by_event_type("Attendee")
   end
 
   # GET /events/new
@@ -21,7 +24,17 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    @event = Event.find(params[:id])
+    if params[:format] == "img"
+      @img_url = EventBanner.find(params[:banner_id]).file.path
+      send_file @img_url, :type => 'image/jpeg', :disposition => 'attachment'
+    else
+      @event = Event.find(params[:id])
+      @banners = @event.event_banners
+      @interaction = Interaction.new
+      @speakers = @event.event_users.find_all_by_event_type("Speaker")
+      @partners = @event.event_users.find_all_by_event_type("Partner")
+      @attendee = @event.event_users.find_all_by_event_type("Attendee")
+    end
   end
 
   # POST /events
@@ -36,6 +49,7 @@ class EventsController < ApplicationController
             EventBanner.create(:event_id=> @event.id, :file=>banner["file"],:featured=> banner["feature"].to_i)
           end
         end
+        EventUser.create(user_id: current_user.id, event_id: @event.id, event_type: "Host")
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }
       else
@@ -50,10 +64,8 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -67,6 +79,14 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :no_content }
     end
+  end
+
+  
+  def delete    
+    @events = Event.find(params[:id])
+    @events.destroy
+    flash[:notice] = "Activity Succesfully Deleted"
+    redirect_to :back
   end
 
   def event_search
@@ -90,12 +110,12 @@ class EventsController < ApplicationController
       end
     end
   end
-  def delete    
-    @events = Event.find(params[:id])
-    @events.destroy
-    flash[:notice] = "Activity Succesfully Deleted"
-    redirect_to :back
+
+  def event_interaction
+    Interaction.create(interaction_params)
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -106,5 +126,9 @@ class EventsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:user_id, :title, :s_date, :e_date, :s_time, :e_time, :description, :twitter_hash_tag)
+    end
+
+    def interaction_params
+      params.require(:interaction).permit(:user_id, :event_id, :action, :memo)
     end
 end

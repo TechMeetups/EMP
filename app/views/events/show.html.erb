@@ -6,11 +6,13 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Note to Event Organiser</h4>
       </div>
-      <%= form_for @interaction, :url=>root_url, :method=>"get" do |f| %>
+      <%= form_for @interaction, :url=>event_interaction_path, :remote=>true do |f| %>
         <div class="modal-body">
           <label class="col-lg-2 control-label" style="margin-top:10px">Subject </label>
-          <%= f.text_field :action,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
+          <%= f.text_field "action",:class=>"form-control dynamic_action", :style=>"float:left; width: 30%;", :disabled=>true %>
+          <%= f.hidden_field :action, :class=>"dynamic_action" %>
           <%= f.hidden_field :event_id, :value=>@event.id %>
+          <%= f.hidden_field :user_id, :value=>current_user.id %>
           <label class="col-lg-2 control-label" style="width: 93px;margin-top:10px">Event </label> 
           <%= text_field_tag "event_id", @event.title,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
           <br/>
@@ -46,7 +48,7 @@
     <b style="margin-left: 50px"> to </b>       
     <div style="margin-top: -27px; margin-left: 265px">
       <b>  End </b>
-      <%= @event.e_date.to_formatted_s(:rfc822) %>
+      <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
       <%= @event.e_time.strftime("%I:%M%p") %></p>
     </div>
 
@@ -55,28 +57,86 @@
 
   <div class="event_box">
     <h4>  Speakers/Mentors </h4>
-    <div class="col-xs-12 col-md-8">No Speakers/Mentors</div>
-    <div class="col-xs-6 col-md-4">
-    <!-- Button trigger modal -->
-    <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Speaker" >
-      Apply
-    </button>
+    <div class="table_block">
+      <table class="table">
+        <tr>
+          <% @speakers.each_with_index do |speaker, index| %>
+            <% if index+1 == 6 %> </tr><tr> <% end %>
+            <td style="text-align:center">
+              <% @user = User.find(speaker.user_id) %>
+              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px; height: 80px;" %> <br/>
+              <b><%= @user.name %></b>
+            </td>
+          <% end %>
+        </tr>
+      </table>
     </div>
-
-
-
+    <% if @speakers.blank? %> 
+      <div class="button_block" style="margin-top:-55px"> 
+    <% else %>  
+      <div class="button_block" style="margin-top:-100px">
+    <% end %>
+    
+    <!-- Button trigger modal -->
+      <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Speaker" >
+        Apply
+      </button>
+    </div>
   </div>
 
+  <br/>
   <div  class="event_box">
     <h4> Partner  </h4>
-    <div class="col-xs-12 col-md-8">No Partners</div>
-    <div class="col-xs-6 col-md-4"> <%= link_to 'Partner',nil,  :class=>"btn btn-primary" %></div>
+    <div class="table_block">
+      <table class="table">
+        <tr>
+          <% @partners.each_with_index do |partner, index| %>
+            <% if index+1 == 6 %> </tr><tr> <% end %>
+            <td style="text-align:center">
+              <% @user = User.find(partner.user_id) %>
+              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;" %> <br/>
+              <b><%= @user.name %></b>
+            </td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+    <% if @partners.blank? %> 
+      <div class="button_block" style="margin-top:-55px"> 
+    <% else %>  
+      <div class="button_block" style="margin-top:-100px">
+    <% end %>
+      <button class="btn btn-primary open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Partner" >
+        Partner
+      </button>
+    </div>
   </div>
-
+  <br/>
   <div  class="event_box">
     <h4> Attendees </h4>
-    <div class="col-xs-12 col-md-8">No Attendees </div>
-    <div class="col-xs-6 col-md-4"> <%= link_to 'Attend',nil,  :class=>"btn btn-success" %></div>
+    <div class="table_block">
+      <table class="table">
+        <tr>
+          <% @attendee.each_with_index do |attendee, index| %>
+            <% if index+1 == 6 %> </tr><tr> <% end %>
+            <td style="text-align:center">
+              <% @user = User.find(attendee.user_id) %>
+              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px;height: 80px; " %> <br/>
+              <b><%= @user.name %></b>
+            </td>
+          <% end %>
+        </tr>
+      </table>  
+    </div>
+    <% if @attendee.blank? %> 
+      <div class="button_block" style="margin-top:-55px"> 
+    <% else %>  
+      <div class="button_block" style="margin-top:-100px">
+    <% end %>
+      <button class="btn btn-success open_my_modal" data-toggle="modal" data-target="#myModal" id="Attend event" >
+        Attend
+      </button>
+    </div>
   </div>
 </div>
 
@@ -86,17 +146,20 @@
       <h4>  Host </h4>
       <%= current_user.name %><br/><br/>
       <%= image_tag current_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" %><br/><br/>
-      <%= link_to 'Contact',nil,  :class=>"btn btn-info" %>
+      <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Contact Host" >
+        Contact
+      </button>
+      <br/>
+      <br/>
     </div>
 
     <div class="event_box">
       <h4>  Venue </h4>
-      <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %>   
-
-      <h5> Address </h5> 
-      <b> City </b>
-              <%= City.find(User.find(@event.user_id).city_id).name %> 
-              <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+      <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
+      <%= @event.twitter_hash_tag %><br/><br/>
+      <b> Address </b> <br/><%= current_user.address %><br/><br/>
+      <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
+      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
   </div>
 </div>
@@ -109,6 +172,15 @@
 
 .col-md-9{
    border: 1px solid !important;
+   width: 72%;
+}
+
+.col-md-pull-9{
+  right: 71%;
+}
+
+.col-md-push-3{
+  left: 26%
 }
 
 
@@ -132,6 +204,13 @@
     z-index:9;
 }
 
+.table_block{
+  width: 85%;
+}
+.button_block{
+  float: right;
+}
+  
 </style>
 
 <script type="text/javascript" charset="utf-8">
@@ -153,13 +232,13 @@
   }
 
   $(function() {
-      setInterval( "slideSwitch()", 2000 );
+    setInterval( "slideSwitch()", 2000 );
   });
 
 
   $(document).on("click", ".open_my_modal", function () {
-     var myModalAction = $(this).attr('id');
-     $("#interaction_action").val(myModalAction);
+    var myModalAction = $(this).attr('id');
+    $(".dynamic_action").val(myModalAction);
   });
 
 </script>

@@ -25,28 +25,35 @@
     <div class="form-group">
       <label class="col-lg-2 control-label">Start Date</label>
       <div class="col-lg-10">
-        <%= f.date_select :s_date ,{} , {:class=>"form-control dropdown_form"} %>
+        <%= f.text_field :s_date, :class=>"form-control"%>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label">End Date</label>
       <div class="col-lg-10">
-        <%= f.date_select :e_date ,{} , {:class=>"form-control dropdown_form"} %>
+        <%= f.text_field :e_date, :class=>"form-control"%>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label">Start Time</label>
       <div class="col-lg-10">
-        <%= f.time_select :s_time ,{} , {:class=>"form-control dropdown_form"}%>
+        <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
+          <%= f.text_field :s_time, :class=>"form-control"%>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div> 
+        
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label">End Time</label>
       <div class="col-lg-10">
-        <%= f.time_select :e_time ,{} , {:class=>"form-control dropdown_form" } %>
+        <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
+          <%= f.text_field :e_time, :class=>"form-control"%>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div> 
       </div>
     </div>
 
@@ -97,4 +104,11 @@
 $(".add_more").click(function(){
   $(".add_more_block").append('<label class="col-lg-2 control-label">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 36%;" name="banner[][file]"> <label class="col-lg-2 control-label"style="width: 93px;">Featured : </label><select id="banner_feature" class="form-control dropdown_form" name="banner[][feature]"><option value="1">Yes</option><option value="0">No</option></select>');
 })
+
+$(document).ready(function(){
+  $('#event_s_date').datepicker();
+  $('#event_e_date').datepicker();
+  $('#event_s_time').timepicker();
+  $('#event_e_time').timepicker();
+});
 </script>

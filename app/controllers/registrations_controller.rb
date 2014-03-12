@@ -13,11 +13,11 @@ class RegistrationsController < Devise::RegistrationsController
     else
       flash[:notice] = "Please enter valid information in fields."
   	end
-redirect_to new_user_session_path 
+    redirect_to new_user_session_path 
  end
 
  def update
-  @user = current_user
+    @user = current_user
     respond_to do |format|
       if @user.update(user_params)
         format.json { head :no_content }

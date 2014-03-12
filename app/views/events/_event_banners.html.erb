@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Featured</th>
+      <th>Banner File</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @banners.each_with_index do |banner, index| %>
+      <tr>
+        <td><%= index+1 %></td>
+        <td><%= banner.featured %></td>
+        <td><%= banner.file_file_name %></td>
+        <td><%= link_to(image_tag("upload.png", :style=>"width: 15px;"), events_edit_path(format: "img", banner_id: banner.id, id: @event.id )) %></td>
+        <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), banner_destroy_path(banner_id: banner.id), :method=>"POST", confirm: "Are you sure?", :remote=>true) %></td>
+        <td><%= image_tag("star.png", :style=>"width: 15px;") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="add_more_block">
+
+</div>
+<%= image_tag "plus.png", :style=>"float:right",:title=>"Add more banners", :class=>"add_more" %>

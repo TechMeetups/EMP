@@ -21,6 +21,10 @@ gem 'masonry-rails'
 
 gem 'modernizr-rails'
 
+gem 'bootstrap-datepicker-rails'
+
+gem 'bootstrap-timepicker-rails'
+
 gem 'rails_12factor', group: [:production]
 
 # Use Uglifier as compressor for JavaScript assets

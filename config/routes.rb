@@ -10,12 +10,18 @@ TechMeetsUp::Application.routes.draw do
   root 'home#index'
   post 'events/event_search'
   get 'events/event_search'
+  get 'notifications'=> 'home#notifications', as: :notifications
+  get 'accept_proposal'=> 'home#accept_proposal', as: :accept_proposal
+  post 'add_banners'=> 'home#add_banners', as: :add_banners
+  post 'banner_destroy'=> 'home#banner_destroy', as: :banner_destroy
+  
+
   post 'events/new'
+  post 'event/interaction' => "events#event_interaction"
   get 'events/edit/:id' => 'events#edit', as: :events_edit
   get 'events/delete/:id' => 'events#delete', as: :events_delete
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
+  #   get 'products/:id' => 'catalog#view
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

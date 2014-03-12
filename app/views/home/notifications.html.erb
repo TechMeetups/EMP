@@ -1,0 +1,77 @@
+<div id="masonry-container" class="transitions-enabled clearfix masonry-brick">
+	<% if !@interactions.blank? %>
+		<div class="box">
+			<h2> Following users want to Become Speaker/Mentor </h2>
+			<% @interactions.each do |interaction| %>
+				<% @request_user = User.find(interaction.user_id) %>
+				<% if interaction.action == "Become Speaker" %>
+					<div class="interaction_block">
+					 	<%= image_tag @request_user.avatar.url(:thumb) %>
+						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+						<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) , :class=>"btn btn-info" %>
+					</div>
+				<% end %>	
+			<% end %>
+		</div>
+
+		<div class="box">
+			<h2> Following users want to Become Partner </h2>
+			<% @interactions.each do |interaction| %>
+				<% @request_user = User.find(interaction.user_id) %>
+				<% if interaction.action == "Become Partner" %>
+					<div class="interaction_block">
+				 		<%= image_tag @request_user.avatar.url(:thumb) %>
+						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+						<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
+					</div>
+				<% end %>	
+			<% end %>
+		</div>
+
+		<div class="box">
+			<h2> Following users want to Attend Event </h2>
+			<% @interactions.each do |interaction| %>
+				<% @request_user = User.find(interaction.user_id) %>
+				<% if interaction.action == "Attend event" %>
+					<div class="interaction_block">
+					 	<%= image_tag @request_user.avatar.url(:thumb) %>
+						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+						<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
+					</div>
+				<% end %>	
+			<% end %>
+		</div>
+
+
+	<% end %>
+</div>
+
+<style>
+.box{
+	background-color: YellowGreen !important;
+	width: 98%;
+}
+
+.box img{
+	width: 10%;
+	float: left;
+	padding: 5px;
+	height: 125%;
+}
+
+h3{
+	width: 50%;
+}
+
+p{
+	width: 50%; float: left;
+}
+
+.btn-info{
+	float: right; margin-top: -35px;
+}
+
+.interaction_block{
+	height: 65px;
+}
+</style>
