@@ -185,8 +185,9 @@
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
-      <%= @event_user.name if !@event_user.nil? %><br/><br/>
-      <%= image_tag @event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" if !@event_user.nil?%><br/><br/>
+      <b><%= link_to @event_user.name, user_profile_path(id: @event_user.id) if !@event_user.nil? %></b><br/><br/>
+      <%=  link_to(image_tag(@event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
+      <br/><br/>
       <% if !user_signed_in?  %>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
       <% elsif @event.user_id != current_user.id %> 
@@ -284,7 +285,7 @@
 
   $(document).on("click", ".open_my_modal", function () {
     var signed_in = '<%= user_signed_in? %>'
-    
+
     if(signed_in == "true") {
       var myModalAction = $(this).attr('id');
       $(".dynamic_action").val(myModalAction);
