@@ -1,48 +1,65 @@
 <div id="masonry-container" class="transitions-enabled clearfix masonry-brick">
 	<% if !@interactions.blank? %>
-		<div class="box">
-			<h2> Following users want to Become Speaker/Mentor </h2>
-			<% @interactions.each do |interaction| %>
-				<% @request_user = User.find(interaction.user_id) %>
-				<% if interaction.action == "Become Speaker" %>
-					<div class="interaction_block">
-					 	<%= image_tag @request_user.avatar.url(:thumb) %>
-						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
-						<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) , :class=>"btn btn-info" %>
-					</div>
-				<% end %>	
-			<% end %>
-		</div>
-
-		<div class="box">
-			<h2> Following users want to Become Partner </h2>
-			<% @interactions.each do |interaction| %>
-				<% @request_user = User.find(interaction.user_id) %>
-				<% if interaction.action == "Become Partner" %>
-					<div class="interaction_block">
-				 		<%= image_tag @request_user.avatar.url(:thumb) %>
-						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
-						<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
-					</div>
-				<% end %>	
-			<% end %>
-		</div>
-
-		<div class="box">
-			<h2> Following users want to Attend Event </h2>
-			<% @interactions.each do |interaction| %>
-				<% @request_user = User.find(interaction.user_id) %>
-				<% if interaction.action == "Attend event" %>
-					<div class="interaction_block">
-					 	<%= image_tag @request_user.avatar.url(:thumb) %>
-						<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
-						<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
-					</div>
-				<% end %>	
-			<% end %>
-		</div>
-
-
+		<% if @interactions.collect(&:action).include? "Become Speaker" %>
+			<div class="box">
+				<h2> Following users want to Become Speaker/Mentor </h2>
+				<% @interactions.each do |interaction| %>
+					<% @request_user = User.find(interaction.user_id) %>
+					<% if interaction.action == "Become Speaker" %>
+						<div class="interaction_block">
+						 	<%= image_tag @request_user.avatar.url(:thumb) %>
+							<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+							<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) , :class=>"btn btn-info" %>
+						</div>
+					<% end %>	
+				<% end %>
+			</div>
+		<% end %>
+		<% if @interactions.collect(&:action).include? "Become Partner" %>
+			<div class="box">
+				<h2> Following users want to Become Partner </h2>
+				<% @interactions.each do |interaction| %>
+					<% @request_user = User.find(interaction.user_id) %>
+					<% if interaction.action == "Become Partner" %>
+						<div class="interaction_block">
+					 		<%= image_tag @request_user.avatar.url(:thumb) %>
+							<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+							<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
+						</div>
+					<% end %>	
+				<% end %>
+			</div>
+		<% end %>
+		<% if @interactions.collect(&:action).include? "Attend event" %>
+			<div class="box">
+				<h2> Following users want to Attend Event </h2>
+				<% @interactions.each do |interaction| %>
+					<% @request_user = User.find(interaction.user_id) %>
+					<% if interaction.action == "Attend event" %>
+						<div class="interaction_block">
+						 	<%= image_tag @request_user.avatar.url(:thumb) %>
+							<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+							<%= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
+						</div>
+					<% end %>	
+				<% end %>
+			</div>
+		<% end %>
+		<% if @interactions.collect(&:action).include? "Contact Host" %>
+			<div class="box">
+				<h2> Following users want to Contact You </h2>
+				<% @interactions.each do |interaction| %>
+					<% @request_user = User.find(interaction.user_id) %>
+					<% if interaction.action == "Contact Host" %>
+						<div class="interaction_block">
+						 	<%= image_tag @request_user.avatar.url(:thumb) %>
+							<h3 ><%= @request_user.name %> </h3><p><%= interaction.memo %></p>
+							<%#= link_to "Accept",accept_proposal_path(:interaction_id => interaction.id), :class=>"btn btn-info" %>
+						</div>
+					<% end %>	
+				<% end %>
+			</div>
+		<% end %>
 	<% end %>
 </div>
 

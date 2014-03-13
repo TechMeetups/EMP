@@ -33,4 +33,7 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
+	 jQuery(function($){
+	  $.extend($.fn.datepicker.defaults, { format: 'yyyy-mm-dd' });
+	});
 });

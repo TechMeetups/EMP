@@ -1,0 +1,5 @@
+<% if params[:view]=="true" %>
+	$("#looking_for-edit-<%=@user.id%>").html("<%= escape_javascript(  render :partial => 'devise/registrations/looking_for_view',  :locals => {:@user => @user} ) %> ")
+<% else %>
+	$("#looking_for-edit-<%=@user.id%>").html("<%= escape_javascript(  render :partial => 'devise/registrations/looking_for',  :locals => {:@user => @user} ) %> ")
+<% end %>

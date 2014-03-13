@@ -1,0 +1,11 @@
+<% if @event_user.nil? %>
+	alert("Data already exist")
+<% else %>	
+	<% if !@attendee.nil? %>
+		$("#attendee_list").html("<%= escape_javascript(render 'events/attendees_list') %>")
+	<% elsif !@speakers.nil? %>
+		$("#speaker_list").html("<%= escape_javascript(render 'events/speakers_list') %>")
+	<% elsif !@partners.nil? %>
+		$("#partner_list").html("<%= escape_javascript(render 'events/partners_list') %>")
+	<% end %>
+<% end %>

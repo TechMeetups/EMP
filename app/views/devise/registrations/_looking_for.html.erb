@@ -1,0 +1,36 @@
+<div id="looking_for-edit-box">
+	<%= text_field_tag :looking_for, @user.tag_list_on(:looking_for_tags).join(", "), :placeholder=>"Looking For" , :class=>"form-control" %>
+</div>
+<script>
+  function onAddTag(tag) {  //tags
+        alert("Added a tag: " + tag);
+      }
+      function onRemoveTag(tag) {
+        alert("Removed a tag: " + tag);
+      }
+
+      function onChangeTag(input,tag) {
+        alert("Changed a tag: " + tag);
+      }
+
+      $(function() {
+      $('#looking_for').tagsInput({width:'auto', height:'auto'});
+      });   
+   $(document).mouseup(function (e)
+{
+    var container = $("#looking_for-edit-box");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+     
+    {
+    	var looking_for = $("#looking_for-edit-box input").val()
+        $.ajax({
+		url: "<%= home_looking_for_path(:view=>true) %>&looking_for="+looking_for,
+		context: document.body
+		}).done(function() {
+		$( this ).addClass( "done" );
+		});
+    }
+});
+</script>

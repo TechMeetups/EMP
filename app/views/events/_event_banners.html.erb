@@ -16,7 +16,7 @@
         <td><%= index+1 %></td>
         <td><%= banner.featured %></td>
         <td><%= banner.file_file_name %></td>
-        <td><%= link_to(image_tag("upload.png", :style=>"width: 15px;"), events_edit_path(format: "img", banner_id: banner.id, id: @event.id )) %></td>
+        <td><%= link_to(image_tag("upload.png", :style=>"width: 15px;"), event_path(format: "img", banner_id: banner.id, id: @event.id )) %></td>
         <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), banner_destroy_path(banner_id: banner.id), :method=>"POST", confirm: "Are you sure?", :remote=>true) %></td>
         <td><%= image_tag("star.png", :style=>"width: 15px;") %></td>
       </tr>
@@ -27,3 +27,11 @@
 
 </div>
 <%= image_tag "plus.png", :style=>"float:right",:title=>"Add more banners", :class=>"add_more" %>
+
+
+
+<script>
+$(".add_more").click(function(){
+    $(".add_more_block").append('<label class="col-lg-2 control-label" style="width: 75px;">Banner: </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 46%;" name="banner[][file]"> <label class="col-lg-2 control-label"style="width: 93px;">Featured : </label><select id="banner_feature" class="form-control dropdown_form" style="width: 170px; " name="banner[][feature]"><option value="1">Yes</option><option value="0">No</option></select><br/>');
+  })
+</script>

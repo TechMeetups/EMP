@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 <%= form_for(@event, :html=>{:class=>"form-horizontal", :multipart=>true}) do |f| %>
   <fieldset>
     <legend>Add a New Event</legend>
@@ -106,8 +109,12 @@ $(".add_more").click(function(){
 })
 
 $(document).ready(function(){
-  $('#event_s_date').datepicker();
-  $('#event_e_date').datepicker();
+  $("#event_s_date" ).datepicker();
+  $('#event_s_date').datepicker("option", "dateFormat", 'yy-mm-dd')
+
+  $("#event_e_date" ).datepicker();
+  $('#event_e_date').datepicker("option", "dateFormat", 'yy-mm-dd')
+
   $('#event_s_time').timepicker();
   $('#event_e_time').timepicker();
 });

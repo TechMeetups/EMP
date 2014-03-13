@@ -12,7 +12,7 @@
           <%= f.text_field "action",:class=>"form-control dynamic_action", :style=>"float:left; width: 30%;", :disabled=>true %>
           <%= f.hidden_field :action, :class=>"dynamic_action" %>
           <%= f.hidden_field :event_id, :value=>@event.id %>
-          <%= f.hidden_field :user_id, :value=>@event_user.id if !@event_user.nil? %> 
+          <%= f.hidden_field :user_id, :value=>current_user.id if user_signed_in? %> 
           <label class="col-lg-2 control-label" style="width: 93px;margin-top:10px">Event </label> 
           <%= text_field_tag "event_id", @event.title,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
           <br/>
@@ -32,56 +32,106 @@
 
 <div style="float: left; width: 72%;">
   <div class="event_box">
-    <h2>  <%= @event.title %> </h2>
-
-    <div id="slideshow">
-      <% @banners.each_with_index do |banner, index| %>
-        <% if index == 0 %>
-          <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
-        <% else %>
-          <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
-        <% end %>
+    <h2>  
+      <% if !user_signed_in?  %>
+        <%= @event.title %>
+      <% elsif @event.user_id != current_user.id %> 
+        <%= @event.title %> 
+      <% else %>
+        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_title") %>
       <% end %>
+
+    </h2>
+    <div class="banner_block">
+      <div id="slideshow">
+        <% @banners.each_with_index do |banner, index| %>
+          <% if index == 0 %>
+            <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
+          <% else %>
+            <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
+          <% end %>
+        <% end %>
+      </div>
+      <% if user_signed_in? && @event.user_id == current_user.id %> 
+        <%= image_tag("edit1.png", :style=>"width: 15px; float:right", :id=>"edit_banners") %> 
+      <% end %>
+      
     </div>
-    <p><b> Start </b>
-    <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %>   <%= @event.s_time.strftime("%I:%M%p") %>
-    <b style="margin-left: 50px"> to </b>       
-    <div style="margin-top: -27px; margin-left: 265px">
+    <br/>
+    <br/>
+    <div>
+      <p><b> Start </b>
+        <% if !user_signed_in?  %>
+          <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %> 
+        <% elsif @event.user_id != current_user.id %> 
+          <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %> 
+        <% else %>
+          <%= best_in_place @event,:s_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
+        <% end %>
+        <% if !user_signed_in?  %>
+          <%= @event.s_time.strftime("%I:%M%p") %>
+        <% elsif @event.user_id != current_user.id %> 
+          <%= @event.s_time.strftime("%I:%M%p") %>
+        <% else %>
+          <%= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I:%M%p") }, :activator => "#edit_s_time" %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_time") %>
+        <% end %>
+        
+      <b style="margin-left: 50px"> to </b>      
+    </div> 
+    <div style="margin-left: 389px; margin-top: -31px;">
       <b>  End </b>
-      <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
-      <%= @event.e_time.strftime("%I:%M%p") %></p>
+        <% if !user_signed_in?  %>
+          <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
+        <% elsif @event.user_id != current_user.id %> 
+          <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
+        <% else %>
+          <%= best_in_place @event, :e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
+        <% end %>
+
+        <% if !user_signed_in?  %>
+          <%= @event.e_time.strftime("%I:%M%p") %>
+        <% elsif @event.user_id != current_user.id %> 
+          <%= @event.e_time.strftime("%I:%M%p") %>
+        <% else %>
+          <%= best_in_place @event, :e_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I:%M%p") }, :activator => "#edit_e_time" %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_time") %>
+        <% end %>
+
+      </p>
     </div>
 
-    <p><%= @event.description %></p>
+    <p>
+      <% if !user_signed_in?  %>
+        <%= @event.description %>
+      <% elsif @event.user_id != current_user.id %> 
+        <%= @event.description %>
+      <% else %>
+        <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
+      <% end %>
+    </p>
+      
+
   </div>
 
   <div class="event_box">
     <h4>  Speakers/Mentors </h4>
-    <div class="table_block">
-      <table class="table">
-        <tr>
-          <% @speakers.each_with_index do |speaker, index| %>
-            <% if index+1 == 6 %> </tr><tr> <% end %>
-            <td style="text-align:center">
-              <% @user = User.find(speaker.user_id) %>
-              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px; height: 80px;" %> <br/>
-              <b><%= @user.name %></b>
-            </td>
-          <% end %>
-        </tr>
-      </table>
+    <div class="table_block" id="speaker_list">
+      <%= render "speakers_list" %>
     </div>
     <% if @speakers.blank? %> 
-      <div class="button_block" style="margin-top:-55px"> 
+      <div class="button_block" id="speaker_block" style="margin-top:-55px"> 
     <% else %>  
-      <div class="button_block" style="margin-top:-100px">
+      <div class="button_block" id="speaker_block" style="margin-top:-100px">
     <% end %>
     
     <!-- Button trigger modal -->
-    <% if user_signed_in? %>
-      <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Speaker" >
-        Apply
-      </button>
+    <% if !user_signed_in?  %>
+      <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+    <% elsif @event.user_id != current_user.id %> 
+      <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+    <% else %>
+      <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_prople"%>
     <% end %>
     </div>
   </div>
@@ -89,58 +139,43 @@
   <br/>
   <div  class="event_box">
     <h4> Partner  </h4>
-    <div class="table_block">
-      <table class="table">
-        <tr>
-          <% @partners.each_with_index do |partner, index| %>
-            <% if index+1 == 6 %> </tr><tr> <% end %>
-            <td style="text-align:center">
-              <% @user = User.find(partner.user_id) %>
-              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;" %> <br/>
-              <b><%= @user.name %></b>
-            </td>
-          <% end %>
-        </tr>
-      </table>
+    <div class="table_block"  id="partner_list">
+      <%= render "partners_list" %>
     </div>
     <% if @partners.blank? %> 
-      <div class="button_block" style="margin-top:-55px"> 
+      <div class="button_block" id="partner_block" style="margin-top:-55px"> 
     <% else %>  
-      <div class="button_block" style="margin-top:-100px">
+      <div class="button_block" id="partner_block" style="margin-top:-100px">
     <% end %>
-    <% if user_signed_in? %>
-      <button class="btn btn-primary open_my_modal" data-toggle="modal" data-target="#myModal" id="Become Partner" >
-        Partner
-      </button>
+   <% if !user_signed_in?  %>
+      <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+    <% elsif @event.user_id != current_user.id %>
+      <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+    <% else %>
+      <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_prople"%>
     <% end %>
     </div>
   </div>
   <br/>
   <div  class="event_box">
     <h4> Attendees </h4>
-    <div class="table_block">
-      <table class="table">
-        <tr>
-          <% @attendee.each_with_index do |attendee, index| %>
-            <% if index+1 == 6 %> </tr><tr> <% end %>
-            <td style="text-align:center">
-              <% @user = User.find(attendee.user_id) %>
-              <%= image_tag @user.avatar.url(:thumb), :style=>"width: 100px;height: 80px; " %> <br/>
-              <b><%= @user.name %></b>
-            </td>
-          <% end %>
-        </tr>
-      </table>  
+    <div class="table_block" id="attendee_list">
+      <%= render "attendees_list" %>
     </div>
+
+
+
     <% if @attendee.blank? %> 
-      <div class="button_block" style="margin-top:-55px"> 
+      <div class="button_block" id="attendee_block" style="margin-top:-55px"> 
     <% else %>  
-      <div class="button_block" style="margin-top:-100px">
+      <div class="button_block" id="attendee_block" style="margin-top:-100px">
     <% end %>
-    <% if user_signed_in? %>
-      <button class="btn btn-success open_my_modal" data-toggle="modal" data-target="#myModal" id="Attend event" >
-        Attend
-      </button>
+    <% if !user_signed_in?  %>
+      <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+    <% elsif @event.user_id != current_user.id %>
+      <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+    <% else %>
+      <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_prople"%>
     <% end %>
     </div>
   </div>
@@ -152,10 +187,10 @@
       <h4>  Host </h4>
       <%= @event_user.name if !@event_user.nil? %><br/><br/>
       <%= image_tag @event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;" if !@event_user.nil?%><br/><br/>
-      <% if user_signed_in? %>
-        <button class="btn btn-info open_my_modal" data-toggle="modal" data-target="#myModal" id="Contact Host" >
-          Contact
-        </button>
+      <% if !user_signed_in?  %>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% elsif @event.user_id != current_user.id %> 
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
       <% end %>
       <br/>
       <br/>
@@ -194,7 +229,7 @@
 
 #slideshow {
     position:relative;
-    height:350px;
+    height:300px;
 }
 
 #slideshow IMG {
@@ -213,11 +248,14 @@
 }
 
 .table_block{
-  width: 85%;
+  width: 80%;
 }
 .button_block{
   float: right;
+  text-align:center;
+  width: 20%;
 }
+
   
 </style>
 
@@ -245,9 +283,48 @@
 
 
   $(document).on("click", ".open_my_modal", function () {
-    var myModalAction = $(this).attr('id');
-    $(".dynamic_action").val(myModalAction);
+    var signed_in = '<%= user_signed_in? %>'
+    
+    if(signed_in == "true") {
+      var myModalAction = $(this).attr('id');
+      $(".dynamic_action").val(myModalAction);
+      $("#interaction_memo").val("");
+      $('#myModal').modal({
+        show: 'true'
+      }); 
+    }
+    else{
+      alert("You must login to continue");
+      return false; 
+    }
+    
   });
+
+  $("#edit_banners").click(function(){
+    $(".banner_block").html("<%= escape_javascript(render :partial => 'event_banners') %> ")
+  })
+
+
+  var event_id = "<%= @event.id %>"
+
+  $("#best_in_place_event_"+event_id+"_s_time").timepicker();
+
+  $(".add_more_prople").click(function(){
+    var block_id = $(this).attr("id");
+    if(block_id == "add_speaker"){
+      $("#speaker_block").html("<%= escape_javascript(render :partial => 'add_more_speakers')%>")
+      $("#dynamic_speaker").val("Speaker")
+    }
+    else if(block_id == "add_partner"){
+      $("#partner_block").html("<%= escape_javascript(render :partial => 'add_more_partners')%>")
+      $("#dynamic_partner").val("Partner")
+    }
+    else if(block_id == "add_attendees"){
+      $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
+      $("#dynamic_attendee").val("Attendee")
+    }
+    
+  })
 
 </script>
 

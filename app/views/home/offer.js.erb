@@ -1,0 +1,5 @@
+<% if params[:view]=="true" %>
+	$("#offer-edit-<%=@user.id%>").html("<%= escape_javascript(  render :partial => 'devise/registrations/offer_view',  :locals => {:@user => @user} ) %> ")
+<% else %>
+	$("#offer-edit-<%=@user.id%>").html("<%= escape_javascript(  render :partial => 'devise/registrations/offer',  :locals => {:@user => @user} ) %> ")
+<% end %>

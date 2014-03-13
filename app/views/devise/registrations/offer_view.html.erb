@@ -1,0 +1,9 @@
+<% if !@user.tag_list_on(:offer_tags).blank?%>
+  <div class="label-tags">
+    <ul>
+
+      <li><%= @user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+      </li>
+    </ul> 
+  </div>
+<% end %>

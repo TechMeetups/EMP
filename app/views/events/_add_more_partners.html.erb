@@ -1,0 +1,7 @@
+<%= form_for @add_event_user, :url=> add_more_path, :remote=>true do |f| %>
+	<%= f.hidden_field :event_id, :value=>@event.id %>
+
+	<%= f.select(:user_id, @other_users.collect {|a| [a.name, a.id]},{} , {:class=>"form-control", :style=>"width: 100px; float: left;"} ) if !@other_users.nil?%>
+	<%= f.hidden_field :event_type, :id=>"dynamic_partner" %>
+	<%= image_submit_tag("plus.png", :style=>"margin-top: 8px;") %>
+<% end %>

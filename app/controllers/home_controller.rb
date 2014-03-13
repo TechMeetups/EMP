@@ -37,4 +37,55 @@ class HomeController < ApplicationController
 	@event_banner.destroy
 	@banners = @event.event_banners
   end
+
+  def add_more
+    if EventUser.find_by_user_id_and_event_id_and_event_type(event_user_param["user_id"], event_user_param["event_id"], event_user_param['event_type']).nil?
+      @event_user = EventUser.create(event_user_param)
+      if event_user_param['event_type'] == "Attendee"
+        @attendee = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Attendee"])
+      elsif event_user_param['event_type'] == "Speaker"
+        @speakers = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Speaker"])
+      elsif event_user_param['event_type'] == "Partner"
+        @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
+      end
+        
+    end
+  end
+
+  def looking_for
+     @user = current_user
+     if params[:looking_for]!="undefined" 
+      if !params[:looking_for].blank? && params[:view]=="true" 
+        @user.set_tag_list_on(:looking_for_tags,params[:looking_for])
+        @user.save
+      end
+    end
+  end
+  def offer
+     @user = current_user
+     if params[:offer]!="undefined" 
+      if !params[:offer].blank? && params[:view]=="true" 
+        @user.set_tag_list_on(:offer_tags,params[:offer])
+        @user.save
+      end
+     end
+  end
+
+  def update_avatar
+    if !params["file-0"].nil?
+      current_user.avatar = params["file-0"]
+      current_user.save
+    end
+  end
+
+  def profile
+    @user = User.find(params[:id])
+  end
+
+  private
+
+    def event_user_param
+      params.require(:event_user).permit(:user_id, :event_id, :event_type)
+    end
+
 end
