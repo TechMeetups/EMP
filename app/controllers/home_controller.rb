@@ -86,9 +86,9 @@ class HomeController < ApplicationController
   def profile
     @user = User.find(params[:id])
     @speakers = @partners = @attendee = []
-    @speakers = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Speaker"] )
-    @partners = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Partner"] )
-    @attendee = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Attendee"] )
+    @speakers = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Speaker"] )
+    @partners = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Partner"] )
+    @attendee = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Attendee"] )
   end
 
   private
