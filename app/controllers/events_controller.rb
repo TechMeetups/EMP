@@ -58,7 +58,9 @@ class EventsController < ApplicationController
       if @event.save
         if !params[:banner].blank?
           params[:banner].each do |banner|
-            EventBanner.create(:event_id=> @event.id, :file=>banner["file"],:featured=> banner["feature"].to_i)
+            if !banner["file"].nil?
+              EventBanner.create(:event_id=> @event.id, :file=>banner["file"],:featured=> banner["feature"].to_i)
+            end
           end
         end
         EventUser.create(user_id: current_user.id, event_id: @event.id, event_type: "Host")

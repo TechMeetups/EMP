@@ -66,7 +66,7 @@
         <% elsif @event.user_id != current_user.id %> 
           <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %> 
         <% else %>
-          <%= best_in_place @event,:s_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
+          <%= best_in_place @event,:s_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date" , :display_with => Proc.new { |f| f.to_formatted_s(:rfc822) } %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
           <%= @event.s_time.strftime("%I:%M%p") %>
@@ -86,7 +86,7 @@
         <% elsif @event.user_id != current_user.id %> 
           <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
         <% else %>
-          <%= best_in_place @event, :e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
+          <%= best_in_place @event, :e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date" , :display_with => Proc.new { |f| f.to_formatted_s(:rfc822) } %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
         <% end %>
 
         <% if !user_signed_in?  %>
@@ -114,69 +114,55 @@
 
   </div>
 
-  <div class="event_box">
+  <div class="event_box" id="speaker_box">
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
     </div>
-    <% if @speakers.blank? %> 
-      <div class="button_block" id="speaker_block" style="margin-top:-55px"> 
-    <% else %>  
-      <div class="button_block" id="speaker_block" style="margin-top:-100px">
-    <% end %>
-    
-    <!-- Button trigger modal -->
-    <% if !user_signed_in?  %>
-      <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
-    <% elsif @event.user_id != current_user.id %> 
-      <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
-    <% else %>
-      <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_prople"%>
-    <% end %>
+
+    <div class="button_block" id="speaker_block"> 
+      <% if !user_signed_in?  %>
+        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+      <% elsif @event.user_id != current_user.id %> 
+        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+      <% else %>
+        <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_prople"%>
+      <% end %>
     </div>
   </div>
 
   <br/>
-  <div  class="event_box">
+  <div  class="event_box" id="partner_box">
     <h4> Partner  </h4>
     <div class="table_block"  id="partner_list">
       <%= render "partners_list" %>
     </div>
-    <% if @partners.blank? %> 
-      <div class="button_block" id="partner_block" style="margin-top:-55px"> 
-    <% else %>  
-      <div class="button_block" id="partner_block" style="margin-top:-100px">
-    <% end %>
-   <% if !user_signed_in?  %>
-      <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
-    <% elsif @event.user_id != current_user.id %>
-      <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
-    <% else %>
-      <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_prople"%>
-    <% end %>
+    
+    <div class="button_block" id="partner_block" > 
+      <% if !user_signed_in?  %>
+        <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+      <% elsif @event.user_id != current_user.id %>
+        <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+      <% else %>
+        <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_prople"%>
+      <% end %>
     </div>
   </div>
   <br/>
-  <div  class="event_box">
+  <div  class="event_box" id="attendee_box">
     <h4> Attendees </h4>
     <div class="table_block" id="attendee_list">
       <%= render "attendees_list" %>
     </div>
 
-
-
-    <% if @attendee.blank? %> 
-      <div class="button_block" id="attendee_block" style="margin-top:-55px"> 
-    <% else %>  
-      <div class="button_block" id="attendee_block" style="margin-top:-100px">
-    <% end %>
-    <% if !user_signed_in?  %>
-      <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
-    <% elsif @event.user_id != current_user.id %>
-      <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
-    <% else %>
-      <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_prople"%>
-    <% end %>
+    <div class="button_block" id="attendee_block"> 
+      <% if !user_signed_in?  %>
+        <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+      <% elsif @event.user_id != current_user.id %>
+        <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+      <% else %>
+        <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_prople"%>
+      <% end %>
     </div>
   </div>
 </div>
@@ -214,20 +200,6 @@
   border-bottom: 1px solid;
 }
 
-.col-md-9{
-   border: 1px solid !important;
-   width: 72%;
-}
-
-.col-md-pull-9{
-  right: 71%;
-}
-
-.col-md-push-3{
-  left: 26%
-}
-
-
 #slideshow {
     position:relative;
     height:300px;
@@ -250,6 +222,7 @@
 
 .table_block{
   width: 80%;
+  float: left;
 }
 .button_block{
   float: right;
@@ -325,7 +298,16 @@
       $("#dynamic_attendee").val("Attendee")
     }
     
-  })
+  });
+
+
+  var speakers_height = $("#speaker_list").height();
+  var partner_height = $("#partner_list").height();
+  var attendee_height = $("#attendee_list").height();
+
+  $("#attendee_box").css("height", attendee_height+40)
+  $("#speaker_box").css("height", speakers_height+40)
+  $("#partner_box").css("height", partner_height+40)
 
 </script>
 

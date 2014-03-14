@@ -9,3 +9,11 @@
 		$("#partner_list").html("<%= escape_javascript(render 'events/partners_list') %>")
 	<% end %>
 <% end %>
+
+var speakers_height = $("#speaker_list").height();
+var partner_height = $("#partner_list").height();
+var attendee_height = $("#attendee_list").height();
+
+$("#attendee_box").css("height", attendee_height+40)
+$("#speaker_box").css("height", speakers_height+40)
+$("#partner_box").css("height", partner_height+40)

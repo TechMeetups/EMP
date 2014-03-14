@@ -2,7 +2,7 @@
 
 	<% if !@events.blank? %>
 		<% @events.each do |event| %>
-			<div class="box col5">
+			<div class="box col3">
 			  <div>
 			    <div class="thumbnail">
 			      <h3><%= event.title %></h3>
@@ -14,18 +14,21 @@
 			      <div class="caption">
 			        
 				     
-					    <p><b> Date </b>
-					   	<%= event.s_date %>           
-					    <div style="margin-top: -30px; margin-left: 230px">
-					    	<b> Time </b>
+					    <p><b> Date : </b>
+					    <%= event.s_date.to_formatted_s(:rfc822) if !event.s_date.nil?  %>
+					    <b> to </b>          
+					    <%= event.e_date.to_formatted_s(:rfc822) if !event.e_date.nil?  %>
+
+					    <div>
+					    	<b> Time : </b>
 								<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
 								<%= event.e_time.strftime("%I:%M%p") %></p>
 				   		</div>
-				   		<p><b> City </b>
+				   		<p><b> City : </b>
 					   	<%= City.find(User.find(event.user_id).city_id).name %>       
 				   		 <p><%= event.description %></p>
 			        <p>
-			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 350px;"%>
+			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 165px;"%>
 					</p>
 			      </div>
 			    </div>
@@ -36,5 +39,28 @@
 </div>
 
 <div style="display:block;" >
-	<%= link_to 'Submit Event',nil,  :class=>"btn btn-danger" %>
+	<%= link_to 'Submit Event', new_event_path, :class=>"btn btn-danger", :id=>"add_new_event" %>
 </div>
+
+<style>
+.col3{
+	width: 300px;
+}
+.col-md-9{
+  border: none ;
+}
+</style>
+
+<script>
+$("#add_new_event").click(function(){
+	var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+    	return true;
+    }
+    else{
+      alert("You must login to continue");
+      return false; 
+    }
+})
+</script>

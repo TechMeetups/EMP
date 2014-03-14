@@ -1,42 +1,29 @@
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Note to Event Organiser</h4>
-      </div>
-      
-    </div>
-  </div>
-</div>
-
-
-<div style="float: left; width: 75%;border-bottom:1px solid;">
-  <div class="event_box" >
+<div style="float: left; width: 72%;">
+  <div style="height: 270px;">
     
-    <h2> <%= @user.name %> </h2>
-  <%= image_tag @user.avatar.url(:thumb) %>
-  
-  
-    <div style="float:right;">
-      <table>
+      <h2> <%= @user.name %> </h2>
+
+    <div style="width: 50%; float: left;">
+      <div id="users_avatar"><%= image_tag @user.avatar.url(:thumb), :style=>"height: 220px; width: 300px;" %></div>
+    </div>
+
+    <div>
+      <table class="table" style="width: 50%;">
         <tr>
           <th>I can offer</th>
           <td> 
-          <div id="offer-edit-<%= @user.id%>">          
-            <% if !@user.tag_list_on(:offer_tags).blank?%>
-            <div class="label-tags">
-              <ul>
-                <li>
-                  <%= @user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
-                </li>
-              </ul> 
+            <div>          
+              <% if !@user.tag_list_on(:offer_tags).blank?%>
+              <div class="label-tags">
+                <ul>
+                  <li>
+                    <%= @user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+                  </li>
+                </ul> 
+              </div>
+              <%end%>
             </div>
-            <%end%>
-          </div>
-        </td>
-         
+          </td>
         </tr>
         <tr>
           <th>I'm looking for</th>
@@ -56,67 +43,132 @@
         </tr>
       </table>
     </div>
-    
-    <div class="col-xs-6 col-md-4",style="font-weight:bold;border-bottom:1px solid;">
-      <br/> 
-      <div  class="city", style="font-weight:bold;">
-        City
-        <%= City.find(User.find(@user.id).city_id).name  %>
-        <br/><br/>
-        <%=  @user.description %>
-      </div>
-      <div style="font-weight:bold;">Events Attended</div>
-    </div>
-      
-
- 
-
-  <div  class="event_box" >
-    
-    <div class="col-xs-12 col-md-8"> </div>
- 
-
-
-    </div> 
   </div>
 
+  <div class="event_box" >
+    <p> <b>City </b>
+      <%= City.find(User.find(@user.id).city_id).name  %>
+      <br/><br/>
+      <%=  @user.description %>
+    </p>
+  </div>
+  <br/>
+  <div  class="event_box" id="attendee_box">
+    <% if !@attendee.blank? %>
+      <legend> Events Attended </legend>
+      <div class="table_block" id="attendee_list">
+        <table class="table">
+          <tr>
+            <% @attendee.each_with_index do |attendee, index| %>
+              <% if index+1 == 5 %> </tr><tr> <% end %>
+              <td style="text-align:center">
+                <% @event = Event.find(attendee.event_id) %>
+                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                <b><%= link_to @event.title, @event %></b>
+              </td>
+            <% end %>
+          </tr>
+        </table>  
+      </div>
+    <% else %>
+      <h4> No events attended. </h4>
+    <% end %>
+ 
+    <div class="button_block" id="attendee_block"> 
+      <h1><%= @attendee.count if !@attendee.blank? %> </h1>
+    </div>
+  </div>
+  <br/>
+  <div class="event_box" id="speaker_box">
+    <% if !@speakers.blank? %>
+      <legend>  Events Mentored </legend>
+      <div class="table_block" id="speaker_list">
+        <table class="table">
+          <tr>
+            <% @speakers.each_with_index do |speaker, index| %>
+              <% if index+1 == 5 %> </tr><tr> <% end %>
+              <td style="text-align:center">
+                <% @event = Event.find(speaker.event_id) %>
+                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                <b><%= link_to @event.title, @event %></b>
+              </td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    <% else %>
+      <h4> No events mentored. </h4>
+    <% end %>
+    <div class="button_block" id="speaker_block"> 
+      <h1><%= @speakers.count if !@speakers.blank? %> </h1>
+    </div>
+  </div>
+
+  <br/>
+  <div  class="event_box" id="partner_box">
+    <% if !@partners.blank? %>
+      <legend> Events Partnered  </legend>
+      <div class="table_block"  id="partner_list">
+        <table class="table">
+          <tr>
+            <% @partners.each_with_index do |partner, index| %>
+              <% if index+1 == 5 %> </tr><tr> <% end %>
+              <td style="text-align:center">
+                <% @event = Event.find(partner.event_id) %>
+                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                <b><%= link_to @event.title, @event %></b>
+              </td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    <% else %>
+      <h4> No events partnered. </h4>
+    <% end %>
+    <div class="button_block" id="partner_block"> 
+      <h1><%= @partners.count if !@partners.blank? %> </h1>
+    </div>
+  </div>
+  <br/>
+
+  
+</div>
 </div>
 
 <div style="float: right; width: 25%; border-left: 1px solid; text-align:center;">
   <div class="event_box">
     <h4>  Social Media Stream </h4>
-    <%=  @user.twitter %><br/><br/>
-    <%=  @user.facebook %><br/><br/>
-    <%=  @user.twitter %><br/><br/>
+    
   </div>
 </div>
+
+
 
 <style>
 
 .event_box{
-  
+  border-bottom: 1px solid;
 }
 
-.event_box1{
-  border: 1px solid ;
+.table_block{
+  width: 80%;
+  float: left;
 }
-
-.col-md-9{
-   border: 1px solid ;
-   width: 72%;
+.button_block{
+  float: right;
+  text-align:center;
+  width: 20%;
 }
-
-.col-md-pull-9{
-  right: 71%;
-}
-
-.col-md-push-3{
-  left: 26%
-}
-.city {
-  width: 72%;
-}
-
 
 </style>
+
+<script>
+  var speakers_height = $("#speaker_list").height();
+  var partner_height = $("#partner_list").height();
+  var attendee_height = $("#attendee_list").height();
+
+  $("#attendee_box").css("height", attendee_height+40)
+  $("#speaker_box").css("height", speakers_height+40)
+  $("#partner_box").css("height", partner_height+40)
+</script>
 

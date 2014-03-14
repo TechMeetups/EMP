@@ -28,3 +28,17 @@
 .box{
 	background-color: white !important; 
 }
+
+.col-md-9{
+  border: 1px solid ;
+  width: 70% !important;
+}
+
+.col-md-pull-9{
+	right: 70% !important;
+}
+
+.col-md-push-3{
+	left: 27% !important;
+}
+

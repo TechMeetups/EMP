@@ -1,155 +1,316 @@
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html=>{:class=>"form-horizontal"}) do |f| %>
-  <fieldset>
-    <legend>Sign up</legend>
-    <%= devise_error_messages! %>
-
-    <div class="form-group">
-     	<label for="inputEmail" class="col-lg-2 control-label">Upload Photo</label>
-      <div class="col-lg-10">
-      	<%= f.file_field :avatar, :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Name</label>
-      <div class="col-lg-10">
-      	<%= f.text_field :name, :autofocus => true, :placeholder=>"Name" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-      <div class="col-lg-10">
-      	<%= f.email_field :email, :placeholder=>"Email" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-      <div class="col-lg-10">
-      	<%= f.password_field :password, :placeholder=>"Password" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label">Password Confirmation</label>
-      <div class="col-lg-10">
-      	<%= f.password_field :password_confirmation, :placeholder=>"Password Confirmation" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Company</label>
-      <div class="col-lg-10">
-      	<%= f.text_field :company, :placeholder=>"Company" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-lg-2 control-label">Type</label>
-      <div class="col-lg-10">
-        <label>
-          <%= f.radio_button :user_type, "Startup" %> Startup
-        </label>
-
-        <label>
-          <%= f.radio_button :user_type, "Mentor" %> Mentor
-        </label>
-      
-        <label>
-          <%= f.radio_button :user_type, "Investor" %> Investor
-        </label>
-      
-        <label>
-          <%= f.radio_button :user_type, "Developer" %> Developer
-        </label>
-
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label">Address</label>
-      <div class="col-lg-10">
-        <%= f.text_field :address, :placeholder=>"Address" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">City</label>
-      <div class="col-lg-10">
-        <%= f.select(:city_id, City.all.collect {|a| [a.name, a.id]},{} , {:class=>"form-control"} )%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">About Youself</label>
-      <div class="col-lg-10">
-      	<%= f.text_area :description, :placeholder=>"Describe Yourself" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Offer</label>
-      <div class="col-lg-10">
-      	<%= text_field_tag :offer, nil, :class=>"tags form-control LV_valid_field",:style=>"height:107px;" %>
-
-
-        <%#= text_field_tag :tag,@company.tag_list_on(:company_tags).join(", "),:id=>"tag",:class=>"tags form-control LV_valid_field",:style=>"height:107px;" %>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Looking For</label>
-      <div class="col-lg-10">
-        <%= text_field_tag :looking_for, nil, :placeholder=>"Looking For" , :class=>"form-control", :style=>"height:107px;" %>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Twitter URL</label>
-      <div class="col-lg-10">
-      	<%= f.text_field :twitter, :placeholder=>"Twitter URL" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Facebook URL</label>
-      <div class="col-lg-10">
-      	<%= f.text_field :facebook, :placeholder=>"Facebook URL" , :class=>"form-control"%>
-      </div>
-    </div>
-
-    <div class="form-group">
-    	<label for="inputEmail" class="col-lg-2 control-label">Linkedin URL</label>
-      <div class="col-lg-10">
-      	<%= f.text_field :linkedin, :placeholder=>"Linkedin URL" , :class=>"form-control"%>
-      </div>
-    </div>
-
-
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-      	<%= f.submit "Sign Up", :class=>"btn btn-primary" %>
-      </div>
-    </div>
-  </fieldset>
+<% if !user_signed_in? %>
+  <br/>
+  <legend>Sign up</legend>
+  <form id="new_user" method="post" enctype="multipart/form-data" action="/users" accept-charset="UTF-8">
 <% end %>
+
+  <div style="float: left; width: 72%;">
+    <div class="event_box" style="height: 330px;">
+      
+        <h2> 
+          <% if !user_signed_in? %>
+            <input class="form-control" id="user_name" name="user[name]" placeholder="Name" type="text" />
+          <% else %>
+            <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
+            <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
+          <% end %>
+        </h2>
+
+      <div style="width: 50%; float: left;">
+        <div id="users_avatar">
+          <% if !user_signed_in? %>
+            <img id="preview_image" src="#" alt="" style="width: 330px; height: 225px;" />
+            <input class="form-control" id="user_avatar" name="user[avatar]" type="file" />
+          <% else %>
+            <%= image_tag @user.avatar.url(:thumb) %>
+          <% end %>
+        </div>
+        <% if user_signed_in? %>
+          <div class="avatar_form" style="display:none;">
+            <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">
+            <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 15px; margin-left: 83%; margin-top: -60px;" %>
+          </div>
+          <%= image_tag "edit1.png",:id=>"edit_user_avatar", :style=>"width: 15px; margin-left: 83%;" %>
+        <% end %>
+      </div>
+
+      <div>
+        <table class="table" style="width: 50%;">
+          <tr>
+            <th>I can offer</th>
+            <td> 
+              <% if !user_signed_in? %>
+                <input class="tags form-control LV_valid_field" id="offer" name="offer" style="height:107px;" type="text" />
+              <% else %>
+                <div id="offer-edit-<%= current_user.id%>">          
+                  <% if !current_user.tag_list_on(:offer_tags).blank?%>
+                  <div class="label-tags">
+                    <ul>
+                      <li>
+                        <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+                      </li>
+                    </ul> 
+                  </div>
+                  <%end%>
+                </div>
+              <% end %>
+            </td>
+            <% if user_signed_in? %>
+              <td>
+                <%= link_to(image_tag("edit1.png",:id=>"offer-#{current_user.id}", :style=>"width: 15px;"),home_offer_path,:remote=>true ) %>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <th>I'm looking for</th>
+            <td>  
+              <% if !user_signed_in? %>
+                <input class="form-control" id="looking_for" name="looking_for" placeholder="Looking For" style="height:107px;" type="text" />
+              <% else %>         
+                <div id="looking_for-edit-<%=current_user.id%>">
+                  <% if !current_user.tag_list_on(:looking_for_tags).blank?%>
+                  <div class="label-tags">
+                    <ul>
+                      <li><%= current_user.tag_list_on(:looking_for_tags).join("</li><li>").html_safe %>
+                      </li>
+                    </ul> 
+                  </div>
+                  <%end%>
+                </div>
+              <% end %>
+            </td>
+            <% if user_signed_in? %>
+              <td>
+                <%= link_to(image_tag("edit1.png",:id=>"looking_for-#{current_user.id}", :style=>"width: 15px;"),home_looking_for_path,:remote=>true ) %>
+                </div>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <th>Company</th>
+            <% if !user_signed_in? %>
+              <td><input class="form-control" id="user_company" name="user[company]" placeholder="Company" type="text" /></td>
+            <% else %>     
+              <td><%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
+              <td><%= image_tag "edit1.png",:id=>"company-#{current_user.id}", :style=>"width: 15px;" %>
+              </td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="event_box">
+      <% if !user_signed_in? %>
+        <textarea class="form-control" id="user_description" name="user[description]" placeholder="Describe Yourself"></textarea>
+      <% else %>    
+        <p><%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %>
+           <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
+        </p>
+      <% end %>
+    </div>
+
+    <div  class="event_box">
+      <table width="282px" cellpadding="10" class="table">
+        <tr>
+          <th>Email</th>
+          <% if !user_signed_in? %>
+            <td><input class="form-control" id="user_email" name="user[email]" placeholder="Email" type="email" value="" /></td>
+          <% else %>    
+            <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}" %>
+            </td>
+            <td><%= image_tag "edit1.png",:id=>"email-#{current_user.id}", :style=>"width: 15px;" %>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <th>Password</th>
+          <% if !user_signed_in? %>
+            <td><input class="form-control" id="user_password" name="user[password]" placeholder="Password" type="password" /></td>
+          <% else %>
+            <td><%= best_in_place current_user, :password,:path=> "/users" ,:activator => "#password-#{current_user.id}" %></td>
+            <td><%= image_tag "edit1.png",:id=>"password-#{current_user.id}", :style=>"width: 15px;" %></td>
+          <% end %>
+        </tr>
+        <% if !user_signed_in? %>
+          <tr>
+            <th>Password Confirmation</th>
+            <td><input class="form-control" id="user_password_confirmation" name="user[password_confirmation]" placeholder="Password Confirmation" type="password" /></td>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <td>
+              <label>
+                <input id="user_user_type_startup" name="user[user_type]" type="radio" value="Startup" /> Startup
+              </label>
+
+              <label>
+                <input id="user_user_type_mentor" name="user[user_type]" type="radio" value="Mentor" /> Mentor
+              </label>
+            
+              <label>
+                <input id="user_user_type_investor" name="user[user_type]" type="radio" value="Investor" /> Investor
+              </label>
+            
+              <label>
+                <input id="user_user_type_developer" name="user[user_type]" type="radio" value="Developer" /> Developer
+              </label>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <th>Address</th>
+          <% if !user_signed_in? %>
+            <td> <input class="form-control" id="user_address" name="user[address]" placeholder="Address" type="text" /></td>
+          <% else %>
+            <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}"%></td>
+            <td><%= image_tag "edit1.png",:id=>"address-#{current_user.id}", :style=>"width: 15px;" %>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <th>City</th>
+          <% if !user_signed_in? %>
+            <td> 
+              <select class="form-control" id="user_city_id" name="user[city_id]">
+                <option value="1">Indore</option>
+                <option value="2">Mumbai</option>
+                <option value="3">Pune</option>
+
+                <option value="4">Ujjain</option>
+              </select>
+              <%#= f.select(:city_id, City.all.collect {|a| [a.name, a.id]},{} , {:class=>"form-control"} )%> </td>
+          <% else %>
+            <td><%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %></td>
+            <td><%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
+            </td>  
+          <% end %>
+        </tr>  
+      </table>
+    </div>
+    <% if !user_signed_in? %>
+      <input class="btn btn-info" name="commit" type="submit" value="Sign Up" , style="margin-left: 60%;"/>
+    <% end %>
+  </div>
+
+  <div style="float: right; width: 25%; border-left: 1px solid; text-align:center;">
+    <div class="event_box">
+      <h4>  Social Media Stream </h4>
+      <table width="282px" cellpadding="10" class="table">
+        <tr>
+          <td>
+            <% if !user_signed_in? %>
+               <input class="form-control" id="user_twitter" name="user[twitter]" placeholder="Twitter URL" type="text" />
+            <% else %>
+              <%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %>
+              <%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% if !user_signed_in? %>
+              <input class="form-control" id="user_facebook" name="user[facebook]" placeholder="Facebook URL" type="text" />
+            <% else %>
+              <%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %>
+              <%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% if !user_signed_in? %>
+              <input class="form-control" id="user_linkedin" name="user[linkedin]" placeholder="Linkedin URL" type="text" />
+            <% else %>
+              <%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %>
+              <%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+<% if !user_signed_in? %>
+  </form>
+<% end %>
+
+
+
+<style>
+
+
+
+
+
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).on("click", ".open_my_modal", function () {
+    var myModalAction = $(this).attr('id');
+    $(".dynamic_action").val(myModalAction);
+  });
+
+  $("#edit_user_avatar").click(function(){
+    $(".avatar_form").css('display',"block");
+    $("#edit_user_avatar").css("display", "none")
+  })
+
+  $(document).ready(function(){
+    $("#uploadbutton").click(function () {
+      var data = new FormData();
+        jQuery.each($('#file')[0].files, function(i, file) {
+        data.append('file-'+i, file);
+          });
+      $.ajax({
+          type: "POST",
+          url: "/update_avatar",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
+      return false;
+    });
+  });
+</script>
 
 <script>
   function onAddTag(tag) {  //tags
-        alert("Added a tag: " + tag);
-      }
-      function onRemoveTag(tag) {
-        alert("Removed a tag: " + tag);
-      }
+    alert("Added a tag: " + tag);
+  }
+  function onRemoveTag(tag) {
+    alert("Removed a tag: " + tag);
+  }
+  function onChangeTag(input,tag) {
+    alert("Changed a tag: " + tag);
+  }
 
-      function onChangeTag(input,tag) {
-        alert("Changed a tag: " + tag);
-      }
+  $(function() {
+    $('#offer').tagsInput({width:'auto'});
+    $('#looking_for').tagsInput({width:'auto'});
+  });  
 
-      $(function() {
-      $('#offer').tagsInput({width:'auto'});
-      $('#looking_for').tagsInput({width:'auto'});
-      });   
+
+  function readURL(input) {
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#preview_image').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#user_avatar").change(function(){
+      readURL(this);
+  });
+
+
+
    
 </script>

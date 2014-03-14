@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
   	@events = Event.all
+    @user = current_user if user_signed_in?
   end
 
   def notifications
@@ -28,14 +29,19 @@ class HomeController < ApplicationController
   end
 
   def add_banners
-	
+    @event = Event.find(params["event_id"])
+	  if !params["file-0"].nil?
+      @banner = @event.event_banners.build(file: params["file-0"], featured: params[:featured])
+      @banner.save
+    end
+    @banners = @event.event_banners
   end
 
   def banner_destroy
   	@event_banner = EventBanner.find(params["banner_id"])
-	@event = Event.find(@event_banner.event_id)
-	@event_banner.destroy
-	@banners = @event.event_banners
+  	@event = Event.find(@event_banner.event_id)
+  	@event_banner.destroy
+  	@banners = @event.event_banners
   end
 
   def add_more
@@ -48,7 +54,6 @@ class HomeController < ApplicationController
       elsif event_user_param['event_type'] == "Partner"
         @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
       end
-        
     end
   end
 
@@ -80,6 +85,10 @@ class HomeController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
+    @speakers = @partners = @attendee = []
+    @speakers = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Speaker"] )
+    @partners = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Partner"] )
+    @attendee = EventUser.find(:all, :conditions=>["user_id = ? && event_type = ?", @user.id, "Attendee"] )
   end
 
   private
