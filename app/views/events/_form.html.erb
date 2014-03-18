@@ -23,17 +23,22 @@
           </p>
           <div style="width: 300px; float: left;">
             <p><b> Start </b>
-              <%= f.text_field :s_date, :class=>"form-control", :placeholder=>"Start Date"%>
-              <%= f.text_field :s_time, :class=>"form-control", :placeholder=>"Start Time"%>
+              <%= f.text_field :s_date, :class=>"form-control", :placeholder=>"Start Date"%> </p>
+              <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
+
+                <%= f.text_field :s_time, :class=>"form-control", :placeholder=>"Start Time"%>
+              </div>
           </div> 
           <div style="width: 20px; float: left; margin-left: 30px; margin-top: 45px;">
             <b> To </b> 
           </div>
           <div style="margin-left: 389px; ">
-            <b>  End </b>
-              <%= f.text_field :e_date, :class=>"form-control", :placeholder=>"End Date"%>
-              <%= f.text_field :e_time, :class=>"form-control", :placeholder=>"End Time"%>
-            </p>
+            <p><b>  End </b>
+              <%= f.text_field :e_date, :class=>"form-control", :placeholder=>"End Date"%></p>
+              <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
+
+                <%= f.text_field :e_time, :class=>"form-control", :placeholder=>"End Time"%>
+              </div>
           </div>
           <br/><br/>
           <p>
@@ -102,10 +107,14 @@
 
     $('#event_s_time').timepicker();
     $('#event_e_time').timepicker();
+
+    var add_more = $(".add_more_block").height();
+    $(".add_more_block").css("height", add_more+40)
+
+    $('.dateselect-time').timepicker();
   });
 
-  var add_more = $(".add_more_block").height();
-  $(".add_more_block").css("height", add_more+40)
+  
 
   
 </script>

@@ -1,17 +1,16 @@
 <div style="float: left; width: 72%;">
   <div style="height: 270px;">
-    
-      <h2> 
-        <% if params[:id].to_i == current_user.id %>
-          <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
-          <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
-        <% else %>
-          <%= @user.name %>
-        <% end %>
-       </h2>
+    <h2> 
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
+        <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
+      <% else %>
+        <%= @user.name %>
+      <% end %>
+     </h2>
     <div style="width: 50%; float: left;">
       <div id="users_avatar"><%= image_tag @user.avatar.url(:thumb), :style=>"height: 220px; width: 300px;" %></div>
-      <% if params[:id].to_i == current_user.id %>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">
           <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 15px; margin-left: 83%; margin-top: -60px;" %>
@@ -25,7 +24,7 @@
       <table class="table" style="width: 50%;">
         <tr>
           <th>I can offer</th>
-          <% if params[:id].to_i == current_user.id %>
+          <% if user_signed_in? && params[:id].to_i == current_user.id %>
             <td>
               <div id="offer-edit-<%= current_user.id%>">          
                 <% if !current_user.tag_list_on(:offer_tags).blank?%>
@@ -61,7 +60,7 @@
         </tr>
         <tr>
           <th>I'm looking for</th>
-          <% if params[:id].to_i == current_user.id %>
+          <% if user_signed_in? && params[:id].to_i == current_user.id %>
             <td>           
               <div id="looking_for-edit-<%=current_user.id%>">
                 <% if !current_user.tag_list_on(:looking_for_tags).blank?%>
@@ -96,7 +95,7 @@
           <% end %>
           
         </tr>
-        <% if params[:id].to_i == current_user.id %>
+        <% if user_signed_in? && params[:id].to_i == current_user.id %>
           <tr>
             <th> Company </th>
             <td> <%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
@@ -110,7 +109,7 @@
   <br/><br/><br/>
   <div class="event_box" >
     <p> <b>City </b>
-      <% if params[:id].to_i == current_user.id %>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
         <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
       <% else %>
@@ -119,7 +118,7 @@
       
       <br/><br/>
 
-      <% if params[:id].to_i == current_user.id %>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <b>Description </b>
         <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %></th>
          <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
@@ -128,7 +127,7 @@
       <% end %>
     </p>
   </div>
-  <% if params[:id].to_i == current_user.id %>
+  <% if user_signed_in? && params[:id].to_i == current_user.id %>
     <div  class="event_box">
       <table width="282px" cellpadding="10" class="table">
         <tr>
@@ -239,7 +238,7 @@
 <div style="float: right; width: 25%; border-left: 1px solid; text-align:center;">
   <div class="event_box">
     <h4>  Social Media Stream </h4>
-    <% if params[:id].to_i == current_user.id %>
+    <% if user_signed_in? && params[:id].to_i == current_user.id %>
       <%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %>
       <%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
       <%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %>
