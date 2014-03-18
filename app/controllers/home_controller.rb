@@ -45,8 +45,19 @@ class HomeController < ApplicationController
   end
 
   def add_more
-    if EventUser.find_by_user_id_and_event_id_and_event_type(event_user_param["user_id"], event_user_param["event_id"], event_user_param['event_type']).nil?
-      @event_user = EventUser.create(event_user_param)
+
+    if event_user_param["user_id"].split(",").count >= 2
+      event_user_param["user_id"].split(",").each do |user_id|
+        if EventUser.find_by_user_id_and_event_id_and_event_type(user_id, event_user_param["event_id"], event_user_param['event_type']).nil?
+          @event_user = EventUser.create(:user_id=>user_id, :event_id=>event_user_param["event_id"], :event_type=> event_user_param['event_type'])
+        end
+      end
+    else
+      if EventUser.find_by_user_id_and_event_id_and_event_type(event_user_param["user_id"], event_user_param["event_id"], event_user_param['event_type']).nil?
+        @event_user = EventUser.create(event_user_param)
+      end
+    end
+    if !@event_user.nil?
       if event_user_param['event_type'] == "Attendee"
         @attendee = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Attendee"])
       elsif event_user_param['event_type'] == "Speaker"

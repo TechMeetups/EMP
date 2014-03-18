@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
 		super
 	end
 
-  def create 
+  def create
   	@user = User.new(user_params)
     @user.set_tag_list_on(:offer_tags,params[:offer])
     @user.set_tag_list_on(:looking_for_tags,params[:looking_for])

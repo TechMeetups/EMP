@@ -1,141 +1,256 @@
 <div style="float: left; width: 72%;">
   <div style="height: 270px;">
     
-      <h2> <%= @user.name %> </h2>
-
+      <h2> 
+        <% if params[:id].to_i == current_user.id %>
+          <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
+          <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
+        <% else %>
+          <%= @user.name %>
+        <% end %>
+       </h2>
     <div style="width: 50%; float: left;">
       <div id="users_avatar"><%= image_tag @user.avatar.url(:thumb), :style=>"height: 220px; width: 300px;" %></div>
+      <% if params[:id].to_i == current_user.id %>
+        <div class="avatar_form" style="display:none;">
+          <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">
+          <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 15px; margin-left: 83%; margin-top: -60px;" %>
+        </div>
+        <%= image_tag "edit1.png",:id=>"edit_user_avatar", :style=>"width: 15px; margin-left: 83%;" %>
+      <% end %>
+      
     </div>
 
     <div>
       <table class="table" style="width: 50%;">
         <tr>
           <th>I can offer</th>
-          <td> 
-            <div>          
-              <% if !@user.tag_list_on(:offer_tags).blank?%>
-              <div class="label-tags">
-                <ul>
-                  <li>
-                    <%= @user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
-                  </li>
-                </ul> 
+          <% if params[:id].to_i == current_user.id %>
+            <td>
+              <div id="offer-edit-<%= current_user.id%>">          
+                <% if !current_user.tag_list_on(:offer_tags).blank?%>
+                <div class="label-tags">
+                  <ul>
+                    <li>
+                      <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+                    </li>
+                  </ul> 
+                </div>
+                <%end%>
               </div>
-              <%end%>
-            </div>
-          </td>
+            </td>
+            <td>
+            <%= link_to(image_tag("edit1.png",:id=>"offer-#{current_user.id}", :style=>"width: 15px;"),home_offer_path,:remote=>true ) %>
+            </td>
+          <% else %>
+            <td> 
+              <div>          
+                <% if !@user.tag_list_on(:offer_tags).blank?%>
+                <div class="label-tags">
+                  <ul>
+                    <li>
+                      <%= @user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+                    </li>
+                  </ul> 
+                </div>
+                <%end%>
+              </div>
+            </td>
+          <% end %>
+          
         </tr>
         <tr>
           <th>I'm looking for</th>
-          <td>           
-            <div id="looking_for-edit-<%=@user.id%>">
-              <% if !@user.tag_list_on(:looking_for_tags).blank?%>
-              <div class="label-tags">
-                <ul>
+          <% if params[:id].to_i == current_user.id %>
+            <td>           
+              <div id="looking_for-edit-<%=current_user.id%>">
+                <% if !current_user.tag_list_on(:looking_for_tags).blank?%>
+                <div class="label-tags">
+                  <ul>
 
-                  <li><%= @user.tag_list_on(:looking_for_tags).join("</li><li>").html_safe %>
-                  </li>
-                </ul> 
+                    <li><%= current_user.tag_list_on(:looking_for_tags).join("</li><li>").html_safe %>
+                    </li>
+                  </ul> 
+                </div>
+                <%end%>
               </div>
-              <%end%>
-            </div>
-          </td>
+            </td>
+            <td>
+             <%= link_to(image_tag("edit1.png",:id=>"looking_for-#{current_user.id}", :style=>"width: 15px;"),home_looking_for_path,:remote=>true ) %>
+             </div>
+            </td>
+          <% else %>
+            <td>           
+              <div id="looking_for-edit-<%=@user.id%>">
+                <% if !@user.tag_list_on(:looking_for_tags).blank?%>
+                <div class="label-tags">
+                  <ul>
+
+                    <li><%= @user.tag_list_on(:looking_for_tags).join("</li><li>").html_safe %>
+                    </li>
+                  </ul> 
+                </div>
+                <%end%>
+              </div>
+            </td>
+          <% end %>
+          
         </tr>
+        <% if params[:id].to_i == current_user.id %>
+          <tr>
+            <th> Company </th>
+            <td> <%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
+            <td> <%= image_tag "edit1.png",:id=>"company-#{current_user.id}", :style=>"width: 15px;" %></td>
+          </tr>
+        <% end %>
+
       </table>
     </div>
   </div>
-
+  <br/><br/><br/>
   <div class="event_box" >
     <p> <b>City </b>
-      <%= City.find(User.find(@user.id).city_id).name  %>
+      <% if params[:id].to_i == current_user.id %>
+        <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
+        <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
+      <% else %>
+        <%= City.find(User.find(@user.id).city_id).name  %>
+      <% end %>
+      
       <br/><br/>
-      <%=  @user.description %>
+
+      <% if params[:id].to_i == current_user.id %>
+        <b>Description </b>
+        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %></th>
+         <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
+      <% else %>
+        <%=  @user.description %>
+      <% end %>
     </p>
   </div>
-  <br/>
-  <div  class="event_box" id="attendee_box">
-    <% if !@attendee.blank? %>
-      <legend> Events Attended </legend>
-      <div class="table_block" id="attendee_list">
-        <table class="table">
-          <tr>
-            <% @attendee.each_with_index do |attendee, index| %>
-              <% if index+1 == 5 %> </tr><tr> <% end %>
-              <td style="text-align:center">
-                <% @event = Event.find(attendee.event_id) %>
-                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                <b><%= link_to @event.title, @event %></b>
-              </td>
-            <% end %>
-          </tr>
-        </table>  
+  <% if params[:id].to_i == current_user.id %>
+    <div  class="event_box">
+      <table width="282px" cellpadding="10" class="table">
+        <tr>
+          <th>Email</th>
+          <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}" %>
+          </td>
+          <td><%= image_tag "edit1.png",:id=>"email-#{current_user.id}", :style=>"width: 15px;" %>
+          </td>
+        </tr>
+        <tr>
+          <th>Password</th>
+          <td><%= best_in_place current_user, :password,:path=> "/users" ,:activator => "#password-#{current_user.id}" %></td>
+          <td><%= image_tag "edit1.png",:id=>"password-#{current_user.id}", :style=>"width: 15px;" %></td>
+        </tr>
+        <tr>
+          <th>Address</th>
+          <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}"%></td>
+          <td><%= image_tag "edit1.png",:id=>"address-#{current_user.id}", :style=>"width: 15px;" %>
+          </td>
+        </tr>
+      </table>
+      
+      <div class="col-xs-6 col-md-4">
+        
       </div>
-    <% else %>
-      <h4> No events attended. </h4>
-    <% end %>
- 
-    <div class="button_block" id="attendee_block"> 
-      <h1><%= @attendee.count if !@attendee.blank? %> </h1>
     </div>
-  </div>
-  <br/>
-  <div class="event_box" id="speaker_box">
-    <% if !@speakers.blank? %>
-      <legend>  Events Mentored </legend>
-      <div class="table_block" id="speaker_list">
-        <table class="table">
-          <tr>
-            <% @speakers.each_with_index do |speaker, index| %>
-              <% if index+1 == 5 %> </tr><tr> <% end %>
-              <td style="text-align:center">
-                <% @event = Event.find(speaker.event_id) %>
-                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                <b><%= link_to @event.title, @event %></b>
-              </td>
-            <% end %>
-          </tr>
-        </table>
+  <% else %>
+    <div  class="event_box" id="attendee_box">
+      <% if !@attendee.blank? %>
+        <legend> Events Attended </legend>
+        <div class="table_block" id="attendee_list">
+          <table class="table">
+            <tr>
+              <% @attendee.each_with_index do |attendee, index| %>
+                <% if index+1 == 5 %> </tr><tr> <% end %>
+                <td style="text-align:center">
+                  <% @event = Event.find(attendee.event_id) %>
+                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                  <b><%= link_to @event.title, @event %></b>
+                </td>
+              <% end %>
+            </tr>
+          </table>  
+        </div>
+      <% else %>
+        <h4> No events attended. </h4>
+      <% end %>
+   
+      <div class="button_block" id="attendee_block"> 
+        <h1><%= @attendee.count if !@attendee.blank? %> </h1>
       </div>
-    <% else %>
-      <h4> No events mentored. </h4>
-    <% end %>
-    <div class="button_block" id="speaker_block"> 
-      <h1><%= @speakers.count if !@speakers.blank? %> </h1>
     </div>
-  </div>
+    <br/>
+    <div class="event_box" id="speaker_box">
+      <% if !@speakers.blank? %>
+        <legend>  Events Mentored </legend>
+        <div class="table_block" id="speaker_list">
+          <table class="table">
+            <tr>
+              <% @speakers.each_with_index do |speaker, index| %>
+                <% if index+1 == 5 %> </tr><tr> <% end %>
+                <td style="text-align:center">
+                  <% @event = Event.find(speaker.event_id) %>
+                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                  <b><%= link_to @event.title, @event %></b>
+                </td>
+              <% end %>
+            </tr>
+          </table>
+        </div>
+      <% else %>
+        <h4> No events mentored. </h4>
+      <% end %>
+      <div class="button_block" id="speaker_block"> 
+        <h1><%= @speakers.count if !@speakers.blank? %> </h1>
+      </div>
+    </div>
 
-  <br/>
-  <div  class="event_box" id="partner_box">
-    <% if !@partners.blank? %>
-      <legend> Events Partnered  </legend>
-      <div class="table_block"  id="partner_list">
-        <table class="table">
-          <tr>
-            <% @partners.each_with_index do |partner, index| %>
-              <% if index+1 == 5 %> </tr><tr> <% end %>
-              <td style="text-align:center">
-                <% @event = Event.find(partner.event_id) %>
-                <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                <b><%= link_to @event.title, @event %></b>
-              </td>
-            <% end %>
-          </tr>
-        </table>
+    <br/>
+    <div  class="event_box" id="partner_box">
+      <% if !@partners.blank? %>
+        <legend> Events Partnered  </legend>
+        <div class="table_block"  id="partner_list">
+          <table class="table">
+            <tr>
+              <% @partners.each_with_index do |partner, index| %>
+                <% if index+1 == 5 %> </tr><tr> <% end %>
+                <td style="text-align:center">
+                  <% @event = Event.find(partner.event_id) %>
+                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
+                  <b><%= link_to @event.title, @event %></b>
+                </td>
+              <% end %>
+            </tr>
+          </table>
+        </div>
+      <% else %>
+        <h4> No events partnered. </h4>
+      <% end %>
+      <div class="button_block" id="partner_block"> 
+        <h1><%= @partners.count if !@partners.blank? %> </h1>
       </div>
-    <% else %>
-      <h4> No events partnered. </h4>
-    <% end %>
-    <div class="button_block" id="partner_block"> 
-      <h1><%= @partners.count if !@partners.blank? %> </h1>
     </div>
-  </div>
+  <% end %>
   <br/>
 </div>
 
 <div style="float: right; width: 25%; border-left: 1px solid; text-align:center;">
   <div class="event_box">
     <h4>  Social Media Stream </h4>
-    
+    <% if params[:id].to_i == current_user.id %>
+      <%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %>
+      <%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+      <%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %>
+      <%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+      <%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %>
+      <%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+    <% else %>
+      <%=  @user.twitter %><br/><br/>
+      <%=  @user.facebook %><br/><br/>
+      <%=  @user.linkedin %><br/><br/>
+    <% end %>
   </div>
 </div>
 
@@ -156,6 +271,9 @@
   text-align:center;
   width: 20%;
 }
+legend{
+  margin-bottom: -1px;
+}
 
 </style>
 
@@ -167,5 +285,29 @@
   $("#attendee_box").css("height", attendee_height+40)
   $("#speaker_box").css("height", speakers_height+40)
   $("#partner_box").css("height", partner_height+40)
+
+  $("#edit_user_avatar").click(function(){
+    $(".avatar_form").css('display',"block");
+    $("#edit_user_avatar").css("display", "none")
+  })
+
+  $(document).ready(function(){
+    $("#uploadbutton").click(function () {
+      var data = new FormData();
+        jQuery.each($('#file')[0].files, function(i, file) {
+        data.append('file-'+i, file);
+          });
+      $.ajax({
+          type: "POST",
+          url: "/update_avatar",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
+      return false;
+    });
+  });
 </script>
 

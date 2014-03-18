@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+
     if params[:format] == "img"
       @img_url = EventBanner.find(params[:banner_id]).file.path
       if Rails.env == "development"
@@ -21,11 +22,20 @@ class EventsController < ApplicationController
       @banners = @event.event_banners
       @interaction = Interaction.new
       @add_event_user = EventUser.new
-      @other_users = User.find(:all, :conditions=>["id != ?", current_user.id] ) if user_signed_in?
+      if !params[:q].nil?
+        @other_users = User.where("name like ?", "%#{params[:q]}%")
+      else
+        @other_users = User.find(:all, :conditions=>["id != ?", current_user.id] ) if user_signed_in?
+      end
       @speakers = @event.event_users.find_all_by_event_type("Speaker")
       @partners = @event.event_users.find_all_by_event_type("Partner")
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
       @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @other_users }
     end
   end
 

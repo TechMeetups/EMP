@@ -26,7 +26,7 @@
 				   		</div>
 				   		<p><b> City : </b>
 					   	<%= City.find(User.find(event.user_id).city_id).name %>       
-				   		 <p><%= event.description %></p>
+				   		 <p><%= truncate(event.description, :length => 80)  %></p>
 			        <p>
 			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 165px;"%>
 					</p>
@@ -39,7 +39,7 @@
 </div>
 
 <div style="display:block;" >
-	<%= link_to 'Submit Event', new_event_path, :class=>"btn btn-danger", :id=>"add_new_event" %>
+	<%= link_to 'Add Event',"#", :class=>"btn btn-danger", :id=>"add_new_event" %>
 </div>
 
 <style>
@@ -56,7 +56,7 @@ $("#add_new_event").click(function(){
 	var signed_in = '<%= user_signed_in? %>'
 
     if(signed_in == "true") {
-    	return true;
+    	$(".search_event").html("<%= escape_javascript(  render :partial => 'events/form' ) %>")
     }
     else{
       alert("You must login to continue");

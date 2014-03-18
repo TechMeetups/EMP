@@ -172,14 +172,7 @@
           <th>City</th>
           <% if !user_signed_in? %>
             <td> 
-              <select class="form-control" id="user_city_id" name="user[city_id]">
-                <option value="1">Indore</option>
-                <option value="2">Mumbai</option>
-                <option value="3">Pune</option>
-
-                <option value="4">Ujjain</option>
-              </select>
-              <%#= f.select(:city_id, City.all.collect {|a| [a.name, a.id]},{} , {:class=>"form-control"} )%> </td>
+              <%= select_tag(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" )%> </td>
           <% else %>
             <td><%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %></td>
             <td><%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>

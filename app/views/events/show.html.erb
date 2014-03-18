@@ -120,15 +120,28 @@
       <%= render "speakers_list" %>
     </div>
 
-    <div class="button_block" id="speaker_block"> 
+    
       <% if !user_signed_in?  %>
+      <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
         <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        </div>
       <% elsif @event.user_id != current_user.id %> 
+      <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
         <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        </div>
       <% else %>
-        <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_prople"%>
+        <% if !@speakers.blank? %>
+        <div class="button_block" id="speaker_block"> 
+          <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_people", :remote=>true%>
+          </div>
+        <% else %>
+        <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
+          <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_people", :remote=>true%>
+          </div>
+        <% end %>
+        
       <% end %>
-    </div>
+    
   </div>
 
   <br/>
@@ -138,15 +151,27 @@
       <%= render "partners_list" %>
     </div>
     
-    <div class="button_block" id="partner_block" > 
-      <% if !user_signed_in?  %>
+    
+    <% if !user_signed_in?  %>
+      <div class="button_block" id="partner_block"  style="margin-top:-25px"> 
         <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
-      <% elsif @event.user_id != current_user.id %>
+      </div>
+    <% elsif @event.user_id != current_user.id %>
+      <div class="button_block" id="partner_block"  style="margin-top:-25px"> 
         <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+      </div>
+    <% else %>
+      <% if !@partners.blank? %>
+        <div class="button_block" id="partner_block" > 
+          <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_people", :remote=>true%>
+        </div>
       <% else %>
-        <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_prople"%>
+        <div class="button_block" id="partner_block" style="margin-top:-25px"> 
+          <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_people", :remote=>true%>
+        </div>
       <% end %>
-    </div>
+
+    <% end %>
   </div>
   <br/>
   <div  class="event_box" id="attendee_box">
@@ -155,15 +180,28 @@
       <%= render "attendees_list" %>
     </div>
 
-    <div class="button_block" id="attendee_block"> 
+     
       <% if !user_signed_in?  %>
-        <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+        <div class="button_block" id="attendee_block"  style="margin-top:-25px">
+          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+        </div>
       <% elsif @event.user_id != current_user.id %>
-        <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+        <div class="button_block" id="attendee_block"  style="margin-top:-25px">
+          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+        </div>
       <% else %>
-        <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_prople"%>
+        <% if !@attendee.blank? %>
+          <div class="button_block" id="attendee_block">
+            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true%>
+          </div>
+        <% else %>
+          <div class="button_block" id="attendee_block"  style="margin-top:-25px">
+            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true%>
+          </div>
+        <% end %>
+        
       <% end %>
-    </div>
+    
   </div>
 </div>
 
@@ -175,8 +213,10 @@
       <%=  link_to(image_tag(@event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
       <br/><br/>
       <% if !user_signed_in?  %>
+        <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
-      <% elsif @event.user_id != current_user.id %> 
+      <% elsif @event.user_id != current_user.id %>
+        <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
       <% end %>
       <br/>
@@ -230,6 +270,9 @@
   width: 20%;
 }
 
+.token-input-list-facebook, .token-input-dropdown-facebook{
+  width: 135px !important;
+}
   
 </style>
 
@@ -283,7 +326,7 @@
 
   $("#best_in_place_event_"+event_id+"_s_time").timepicker();
 
-  $(".add_more_prople").click(function(){
+  $(".add_more_people").click(function(){
     var block_id = $(this).attr("id");
     if(block_id == "add_speaker"){
       $("#speaker_block").html("<%= escape_javascript(render :partial => 'add_more_speakers')%>")

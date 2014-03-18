@@ -28,5 +28,20 @@
 
 <br>
 <div style="float:right">
-  <%= link_to( image_tag("plus.png"), new_event_path ,:title=>"Add a new Event") %>
+  <%= link_to( image_tag("plus.png"), "#" ,:title=>"Add a new Event", :id=>"add_new_event") %>
 </div>
+
+<script>
+$("#add_new_event").click(function(){
+  var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+      $(".search_event").html("<%= escape_javascript(  render :partial => 'events/form' ) %>")
+    }
+    else{
+      alert("You must login to continue");
+      return false; 
+    }
+  
+})
+</script>
