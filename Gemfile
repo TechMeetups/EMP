@@ -27,6 +27,9 @@ gem 'bootstrap-timepicker-rails'
 
 gem 'rails_12factor', group: [:production]
 
+gem 'activeadmin', github: 'gregbell/active_admin'
+
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

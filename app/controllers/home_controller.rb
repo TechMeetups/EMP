@@ -29,6 +29,7 @@ class HomeController < ApplicationController
   end
 
   def add_banners
+    debugger
     @event = Event.find(params["event_id"])
 	  if !params["file-0"].nil?
       @banner = @event.event_banners.build(file: params["file-0"], featured: params[:featured])

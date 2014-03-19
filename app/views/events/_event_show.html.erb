@@ -5,7 +5,10 @@
 			<div class="box col3">
 			  <div>
 			    <div class="thumbnail">
-			      <h3><%= event.title %></h3>
+			      <h3><%= event.title %>
+			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.user_id).address %>"><%= image_tag("setting.png", :style=>"width: 15px; float:right")%>
+			      	</a>
+			      </h3>
 			      <% if !event.event_banners.blank? %>
 			      	<%= image_tag event.event_banners.first.file.url(:medium), :style=>"height: 200px;" %>
 			      <%else%>

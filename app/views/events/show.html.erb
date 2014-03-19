@@ -35,8 +35,10 @@
     <h2>  
       <% if !user_signed_in?  %>
         <%= @event.title %>
+
       <% elsif @event.user_id != current_user.id %> 
-        <%= @event.title %> 
+        <%= @event.title %>
+        
       <% else %>
         <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_title") %>
       <% end %>
