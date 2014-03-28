@@ -1,5 +1,5 @@
 <div id="offer-edit-box">
-	<%= text_field_tag :offer, @user.tag_list_on(:offer_tags).join(", "), :placeholder=>"Offer" , :class=>"form-control" %>
+  <%= text_field_tag :offer, @user.tag_list_on(:offer_tags).join(", "), :placeholder=>"Offer" , :class=>"form-control" %>
 </div>
 <script>
   function onAddTag(tag) {  //tags
@@ -24,13 +24,13 @@
         && container.has(e.target).length === 0) // ... nor a descendant of the container
      
     {
-    	var offer = $("#offer-edit-box input").val()
+      var offer = $("#offer-edit-box input").val()
         $.ajax({
-		url: "<%= home_offer_path(:view=>true) %>&offer="+offer,
-		context: document.body
-		}).done(function() {
-		$( this ).addClass( "done" );
-		});
+    url: "<%= home_offer_path(:view=>true) %>&offer="+offer,
+    context: document.body
+    }).done(function() {
+    $( this ).addClass( "done" );
+    });
     }
 
 

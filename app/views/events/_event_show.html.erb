@@ -5,7 +5,7 @@
 			<div class="box col3">
 			  <div>
 			    <div class="thumbnail">
-			      <h3><%= event.title %>
+			      <h3><%= truncate(event.title, :length => 20) %>
 			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.user_id).address %>"><%= image_tag("setting.png", :style=>"width: 15px; float:right")%>
 			      	</a>
 			      </h3>
@@ -29,7 +29,7 @@
 				   		</div>
 				   		<p><b> City : </b>
 					   	<%= City.find(User.find(event.user_id).city_id).name %>       
-				   		 <p><%= truncate(event.description, :length => 80)  %></p>
+				   		 <p><%= truncate(event.description, :length => 40)  %></p>
 			        <p>
 			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 165px;"%>
 					</p>
