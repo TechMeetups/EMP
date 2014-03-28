@@ -1,0 +1,45 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require jquery.ui.core
+ *= require jquery.ui.theme
+ *= require dataTables/src/demo_table_jui
+ *= require 'masonry/basic'
+ *= require 'masonry/centered'
+ *= require 'masonry/fluid'
+ *= require 'masonry/gutters'
+ *= require 'masonry/infinitescroll'
+ *= require 'masonry/right-to-left'
+ *= require 'masonry/transitions'
+ *= require bootstrap-datepicker
+ *= require bootstrap-timepicker
+ *= require_tree .
+ *= stub active_admin
+ */
+
+
+.box{
+	background-color: white !important; 
+}
+
+.col-md-9{
+  border: 1px solid ;
+  width: 70% !important;
+}
+
+.col-md-pull-9{
+	right: 70% !important;
+}
+
+.col-md-push-3{
+	left: 27% !important;
+}
+
