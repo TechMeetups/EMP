@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   acts_as_taggable # Alias for acts_as_taggable_on :tags
   acts_as_taggable_on :offer, :looking_for
 
-  has_many :events
-  has_many :interactions
+  has_many :events, dependent: :destroy
+  has_many :interactions, dependent: :destroy
   belongs_to :city
 
 end
