@@ -11,6 +11,6 @@ class User < ActiveRecord::Base
 
   has_many :events, dependent: :destroy
   has_many :interactions, dependent: :destroy
-  belongs_to :city
+  belongs_to :city, dependent: :destroy
 
 end
