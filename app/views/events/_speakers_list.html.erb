@@ -3,7 +3,7 @@
     <% @speakers.each_with_index do |speaker, index| %>
       <% if index+1 == 5 %> </tr><tr> <% end %>
       <td style="text-align:center">
-        <% @user = !User.where(:id => speaker.user_id).blank? ?  User.where(:id => speaker.user_id) : "" %>
+        <% @user = User.find(speaker.user_id) %>
         <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;"),user_profile_path(id: @user.id) ) %> <br/>
         <b><%= link_to @user.name, user_profile_path(id: @user.id) %></b>
       </td>
