@@ -9,7 +9,7 @@
       
         <h2> 
           <% if !user_signed_in? %>
-            <input class="form-control" id="user_name" name="user[name]" placeholder="Name" type="text" />
+            <input class="form-control" id="user_name" name="user[name]" placeholder="Name" type="text" required="true"/>
           <% else %>
             <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
             <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
@@ -20,7 +20,7 @@
         <div id="users_avatar">
           <% if !user_signed_in? %>
             <img id="preview_image" src="#" alt="" style="width: 330px; height: 225px;" />
-            <input class="form-control" id="user_avatar" name="user[avatar]" type="file" />
+            <input class="form-control" id="user_avatar" name="user[avatar]" type="file" required="true" />
           <% else %>
             <%= image_tag @user.avatar.url(:thumb) %>
           <% end %>
@@ -44,13 +44,13 @@
               <% else %>
                 <div id="offer-edit-<%= current_user.id%>">          
                   <% if !current_user.tag_list_on(:offer_tags).blank?%>
-                  <div class="label-tags">
-                    <ul>
-                      <li>
-                        <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
-                      </li>
-                    </ul> 
-                  </div>
+                    <div class="label-tags">
+                      <ul>
+                        <li>
+                          <%= current_user.tag_list_on(:offer_tags).join("</li><li>").html_safe %>
+                        </li>
+                      </ul> 
+                    </div>
                   <%end%>
                 </div>
               <% end %>
@@ -89,7 +89,7 @@
           <tr>
             <th>Company</th>
             <% if !user_signed_in? %>
-              <td><input class="form-control" id="user_company" name="user[company]" placeholder="Company" type="text" /></td>
+              <td><input class="form-control" id="user_company" name="user[company]" placeholder="Company" type="text" required = "true" /></td>
             <% else %>     
               <td><%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
               <td><%= image_tag "edit1.png",:id=>"company-#{current_user.id}", :style=>"width: 15px;" %>
@@ -102,7 +102,7 @@
 
     <div class="event_box">
       <% if !user_signed_in? %>
-        <textarea class="form-control" id="user_description" name="user[description]" placeholder="Describe Yourself"></textarea>
+        <textarea class="form-control" id="user_description" name="user[description]" placeholder="Describe Yourself" required="true"></textarea>
       <% else %>    
         <p><%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %>
            <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
@@ -115,7 +115,7 @@
         <tr>
           <th>Email</th>
           <% if !user_signed_in? %>
-            <td><input class="form-control" id="user_email" name="user[email]" placeholder="Email" type="email" value="" /></td>
+            <td><input class="form-control" id="user_email" name="user[email]" placeholder="Email" type="email" value="" required="true" /></td>
           <% else %>    
             <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}" %>
             </td>
@@ -126,7 +126,7 @@
         <tr>
           <th>Password</th>
           <% if !user_signed_in? %>
-            <td><input class="form-control" id="user_password" name="user[password]" placeholder="Password" type="password" /></td>
+            <td><input class="form-control" id="user_password" name="user[password]" placeholder="Password" type="password" required="true" /></td>
           <% else %>
             <td><%= best_in_place current_user, :password,:path=> "/users" ,:activator => "#password-#{current_user.id}" %></td>
             <td><%= image_tag "edit1.png",:id=>"password-#{current_user.id}", :style=>"width: 15px;" %></td>
@@ -135,7 +135,7 @@
         <% if !user_signed_in? %>
           <tr>
             <th>Password Confirmation</th>
-            <td><input class="form-control" id="user_password_confirmation" name="user[password_confirmation]" placeholder="Password Confirmation" type="password" /></td>
+            <td><input class="form-control" id="user_password_confirmation" name="user[password_confirmation]" placeholder="Password Confirmation" type="password" / required="true" ></td>
           </tr>
           <tr>
             <th>Type</th>
@@ -172,7 +172,7 @@
           <th>City</th>
           <% if !user_signed_in? %>
             <td> 
-              <%= select_tag(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" )%> </td>
+              <%= select_tag(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" ,:required=> true )%> </td>
           <% else %>
             <td><%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %></td>
             <td><%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>

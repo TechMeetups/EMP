@@ -28,8 +28,7 @@ class HomeController < ApplicationController
 
   end
 
-  def add_banners
-    
+  def add_banners    
     @event = Event.find(params["event_id"])
 	  if !params["file-0"].nil?
       @banner = @event.event_banners.build(file: params["file-0"], featured: params[:featured])
@@ -46,7 +45,6 @@ class HomeController < ApplicationController
   end
 
   def add_more
-
     if event_user_param["user_id"].split(",").count >= 2
       event_user_param["user_id"].split(",").each do |user_id|
         if EventUser.find_by_user_id_and_event_id_and_event_type(user_id, event_user_param["event_id"], event_user_param['event_type']).nil?

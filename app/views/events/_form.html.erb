@@ -3,7 +3,7 @@
 <br/>
 <br/>
 <% if user_signed_in?%>
-  <%= form_for(Event.new, :html=>{:class=>"form-horizontal", :multipart=>true}) do |f| %>
+  <%= form_for(Event.new, :html=>{:class=>"form-horizontal", :multipart=>true})  do |f| %>
     <fieldset>
       <legend>Add a New Event</legend>
       
@@ -11,11 +11,11 @@
         <div class="event_box">
           <%= f.hidden_field :user_id, :value=>current_user.id %>
           <h2>
-             <%= f.text_field :title, :class=>"form-control", :placeholder=>"Title of the Event"%>
+             <%= f.text_field :title, :class=>"form-control", :placeholder=>"Title of the Event" ,:required=>true %>
           </h2>
           <div class="col-lg-10 add_more_block" >
             <label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label>
-            <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 52%;" %>
+            <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 52%;" ,:required=>true %>
             <label class="col-lg-2 control-label" style="width: 93px; margin-left: -40px;">Featured : </label> <%= select_tag("banner[][feature]", options_for_select([["Yes",1],["No",0]]), :class=>"form-control dropdown_form" )%>
             <%= image_tag "plus.png", :style=>"margin-top: 7px; margin-left: 30px;",:title=>"Add more banners", :class=>"add_more" %>
           </div>
@@ -23,10 +23,10 @@
           </p>
           <div style="width: 300px; float: left;">
             <p><b> Start </b>
-              <%= f.text_field :s_date, :class=>"form-control", :placeholder=>"Start Date"%> </p>
+              <%= f.text_field :s_date, :class=>"form-control", :placeholder=>"Start Date" ,:required=>true %> </p>
               <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
 
-                <%= f.text_field :s_time, :class=>"form-control", :placeholder=>"Start Time"%>
+                <%= f.text_field :s_time, :class=>"form-control", :placeholder=>"Start Time" ,:required=>true%>
               </div>
           </div> 
           <div style="width: 20px; float: left; margin-left: 30px; margin-top: 45px;">
@@ -34,15 +34,15 @@
           </div>
           <div style="margin-left: 389px; ">
             <p><b>  End </b>
-              <%= f.text_field :e_date, :class=>"form-control", :placeholder=>"End Date"%></p>
+              <%= f.text_field :e_date, :class=>"form-control", :placeholder=>"End Date" ,:required=>true%></p>
               <div class='input-append bootstrap-timepicker-component' style='display: inline;'>
 
-                <%= f.text_field :e_time, :class=>"form-control", :placeholder=>"End Time"%>
+                <%= f.text_field :e_time, :class=>"form-control", :placeholder=>"End Time" ,:required=>true%>
               </div>
           </div>
           <br/><br/>
           <p>
-            <%= f.text_area :description , :class=>"form-control" , :placeholder=>"Description of the Event" %>
+            <%= f.text_area :description , :class=>"form-control" , :placeholder=>"Description of the Event",:required=>true %>
           </p>
 
           <p>
@@ -117,4 +117,9 @@
   
 
   
+</script>
+<script>
+$(document).ready(function(){
+  $('#new_form').validate();
+})
 </script>

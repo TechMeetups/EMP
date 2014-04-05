@@ -13,11 +13,11 @@ class RegistrationsController < Devise::RegistrationsController
   	if @user.save
   		flash[:notice] = "User Succesfully created"
       sign_in @user
-      
+      redirect_to new_user_session_path
     else
       flash[:notice] = "Please enter valid information in fields."
-  	end
-    redirect_to new_user_session_path 
+      redirect_to :back
+    end
  end
 
  def update

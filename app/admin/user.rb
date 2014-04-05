@@ -18,8 +18,6 @@ ActiveAdmin.register User do
 
   form do |f|
     f.inputs "Details" do
-
-      #f.input :user_id, :label => 'Member', :as => :select, :collection => User.all.map{|u| ["#{u.last_name}, #{u.first_name}", u.id]}
       
       f.input :city_id, :as => :select,:collection => City.all.map {|a| ["#{a.name}",a.id]}
       f.input :email
@@ -27,18 +25,14 @@ ActiveAdmin.register User do
       f.input :name
       f.input :company
       f.input :address
-      f.input :user_type
-      f.input :description
+      f.input :user_type, :as => :radio, :collection =>[ 'Startup', 'Mentor', 'Investor', 'developer']
+      f.input :description,:required => false
       f.input :twitter
       f.input :facebook
       f.input :linkedin
-      f.input :avatar
-
-#City.find(User.find(@event.user_id).city_id).name
-      
+      f.input :avatar ,:as => :file      
     end
     f.actions
-
   end
 
   index do
@@ -46,20 +40,15 @@ ActiveAdmin.register User do
     column "Type", :user_type
     column "Company", :company
     column "City" ,:city
-    #  column "City"  do |user|
-    # city_name= City.find(user.city_id).name
-    #  end
 
     actions :defaults => false do |user|
-     link_to "View", admin_user_path(user)
-
+     link_to image_tag( "../assets/view.png", :style=>"width:15px;"),admin_user_path(user)      
     end
     actions :defaults => false do |user|
-     link_to "Edit", edit_admin_user_path(user)
-
+     link_to image_tag( "../assets/edit1.png", :style=>"width:15px;"), edit_admin_user_path(user)
     end
     actions :defaults => false do |user|
-       link_to 'Delete',admin_user_path(user), :confirm => 'Are you sure?', :method => :delete 
+      link_to image_tag( "../assets/trash.png", :style=>"width:15px;"),admin_user_path(user), :confirm => 'Are you sure?', :method => :delete 
     end
   end
   

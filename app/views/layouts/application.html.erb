@@ -9,10 +9,20 @@
 	<body>
 		<%= render 'layouts/header' %>
 
-		<div class="row">
+		<div class="row" style="overflow-x: hidden;">
 		  
 		  <div class="col-md-9 col-md-push-3 search_event">
-		  	<%= yield %>
+        <% if alert %>
+          <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" >
+            <button type="button" class="close" data-dismiss="alert">×</button><%= alert %>
+          </div>
+		  	<% end %>
+         <% if notice %>
+          <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" ><button type="button" class="close" data-dismiss="alert">×</button><%= notice %>
+          </div>
+        <% end %>
+        <%= yield %>
+
 		  </div>
 		  <div class="col-md-3 col-md-pull-9">
 		  	<div class="jumbotron">
@@ -47,42 +57,48 @@
 </html>
 
 <script>
-$('#all_events').change(function() {            
-  $.ajax({
-      type: "POST",
-      url: "/events/event_search",
-      data: { id: "all" }
-   });  
-}); 
 
-    
-$('.checkbox1').change(function(event) {	
-  if(this.checked) { // check select status         
+$('.checkbox1').change(function() {   
   checked_id = []
   checked_count = 0
-  $('.checkbox1:checked').each(function() { 
+  $('.checkbox1:checked').each(function() {  
     checked_id[checked_count] = $('.checkbox1:checked')[checked_count].id
-   
-  });
+    checked_count = checked_count+1
+      });
     $.ajax({
         type: "POST",
         url: "/events/event_search",
         data: { id: $(this).attr('id'), checked: checked_id}
-     });            
-  }else{
-      unchecked_id = []
-     unchecked_count = 0
-     $('.checkbox1:checked').each(function() { 
-      unchecked_id[unchecked_count] = $('.checkbox1:unchecked')[uchecked_count].id
-      unchecked_count = unchecked_count+1
      });           
-    $.ajax({
+  });
+    
+// $('.checkbox1').change(function(event) {	
+//   if(this.checked) { // check select status         
+//   checked_id = []
+//   checked_count = 0
+//   $('.checkbox1:checked').each(function() { 
+//     checked_id[checked_count] = $('.checkbox1:checked')[checked_count].id
+   
+//   });
+//     $.ajax({
+//         type: "POST",
+//         url: "/events/event_search",
+//         data: { id: $(this).attr('id'), checked: checked_id}
+//      });            
+//   }else{
+//       unchecked_id = []
+//      unchecked_count = 0
+//      $('.checkbox1:checked').each(function() { 
+//       unchecked_id[unchecked_count] = $('.checkbox1:unchecked')[uchecked_count].id
+//       unchecked_count = unchecked_count+1
+//      });           
+//     $.ajax({
 
-        type: "POST",
-        url: "/events/event_search",
-        data: { id: $(this).attr('id'), unchecked:unchecked_id }
-     });  
-    }
+//         type: "POST",
+//         url: "/events/event_search",
+//         data: { id: $(this).attr('id'), unchecked:unchecked_id }
+//      });  
+//     }
 
-   });
+//    });
 </script>

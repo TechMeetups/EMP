@@ -64,12 +64,12 @@
     <div>
       <p><b> Start </b>
         <% if !user_signed_in?  %>
-<%#= best_in_place shift, :shiftstart, :type => :input, :display_with => Proc.new { |f| f.strftime("%H.%M") } %>        
-          <%= @event.s_date.first.due_at.to_s(:short) if !@event.s_date.nil?  %> 
-        <% elsif @event.user_id != current_user.id %> 
-          <%= @event.s_date.to_formatted_s(:rfc822) if !@event.s_date.nil?  %> 
+          <%= @event.s_date.to_s(:db)  if !@event.s_date.nil?  %>
+        <% elsif @event.user_id != current_user.id %>
+          <%= @event.s_date.to_s(:db)  if !@event.s_date.nil?  %>
         <% else %>
-          <%= best_in_place @event,:s_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date" , :display_with => Proc.new { |f| f.strftime("%H.%M") } %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
+          <%= best_in_place @event,:s_date, :type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
           <%= @event.s_time.strftime("%I:%M%p") %>
@@ -85,13 +85,13 @@
     <div style="margin-left: 389px; margin-top: -31px;">
       <b>  End </b>
         <% if !user_signed_in?  %>
-          <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
-        <% elsif @event.user_id != current_user.id %> 
-          <%= @event.e_date.to_formatted_s(:rfc822) if !@event.e_date.nil?%>
+          <%= @event.e_date if !@event.e_date.nil?  %>
+        <% elsif @event.user_id != current_user.id %>
+          <%= @event.e_date if !@event.e_date.nil?  %>
         <% else %>
-          <%= best_in_place @event, :e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date" , :display_with => Proc.new { |f| f.to_formatted_s(:rfc822) } %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
+          <%= best_in_place @event,:e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
         <% end %>
-
         <% if !user_signed_in?  %>
           <%= @event.e_time.strftime("%I:%M%p") %>
         <% elsif @event.user_id != current_user.id %> 
@@ -110,20 +110,19 @@
       <% elsif @event.user_id != current_user.id %> 
         <%= @event.description %>
       <% else %>
-        <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
+        <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %>
+        <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
       <% end %>
     </p>
       
 
   </div>
-
-  <div class="event_box" id="speaker_box">
+  
+  <div class="event_box" id="speaker_box" >
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
     </div>
-
-    
       <% if !user_signed_in?  %>
       <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
         <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
@@ -195,7 +194,7 @@
       <% else %>
         <% if !@attendee.blank? %>
           <div class="button_block" id="attendee_block">
-            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true%>
+            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true %>
           </div>
         <% else %>
           <div class="button_block" id="attendee_block"  style="margin-top:-25px">
@@ -212,6 +211,7 @@
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
+      
       <b><%= link_to @event_user.name, user_profile_path(id: @event_user.id) if !@event_user.nil? %></b><br/><br/>
       <%=  link_to(image_tag(@event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
       <br/><br/>
@@ -280,6 +280,13 @@
 </style>
 
 <script type="text/javascript" charset="utf-8">
+// jQuery(function($){
+ 
+//  $("#event_twitter_hash_tag").Datepicker({"format": "%m/%d/%Y", "autoclose": true, 
+//   "startDate":new Date()
+//  });
+
+//   });
   function slideSwitch() {
     var $active = $('#slideshow IMG.active');
 

@@ -107,7 +107,7 @@
     </div>
   </div>
   <br/><br/><br/>
-  <div class="event_box" >
+  <div class="event_box" style="border-bottom: 1px solid;">
     <p> <b>City </b>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
@@ -128,7 +128,7 @@
     </p>
   </div>
   <% if user_signed_in? && params[:id].to_i == current_user.id %>
-    <div  class="event_box">
+    <div  class="event_box" style="border-bottom: 1px solid;">
       <table width="282px" cellpadding="10" class="table">
         <tr>
           <th>Email</th>
@@ -155,7 +155,7 @@
       </div>
     </div>
   <% else %>
-    <div  class="event_box" id="attendee_box">
+    <div  class="event_box" id="attendee_box" style="border-bottom: 1px solid;">
       <% if !@attendee.blank? %>
         <legend> Events Attended </legend>
         <div class="table_block" id="attendee_list">
@@ -164,9 +164,7 @@
               <% @attendee.each_with_index do |attendee, index| %>
                 <% if index+1 == 5 %> </tr><tr> <% end %>
                 <td style="text-align:center">
-                  <% @event = Event.find(attendee.event_id) %>
-                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                  <b><%= link_to @event.title, @event %></b>
+                  <%= participants_detail(attendee) %>
                 </td>
               <% end %>
             </tr>
@@ -181,7 +179,7 @@
       </div>
     </div>
     <br/>
-    <div class="event_box" id="speaker_box">
+    <div class="event_box" id="speaker_box" style="border-bottom: 1px solid;">
       <% if !@speakers.blank? %>
         <legend>  Events Mentored </legend>
         <div class="table_block" id="speaker_list">
@@ -190,9 +188,7 @@
               <% @speakers.each_with_index do |speaker, index| %>
                 <% if index+1 == 5 %> </tr><tr> <% end %>
                 <td style="text-align:center">
-                  <% @event = Event.find(speaker.event_id) %>
-                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                  <b><%= link_to @event.title, @event %></b>
+                  <%= participants_detail(speaker) %>
                 </td>
               <% end %>
             </tr>
@@ -207,7 +203,7 @@
     </div>
 
     <br/>
-    <div  class="event_box" id="partner_box">
+    <div  class="event_box" id="partner_box" style="border-bottom: 1px solid;">
       <% if !@partners.blank? %>
         <legend> Events Partnered  </legend>
         <div class="table_block"  id="partner_list">
@@ -216,9 +212,7 @@
               <% @partners.each_with_index do |partner, index| %>
                 <% if index+1 == 5 %> </tr><tr> <% end %>
                 <td style="text-align:center">
-                  <% @event = Event.find(partner.event_id) %>
-                  <%=  link_to(image_tag(@event.event_banners.first.file.url, :style=>"width: 100px;height: 80px;"), @event ) %> <br/>
-                  <b><%= link_to @event.title, @event %></b>
+                  <%= participants_detail(partner) %>
                 </td>
               <% end %>
             </tr>
@@ -258,7 +252,7 @@
 <style>
 
 .event_box{
-  border-bottom: 1px solid;
+ 
 }
 
 .table_block{

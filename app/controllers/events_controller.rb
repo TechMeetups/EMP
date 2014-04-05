@@ -27,9 +27,11 @@ class EventsController < ApplicationController
       else
         @other_users = User.find(:all, :conditions=>["id != ?", current_user.id] ) if user_signed_in?
       end
+      @event = Event.find(params[:id])
       @speakers = @event.event_users.find_all_by_event_type("Speaker")
       @partners = @event.event_users.find_all_by_event_type("Partner")
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
+      
       @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
     end
 
@@ -46,6 +48,7 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+      
     if params[:format] == "img"
       @img_url = EventBanner.find(params[:banner_id]).file.path
       send_file @img_url, :type => 'image/jpeg', :disposition => 'attachment'
@@ -64,7 +67,6 @@ class EventsController < ApplicationController
   def create
     debugger
     @event = Event.new(event_params)
-
     respond_to do |format|
       if @event.save
         if !params[:banner].blank?
@@ -87,8 +89,23 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    respond_to do |format|
+    if !params[:event]["s_date"].nil?
+      dd = params[:event]["s_date"].split("/")[0]
+      mm = params[:event]["s_date"].split("/")[1]
+      yy =  params[:event]["s_date"].split("/")[2]
+      params[:event]["s_date"] = mm+ "/" + dd + "/" +  yy
+      params[:event]["s_date"] =params[:event]["s_date"].to_date
+    end
+    if !params[:event]["e_date"].nil?
+      dd = params[:event]["e_date"].split("/")[0]
+      mm = params[:event]["e_date"].split("/")[1]
+      yy =  params[:event]["e_date"].split("/")[2]
+      params[:event]["e_date"] = mm+ "/" + dd + "/" +  yy
+      params[:event]["e_date"] =params[:event]["e_date"].to_date
+    end
+      respond_to do |format|
       if @event.update(event_params)
+
         format.json { head :no_content }
       else
         format.json { render json: @event.errors, status: :unprocessable_entity }
@@ -115,24 +132,12 @@ class EventsController < ApplicationController
   end
 
   def event_search
-    if params[:id] == "all"
-      @events=Event.all
-    else 
-      if !params[:checked].blank?
-        @user = User.find_by_city_id(params["id"])
-        if @user.nil?
-          @events = []
-        else
-          @events = @user.events
-        end
-      elsif params[:all_checked]=="checked"     
-        @events=Event.all  
-      elsif !params[:unchecked].blank?
-
-        @events = User.find_by_city_id(params["id"]).events
-      else  params[:unchecked]=="all"
-          @events=Event.all 
-      end
+    @events =[]
+    if !params[:checked].blank?
+    params[:checked].each do |id|
+      @events += User.find_by_city_id(id).events if !User.find_by_city_id(id).nil?
+    end
+    #debugger
     end
   end
 
@@ -140,7 +145,9 @@ class EventsController < ApplicationController
     Interaction.create(interaction_params)
   end
 
-
+  # def s_date=(val)
+  # Date.strptime(val, "%d/%m/%Y") if val.present?
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -157,3 +164,12 @@ class EventsController < ApplicationController
       params.require(:interaction).permit(:user_id, :event_id, :action, :memo)
     end
 end
+
+
+# @jobs =[]
+# if !params[:checked].blank?
+# params[:checked].each do |id|
+# @jobs += Job.where(city_id: id)
+# end
+# #debugger
+# end
