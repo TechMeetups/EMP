@@ -119,6 +119,7 @@
   </div>
   
   <div class="event_box" id="speaker_box" >
+    <br>
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
@@ -207,7 +208,7 @@
   </div>
 </div>
 
-<div style="float: right; width: 25%; border-left: 1px solid; text-align:center">
+<div style="float: right; width: 25%; border-left: 1px solid; color: #D1D0CE;text-align:center">
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
@@ -240,7 +241,8 @@
 <style>
 
 .event_box{
-  border-bottom: 1px solid;
+  border-bottom: 0px dashed;
+  border-bottom-color: #D1D0CE;
 }
 
 #slideshow {
@@ -287,7 +289,8 @@
 //  });
 
 //   });
-  function slideSwitch() {
+  function slideSwitch() 
+  {
     var $active = $('#slideshow IMG.active');
 
     if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
@@ -299,9 +302,11 @@
         
     $next.css({opacity: 0.0})
         .addClass('active')
+    
         .animate({opacity: 1.0}, 1000, function() {
             $active.removeClass('active last-active');
         });
+
   }
 
   $(function() {
