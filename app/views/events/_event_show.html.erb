@@ -32,7 +32,11 @@
 					   	<%= City.find(User.find(event.user_id).city_id).name %>       
 				   		 <p><%= truncate(event.description, :length => 40)  %></p>
 			        <p>
-			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 165px;"%>
+			        	<div class="row">
+				        	<%= link_to 'Attend',event,  :class=>"btn btn-xs btn-primary" ,:style=>"margin-left: 10px;"%>
+
+				            <%= link_to 'Learn More',event,  :class=>"btn btn-xs btn-info" ,:style=>"margin-left: 145px;"%>
+			        	</div>
 					</p>
 			      </div>
 			    </div>
@@ -43,7 +47,7 @@
 </div>
 
 <div style="display:block;" >
-	<%= link_to 'Add Event',"#", :class=>"btn btn-danger", :id=>"add_new_event" %>
+	<%= link_to 'Add your Event',"#", :class=>"btn btn-sm btn-danger", :style=>"margin-left: 900px;", :id=>"add_new_event" %>
 </div>
 
 <style>
