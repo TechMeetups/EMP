@@ -3,21 +3,35 @@
 
 	<% if !@events.blank? %>
 		<% @events.each do |event| %>
-			<div class="box col3">
-			  <div>
-			    <div class="thumbnail">			    	
-			      <h3><%= truncate(event.title, :length => 20) %>
-			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"width: 15px; float:right")%>
+
+			<div class="box panel default-panel col3">
+
+			  <div >
+
+			  	<div class="panel-heading">
+
+      				<h4 class="panel-title"><%= truncate(event.title, :length => 30) %></h4>
+
+			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"top-margin: 0px; width: 15px; float: top; float:right")%>
 			      	</a>
-			      </h3>
+				</div>
+			      
+			
+			   <div class="panel-body">
+
+			    <div class="thumbnail">			    	
 			      <% if !event.event_banners.blank? %>
 			      	<%= image_tag event.event_banners.first.file.url(:medium), :style=>"height: 200px;" %>
 			      <%else%>
 			      	<%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"height: 200px;" %>
 			      <% end %>
-			      <div class="caption">
+
+			      
+
+			      	<div class="caption">
 			        
-				     
+				  	<div class="well well-sm">
+
 					    <p><b> Date : </b>
 					    <%= event.s_date if !event.s_date.nil?  %>
 					    <b> to </b>          
@@ -30,18 +44,22 @@
 				   		</div>
 				   		<p><b> City : </b>
 					   	<%= City.find(User.find(event.user_id).city_id).name %>       
-				   		 <p><%= truncate(event.description, :length => 40)  %></p>
+				   		 <p><%= truncate(event.description, :length => 60)  %></p>
+				   	</div>	 
 			        <p>
 			        	<div class="row">
-				        	<%= link_to 'Attend',event,  :class=>"btn btn-xs btn-primary" ,:style=>"margin-left: 10px;"%>
+				        	<%= link_to 'Attend',event,  :class=>"btn btn-xs btn-primary" ,:style=>"margin-left: 15px;"%>
 
-				            <%= link_to 'Learn More',event,  :class=>"btn btn-xs btn-info" ,:style=>"margin-left: 145px;"%>
+				            <%= link_to 'Learn More',event,  :class=>"btn btn-xs btn-info" ,:style=>"margin-left: 105px;"%>
 			        	</div>
 					</p>
 			      </div>
 			    </div>
+			   </div>  
+
 			  </div>
 			</div>
+		
 		<% end %>
 	<% end %>
 </div>
@@ -53,6 +71,7 @@
 <style>
 .col3{
 	width: 300px;
+
 }
 .col-md-9{
   border: none ;
