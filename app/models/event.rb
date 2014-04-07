@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
 	
-	has_many :event_banners
-	has_many :event_users
+	has_many :event_banners, dependent: :destroy
+	has_many :event_users, dependent: :destroy
 	def can_validate
     	true
   	end

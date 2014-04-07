@@ -231,7 +231,7 @@
       <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
       <%= @event.twitter_hash_tag %><br/><br/>
       <b> Address </b> <br/><%= @event_user.address if !@event_user.nil? %><br/><br/>
-      <b> City </b> <%= !User.where(:id=>@event.try(:user_id)).blank? ? City.where(:id => User.find(@event.user_id).city_id).name  : ""  %>   <br/><br/>
+      <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(@event_user.city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
   </div>
