@@ -2,14 +2,23 @@
   <div style="height: 270px;">
     <h2> 
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
-        <%= best_in_place current_user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
+        <%= best_in_place @user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
         <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
       <% else %>
         <%= @user.name %>
       <% end %>
-     </h2>
+    </h2>
+    <h6 style="float:right;margin-top:-34px;margin-right:258px">
+      <%= image_tag "linkedin.png", :style=>"width: 18px;" %>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
+        <%= image_tag "edit1.png",:id=>"user_type-#{current_user.id}", :style=>"width: 15px;" %>
+      <% else %>
+        <%= @user.user_type %>
+      <% end %>
+    </h6>
     <div style="width: 50%; float: left;">
-      <div id="users_avatar"><%= image_tag @user.avatar.url(:thumb), :style=>"height: 220px; width: 300px;" %></div>
+      <div id="users_avatar"><%= image_tag @user.avatar.url%></div>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">
@@ -107,18 +116,8 @@
     </div>
   </div>
   <br/><br/><br/>
-  <div class="event_box" style="border-bottom: 1px solid;">
-    <p> <b>City </b>
-      <% if user_signed_in? && params[:id].to_i == current_user.id %>
-        <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
-        <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
-      <% else %>
-        <%= City.find(User.find(@user.id).city_id).name  %>
-      <% end %>
-      
-      <br/><br/>
-
-      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+  <div class="event_box">
+    <p><% if user_signed_in? && params[:id].to_i == current_user.id %>
         <b>Description </b>
         <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %></th>
          <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
@@ -126,9 +125,9 @@
         <%=  @user.description %>
       <% end %>
     </p>
-  </div>
+  </div>  
   <% if user_signed_in? && params[:id].to_i == current_user.id %>
-    <div  class="event_box" style="border-bottom: 1px solid;">
+    <div  class="event_box">
       <table width="282px" cellpadding="10" class="table">
         <tr>
           <th>Email</th>
@@ -149,7 +148,18 @@
           </td>
         </tr>
       </table>
+      <div class="event_box">
+    <p> <b>City </b>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
+        <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
+      <% else %>
+        <%= City.find(User.find(@user.id).city_id).name  %>
+      <% end %>
       
+      <br/><br/>
+    </p>
+  </div>
       <div class="col-xs-6 col-md-4">
         
       </div>
@@ -233,10 +243,13 @@
   <div class="event_box">
     <h4>  Social Media Stream </h4>
     <% if user_signed_in? && params[:id].to_i == current_user.id %>
+      <%= image_tag "twitter.png", :style=>"width: 18px;" %>
       <%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %>
       <%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+      <%= image_tag "facebook.png", :style=>"width: 18px;" %>
       <%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %>
       <%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+      <%= image_tag "linkedin.png", :style=>"width: 18px;" %>
       <%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %>
       <%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
     <% else %>

@@ -12,6 +12,8 @@ TechMeetsUp::Application.routes.draw do
   root 'home#index'
   post 'events/event_search'
   get 'events/event_search'
+  post 'events/event_search_type'
+  get 'events/event_search_type'
   get 'notifications'=> 'home#notifications', as: :notifications
   get 'accept_proposal'=> 'home#accept_proposal', as: :accept_proposal
   post 'add_banners'=> 'home#add_banners', as: :add_banners
@@ -22,6 +24,7 @@ TechMeetsUp::Application.routes.draw do
   get 'profile/:id' => "home#profile", as: :user_profile
   get 'home/looking_for'
   get 'home/offer'
+  get 'home/destroy_event_user'
   
 
   post 'events/new'

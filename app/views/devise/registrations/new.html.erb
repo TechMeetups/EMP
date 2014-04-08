@@ -19,8 +19,8 @@
       <div style="width: 50%; float: left;">
         <div id="users_avatar">
           <% if !user_signed_in? %>
-            <img id="preview_image" src="#" alt="" style="width: 330px; height: 225px;" />
-            <input class="form-control" id="user_avatar" name="user[avatar]" type="file" required="true" />
+            <img id="preview_image" src="#" alt="" style="max-width:200px;" />
+            <input class="form-control" id="user_avatar" name="user[avatar]" type="file" />
           <% else %>
             <%= image_tag @user.avatar.url(:thumb) %>
           <% end %>
@@ -89,7 +89,7 @@
           <tr>
             <th>Company</th>
             <% if !user_signed_in? %>
-              <td><input class="form-control" id="user_company" name="user[company]" placeholder="Company" type="text" required = "true" /></td>
+              <td><input class="form-control" id="user_company" name="user[company]" placeholder="Company" type="text" /></td>
             <% else %>     
               <td><%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
               <td><%= image_tag "edit1.png",:id=>"company-#{current_user.id}", :style=>"width: 15px;" %>
@@ -102,7 +102,7 @@
 
     <div class="event_box">
       <% if !user_signed_in? %>
-        <textarea class="form-control" id="user_description" name="user[description]" placeholder="Describe Yourself" required="true"></textarea>
+        <textarea class="form-control" id="user_description" name="user[description]" placeholder="Describe Yourself"></textarea>
       <% else %>    
         <p><%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %>
            <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
@@ -141,7 +141,7 @@
             <th>Type</th>
             <td>
               <label>
-                <input id="user_user_type_startup" name="user[user_type]" type="radio" value="Startup" /> Startup
+                <input id="user_user_type_startup" name="user[user_type]" type="radio" value="Startup" checked /> Startup
               </label>
 
               <label>
@@ -172,7 +172,7 @@
           <th>City</th>
           <% if !user_signed_in? %>
             <td> 
-              <%= select_tag(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" ,:required=> true )%> </td>
+              <%= select_tag(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" )%> </td>
           <% else %>
             <td><%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %></td>
             <td><%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>

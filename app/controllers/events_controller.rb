@@ -77,6 +77,7 @@ class EventsController < ApplicationController
           end
         end
         EventUser.create(user_id: current_user.id, event_id: @event.id, event_type: "Host")
+
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }
       else
@@ -141,6 +142,21 @@ class EventsController < ApplicationController
     end
   end
 
+  def event_search_type
+    @events =[]
+    if !params[:checked].blank?
+      @events = Event.where(event_type: params[:checked]) 
+    end
+    #debugger
+    
+  # @users =[]
+  # if !params[:checked].blank?
+  # @users = User.where(event_type: params[:checked])
+  # end
+  # end
+
+  end  
+
   def event_interaction
     Interaction.create(interaction_params)
   end
@@ -154,10 +170,11 @@ class EventsController < ApplicationController
     def set_event
       @event = Event.find(params[:id])
     end
+    
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:user_id, :title, :s_date, :e_date, :s_time, :e_time, :description, :twitter_hash_tag)
+      params.require(:event).permit(:user_id, :title, :s_date, :e_date, :s_time, :e_time, :event_type, :description, :twitter_hash_tag)
     end
 
     def interaction_params

@@ -15,7 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_in @user
       redirect_to new_user_session_path
     else
-      flash[:notice] = "Please enter valid information in fields."
+      flash[:notice] = "#{@user.errors.messages.first[0]}-#{@user.errors.messages.first[1][0]}"
       redirect_to :back
     end
  end

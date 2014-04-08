@@ -42,8 +42,17 @@
       <% else %>
         <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_title") %>
       <% end %>
-
     </h2>
+    <h6 style="float:right; margin-top:-40px;">
+    <%= image_tag "linkedin.png", :style=>"width: 18px;", :alt=>"eventtype" %>
+    <% if !user_signed_in? %>
+     <%= @event.event_type %> 
+     <% elsif @event.user_id != current_user.id %> 
+    <%= @event.event_type %>
+    <% else %>
+      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.name, a.name]} %>
+      <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;" %><% end %>    
+    </h6>
     <div class="banner_block">
       <div id="slideshow">
         <% @banners.each_with_index do |banner, index| %>
@@ -64,9 +73,9 @@
     <div>
       <p><b> Start </b>
         <% if !user_signed_in?  %>
-          <%= @event.s_date.to_s(:db)  if !@event.s_date.nil?  %>
+          <%= @event.s_date  if !@event.s_date.nil?  %>
         <% elsif @event.user_id != current_user.id %>
-          <%= @event.s_date.to_s(:db)  if !@event.s_date.nil?  %>
+          <%= @event.s_date  if !@event.s_date.nil?  %>
         <% else %>
           <%= best_in_place @event,:s_date, :type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
@@ -101,10 +110,10 @@
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_time") %>
         <% end %>
 
-      </p>
+    </p>
     </div>
-
-    <p>
+      
+      <p><br />
       <% if !user_signed_in?  %>
         <%= @event.description %>
       <% elsif @event.user_id != current_user.id %> 
@@ -211,9 +220,9 @@
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
-      
       <b><%= link_to @event_user.name, user_profile_path(id: @event_user.id) if !@event_user.nil? %></b><br/><br/>
-      <%=  link_to(image_tag(@event_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
+      <%=  link_to(image_tag(@event_user.avatar.url(:thumb),:style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
+       <%=  link_to(image_tag("edit1.png", :style=>"width: i5px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
       <br/><br/>
       <% if !user_signed_in?  %>
         <br/>
@@ -229,10 +238,24 @@
     <div class="event_box">
       <h4>  Venue </h4>
       <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
-      <%= @event.twitter_hash_tag %><br/><br/>
+      <%#= @event.address %><br/><br/>
       <b> Address </b> <br/><%= @event_user.address if !@event_user.nil? %><br/><br/>
       <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(@event_user.city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+    </div>
+    <div class="event_box">
+      <h4>Social Media</h4><br /><br />
+      <p>
+        <b>twitter#tag</b>
+      <% if !user_signed_in?  %>
+        <%= @event.twitter_hash_tag %>
+      <% elsif @event.user_id != current_user.id %> 
+        <%= @event.twitter_hash_tag %>
+      <% else %>
+        <%= best_in_place @event,:twitter_hash_tag,:path=> "/events/#{@event.id}" ,  :activator => "#edit_twitter_hash_tag" %>
+        <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_twitter_hash_tag") %><br /><br />
+      <% end %>
+    </p>
     </div>
   </div>
 </div>
@@ -361,5 +384,4 @@
   $("#attendee_box").css("height", attendee_height+40)
   $("#speaker_box").css("height", speakers_height+40)
   $("#partner_box").css("height", partner_height+40)
-
 </script>

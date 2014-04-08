@@ -42,6 +42,10 @@
           </div>
           <br/><br/>
           <p>
+            <%= select_tag 'event_type', options_for_select(EventType.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"event_event_type", :name=>"event[event_type]" %>
+          </p>
+          <br/><br/>
+          <p>
             <%= f.text_area :description , :class=>"form-control" , :placeholder=>"Description of the Event",:required=>true %>
           </p>
 
@@ -63,7 +67,7 @@
           <div class="event_box">
             <h4>  Host </h4>
             <b><%= link_to current_user.name, user_profile_path(id: current_user.id) if !current_user.nil? %></b><br/><br/>
-            <%=  link_to(image_tag(current_user.avatar.url(:thumb), :style=>"width: 75%; height: 160px;"),user_profile_path(id: current_user.id) ) if !current_user.nil? %> 
+            <%=  link_to(image_tag(current_user.avatar.url(:thumb),:style=>"width: 75%; height: 160px;"),user_profile_path(id: current_user.id) ) if !current_user.nil? %> 
           </div>
 
           <div class="event_box">

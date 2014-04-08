@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319062553) do
+ActiveRecord::Schema.define(version: 20140408133311) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20140319062553) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "venue"
   end
 
   create_table "events", force: true do |t|
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20140319062553) do
     t.string   "twitter_hash_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "event_type"
   end
 
   create_table "interactions", force: true do |t|

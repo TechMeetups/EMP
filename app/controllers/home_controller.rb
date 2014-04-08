@@ -20,7 +20,8 @@ class HomeController < ApplicationController
   	@event_user.event_type = "Speaker" if @interaction.action == "Become Speaker"
   	@event_user.event_type = "Partner" if @interaction.action == "Become Partner"
   	@event_user.event_type = "Attendee" if @interaction.action == "Attend event"
-  	@event_user.save
+  	@event_user = User.find(@event_users.find_by_event_type("Host").user_id) if !@event_users.find_by_event_type("Host").nil?
+    @event_user.save
 
   	@interaction.destroy
 
@@ -100,6 +101,14 @@ class HomeController < ApplicationController
     @partners = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Partner"] )
     @attendee = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Attendee"] )
   end
+
+  def destroy_event_user
+    #debugger
+    @event_user = EventUser.find(params[:format])
+    @event_user.destroy
+    flash[:notice] = "Activity Succesfully Deleted"
+    redirect_to :back
+end
 
   private
 
