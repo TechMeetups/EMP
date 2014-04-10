@@ -22,6 +22,7 @@ ActiveAdmin.register Event do
       f.input :e_date
       f.input :s_time
       f.input :e_time
+      f.input :event_type ,:as => :select, :collection => EventType.all.map {|a| ["#{a.name}",a.id]}
       f.input :description 
       f.input :twitter_hash_tag  
     end

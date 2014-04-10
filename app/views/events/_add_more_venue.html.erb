@@ -1,0 +1,20 @@
+<%= form_for @add_event_user, :url=> add_more_path, :remote=>true do |f| %>
+	<%= f.hidden_field :event_id, :value=>@event.id %>
+
+	<%= f.text_field :user_id , :id=>"event_user_venue_tokens"%>
+	<%= f.hidden_field :event_type, :id=>"dynamic_venue" %>
+	<%= image_submit_tag("plus.png", :style=>"margin-top: 70px;" )%>
+<% end %>
+
+<script>
+  $(function() {
+    $("#event_user_venue_tokens").tokenInput("/events/<%= params[:id]%>.json", {
+      crossDomain: false,
+      prePopulate: $("#event_user_venue_tokens").data("pre"),
+      theme: "facebook",
+      tokenLimit :1,
+      preventDuplicates: true
+
+    });
+  });
+</script>

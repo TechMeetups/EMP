@@ -20,7 +20,6 @@ class HomeController < ApplicationController
   	@event_user.event_type = "Speaker" if @interaction.action == "Become Speaker"
   	@event_user.event_type = "Partner" if @interaction.action == "Become Partner"
   	@event_user.event_type = "Attendee" if @interaction.action == "Attend event"
-  	@event_user = User.find(@event_users.find_by_event_type("Host").user_id) if !@event_users.find_by_event_type("Host").nil?
     @event_user.save
 
   	@interaction.destroy
@@ -66,6 +65,14 @@ class HomeController < ApplicationController
         @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
       end
     end
+  end
+
+  def host_change
+    @event=Event.find(params[:event_user][:event_id])
+    @event_user=@event.event_users.where(event_type: "Host").first
+    #@event.update(user_id: event_user_param[:user_id])
+    @event_user.update(user_id: event_user_param[:user_id])
+     @add_event_user = EventUser.new
   end
 
   def looking_for

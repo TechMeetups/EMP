@@ -1,0 +1,14 @@
+<div id="host_block" >
+    <%= link_to @event.user.name, user_profile_path(id: @event.user.id) if !@event.user.nil? %>
+      </div>
+      <br>
+      <%=  link_to(image_tag(@event.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event.user.id) ) if !@event.user.nil? %> 
+      
+      <% if !user_signed_in?  %>
+        <br/>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% elsif @event.user_id != current_user.id %>
+        <br/>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% end %>
+      <br/>

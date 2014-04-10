@@ -18,7 +18,7 @@
       <% end %>
     </h6>
     <div style="width: 50%; float: left;">
-      <div id="users_avatar"><%= image_tag @user.avatar.url%></div>
+      <div id="users_avatar"><%= image_tag @user.avatar.url ,:style=>"height: 250px; width: 250px;"%></div>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">

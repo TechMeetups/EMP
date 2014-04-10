@@ -72,3 +72,5 @@ gem 'debugger', group: [:development, :test]
 
 gem 'rails_best_practices'
 
+gem 'jquery-colorbox-rails'
+

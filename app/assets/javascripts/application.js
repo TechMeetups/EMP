@@ -27,6 +27,8 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require bootstrap-timepicker
+//= require jquery.colorbox
+//= require jquery.colorbox-pl
 //= require_tree .
 
 
@@ -34,6 +36,6 @@ $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 	 jQuery(function($){
-	  $.extend($.fn.datepicker.defaults, { format: 'dd-mm-yy' });
+	  $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
 	});
 });

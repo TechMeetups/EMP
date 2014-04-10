@@ -16,8 +16,8 @@
     
     <% current_user.events.each do |event| %>
       <tr>
-        <td><%= event.s_date if !event.s_date.nil?  %>   <%= event.s_time.strftime("%I:%M%p") %></td>
-        <td><%= event.e_date if !event.e_date.nil? %><%= event.e_time.strftime("%I:%M%p") %></td>
+        <td><%= event.s_date.strftime("%B %d, %Y") if !event.s_date.nil?  %>   <%= event.s_time.strftime("%I:%M%p") %></td>
+        <td><%= event.e_date.strftime("%B %d, %Y") if !event.e_date.nil? %><%= event.e_time.strftime("%I:%M%p") %></td>
         <td><%= event.title %></td>
         <td><%= City.find(User.find(event.user_id).city_id).name %></td>
         <td><%= link_to(image_tag("edit.png", :style=>"width: 15px;"), event ) %></td>
@@ -43,6 +43,4 @@ $("#add_new_event").click(function(){
       alert("You must login to continue");
       return false; 
     }
-  
-})
 </script>

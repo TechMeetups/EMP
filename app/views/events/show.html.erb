@@ -44,13 +44,15 @@
       <% end %>
     </h2>
     <h6 style="float:right; margin-top:-40px;">
-    <%= image_tag "linkedin.png", :style=>"width: 18px;", :alt=>"eventtype" %>
+    <%= image_tag "linkedin.png", :style=>"width: 18px;"%>
     <% if !user_signed_in? %>
-     <%= @event.event_type %> 
+     <%#= @event.event_type %>
+     <%= EventType.find(Event.find(@event.id).event_type).name  %> 
      <% elsif @event.user_id != current_user.id %> 
-    <%= @event.event_type %>
+    <%#= @event.event_type %>
+    <%= EventType.find(Event.find(@event.id).event_type).name  %>
     <% else %>
-      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.name, a.name]} %>
+      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]} %>
       <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;" %><% end %>    
     </h6>
     <div class="banner_block">
@@ -73,11 +75,11 @@
     <div>
       <p><b> Start </b>
         <% if !user_signed_in?  %>
-          <%= @event.s_date  if !@event.s_date.nil?  %>
+          <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% elsif @event.user_id != current_user.id %>
-          <%= @event.s_date  if !@event.s_date.nil?  %>
+          <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% else %>
-          <%= best_in_place @event,:s_date, :type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
+          <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
@@ -94,11 +96,11 @@
     <div style="margin-left: 389px; margin-top: -31px;">
       <b>  End </b>
         <% if !user_signed_in?  %>
-          <%= @event.e_date if !@event.e_date.nil?  %>
+          <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
         <% elsif @event.user_id != current_user.id %>
-          <%= @event.e_date if !@event.e_date.nil?  %>
+          <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
         <% else %>
-          <%= best_in_place @event,:e_date,:type => :date,:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
+          <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
         <% end %>
         <% if !user_signed_in?  %>
@@ -190,8 +192,6 @@
     <div class="table_block" id="attendee_list">
       <%= render "attendees_list" %>
     </div>
-
-     
       <% if !user_signed_in?  %>
         <div class="button_block" id="attendee_block"  style="margin-top:-25px">
           <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
@@ -220,25 +220,33 @@
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
-      <b><%= link_to @event_user.name, user_profile_path(id: @event_user.id) if !@event_user.nil? %></b><br/><br/>
-      <%=  link_to(image_tag(@event_user.avatar.url(:thumb),:style=>"width: 75%; height: 160px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
-       <%=  link_to(image_tag("edit1.png", :style=>"width: i5px;"),user_profile_path(id: @event_user.id) ) if !@event_user.nil? %> 
-      <br/><br/>
       <% if !user_signed_in?  %>
-        <br/>
-        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
-      <% elsif @event.user_id != current_user.id %>
-        <br/>
-        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% elsif @event.user_id != current_user.id %> 
+      <% else %>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
       <% end %>
-      <br/>
-      <br/>
+      <div id="host_show">
+        <%= render "host"%>
+      </div>
     </div>
 
     <div class="event_box">
       <h4>  Venue </h4>
-      <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
-      <%#= @event.address %><br/><br/>
+      
+      <%= render "venue_list" %>
+      <% if !user_signed_in?  %>
+      <% elsif @event.user_id != current_user.id %> 
+           <div class="button_block" id="venue_block">
+            <%#= link_to "Add venue", "#", :id=>"add_venues", :class=>"btn btn-success add_more_people", :remote=>true %>
+            <%#=  link_to(image_tag("edit1.png", :style=>"width: 15px;margin-top:-178px",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
+          </div>
+        <% else %>
+          <div id="venue_block"  style="margin-top:-25px">
+            <%#= link_to "Add venue", "#", :id=>"add_venues", :remote=>true%>
+            <%=  link_to(image_tag("edit1.png", :style=>"width: 15px;",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
+          </div>
+        <% end %>
+      <br/><br/>
       <b> Address </b> <br/><%= @event_user.address if !@event_user.nil? %><br/><br/>
       <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(@event_user.city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
@@ -373,9 +381,17 @@
       $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
       $("#dynamic_attendee").val("Attendee")
     }
-    
+    else if(block_id == "add_venues"){
+      $("#venue_block").html("<%= escape_javascript(render :partial => 'add_more_venue')%>")
+      $("#dynamic_venue").val("Venue")
+    }
   });
+  $(".change_host").click(function(){
+    var block_id = $(this).attr("id");
 
+      $("#host_block").html("<%= escape_javascript(render :partial => 'events/change_host')%>")
+      $("#dynamic_appplicant").val("change_host")
+    });
 
   var speakers_height = $("#speaker_list").height();
   var partner_height = $("#partner_list").height();

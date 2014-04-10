@@ -31,7 +31,7 @@ class EventsController < ApplicationController
       @speakers = @event.event_users.find_all_by_event_type("Speaker")
       @partners = @event.event_users.find_all_by_event_type("Partner")
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
-      
+      @venue = @event.event_users.find_all_by_event_type("Venue")
       @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
     end
 
@@ -47,8 +47,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-      
+  def edit      
     if params[:format] == "img"
       @img_url = EventBanner.find(params[:banner_id]).file.path
       send_file @img_url, :type => 'image/jpeg', :disposition => 'attachment'
@@ -59,6 +58,8 @@ class EventsController < ApplicationController
       @speakers = @event.event_users.find_all_by_event_type("Speaker")
       @partners = @event.event_users.find_all_by_event_type("Partner")
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
+      @venue = @event.event_users.find_all_by_event_type("Venue")
+
     end
   end
 
@@ -72,10 +73,12 @@ class EventsController < ApplicationController
         if !params[:banner].blank?
           params[:banner].each do |banner|
             if !banner["file"].nil?
+              debugger
               EventBanner.create(:event_id=> @event.id, :file=>banner["file"],:featured=> banner["feature"].to_i)
             end
           end
         end
+        debugger
         EventUser.create(user_id: current_user.id, event_id: @event.id, event_type: "Host")
 
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -117,6 +120,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+    debugger
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url }
@@ -125,7 +129,8 @@ class EventsController < ApplicationController
   end
 
   
-  def delete    
+  def delete  
+  debugger  
     @events = Event.find(params[:id])
     @events.destroy
     flash[:notice] = "Activity Succesfully Deleted"

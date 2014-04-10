@@ -3,14 +3,14 @@ ul.token-input-list-facebook {
     overflow: hidden; 
     height: auto !important; 
     height: 1%;
-    width: 201px !important;
+    width: 81px !important;
     border: 1px solid #8496ba;
     cursor: text;
     font-size: 12px;
     font-family: Verdana;
     min-height: 1px;
     z-index: 999;
-    margin: -14px -165px -97px;
+    margin: -22px 0px -96px;
     padding: 0;
     background-color: #fff;
     list-style-type: none;
