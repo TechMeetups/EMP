@@ -1,51 +1,78 @@
-<div id="masonry-container" class="transitions-enabled clearfix masonry-brick">
+<div id="masonry-container" class="transitions-enabled infinite-scroll clearfix masonry-brick">
+	
 
 	<% if !@events.blank? %>
 		<% @events.each do |event| %>
-			<div class="box col3">
-			  <div>
-			    <div class="thumbnail">			    	
-			      <h3><%= truncate(event.title, :length => 20) %>
-			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"width: 15px; float:right")%>
+
+			<div class="box panel default-panel col3">
+
+			  <div >
+
+			  	<div class="panel-heading">
+
+      				<h4 class="panel-title"><%= truncate(event.title, :length => 30) %></h4>
+
+			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"top-margin: 0px; width: 15px; float: top; float:right")%>
 			      	</a>
-			      </h3>
+				</div>
+			      
+			
+			   <div class="panel-body">
+
+			    <div class="thumbnail">			    	
 			      <% if !event.event_banners.blank? %>
 			      	<%= image_tag event.event_banners.first.file.url(:medium), :style=>"height: 200px;" %>
 			      <%else%>
 			      	<%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"height: 200px;" %>
 			      <% end %>
-			      <div class="caption">				     
-				    <p><b> Date : </b>
-				    <%= event.s_date.strftime("%e %b %Y") if !event.s_date.nil?  %>
-				    <b> to </b>          
-				    <%= event.e_date.strftime("%e %b %Y") if !event.e_date.nil?  %>
 
-				    <div>
-				    	<b class="time"> Time : </b>
-							<%= event.s_time.strftime("%I:%M%p") %><b class="time">  to </b>
-							<%= event.e_time.strftime("%I:%M%p") %></p>
-			   		</div>
-			   		<p><b> City : </b>
-				   	<%= City.find(User.find(event.user_id).city_id).name %>       
-			   		 <p><%= truncate(event.description, :length => 40)  %></p>
+			      
+
+			      	<div class="caption">
+			        
+				  	<div class="well well-sm">
+
+					    <p><b> Date : </b>
+					    <%= event.s_date if !event.s_date.nil?  %>
+					    <b> to </b>          
+					    <%= event.e_date if !event.e_date.nil?  %>
+
+					    <div>
+					    	<b> Time : </b>
+								<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
+								<%= event.e_time.strftime("%I:%M%p") %></p>
+				   		</div>
+				   		<p><b> City : </b>
+					   	<%= City.find(User.find(event.user_id).city_id).name %>       
+				   		 <p><%= truncate(event.description, :length => 40)  %></p>
+				   	</div>	 
+
 			        <p>
-			            <%= link_to 'Learn More',event,  :class=>"btn btn-info" ,:style=>"margin-left: 165px;"%>
+			        	<div class="row">
+				        	<%= link_to 'Attend',event,  :class=>"btn btn-xs btn-primary" ,:style=>"margin-left: 15px;"%>
+
+				            <%= link_to 'Learn More',event,  :class=>"btn btn-xs btn-info" ,:style=>"margin-left: 105px;"%>
+			        	</div>
 					</p>
 			      </div>
 			    </div>
+			   </div>  
+
 			  </div>
 			</div>
+		
 		<% end %>
 	<% end %>
 </div>
 
 <div style="display:block;" >
-	<%= link_to 'Add Event',"#", :class=>"btn btn-danger", :id=>"add_new_event" %>
+	<%= link_to 'Add your Event',"#", :class=>"btn btn-sm btn-danger", :style=>"margin-left: 900px;", :id=>"add_new_event" %>
 </div>
 
 <style>
 .col3{
 	width: 300px;
+
 }
 .col-md-9{
   border: none ;
