@@ -1,8 +1,11 @@
 <div id="host_block" >
-    <%= link_to @event.user.name, user_profile_path(id: @event.user.id) if !@event.user.nil? %>
+
+  <% @event_user1 = @event.event_users.where(event_type: "Host").first %>
+
+    <%= link_to @event_user1.user.name, user_profile_path(id: @event_user1.user.id) if !@event_user1.user.nil? %>
       </div>
       <br>
-      <%=  link_to(image_tag(@event.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event.user.id) ) if !@event.user.nil? %> 
+      <%=  link_to(image_tag(@event_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event_user1.user.id) ) if !@event_user1.user.nil? %> 
       
       <% if !user_signed_in?  %>
         <br/>

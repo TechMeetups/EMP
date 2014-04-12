@@ -26,7 +26,7 @@ TechMeetsUp::Application.routes.draw do
   get 'home/offer'
   get 'home/destroy_event_user'
   post 'host_change'=> 'home#host_change', as: :host_change
-
+  post 'venue_change'=> 'home#venue_change', as: :venue_change
   post 'events/new'
   post 'event/interaction' => "events#event_interaction"
   # Example of regular route:

@@ -129,8 +129,7 @@
 
   </div>
   
-  <div class="event_box" id="speaker_box" >
-    <br>
+  <div class="event_box" id="speaker_box" style="height: 169px;">
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
@@ -145,12 +144,12 @@
         </div>
       <% else %>
         <% if !@speakers.blank? %>
-        <div class="button_block" id="speaker_block"> 
-          <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_people", :remote=>true%>
-          </div>
+          <div class="add_new" id="add_speaker">
+            <%= render"add_more_speakers"%>
+          </div> 
         <% else %>
-        <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
-          <%= link_to "Add Speaker", "#",:id=>"add_speaker", :class=>"btn btn-info add_more_people", :remote=>true%>
+          <div class="add_new" id="add_speaker">
+            <%= render"add_more_speakers"%>
           </div>
         <% end %>
         
@@ -176,14 +175,14 @@
       </div>
     <% else %>
       <% if !@partners.blank? %>
-        <div class="button_block" id="partner_block" > 
-          <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_people", :remote=>true%>
-        </div>
-      <% else %>
-        <div class="button_block" id="partner_block" style="margin-top:-25px"> 
-          <%= link_to "Add Partner", "#",:id=>"add_partner", :class=>"btn btn-primary add_more_people", :remote=>true%>
-        </div>
-      <% end %>
+        <div class="add_new" id="partner_block">
+            <%= render"add_more_partners"%>
+          </div> 
+        <% else %>
+          <div class="add_new" id="partner_block">
+            <%= render"add_more_partners"%>
+          </div>
+        <% end %>
 
     <% end %>
   </div>
@@ -203,12 +202,12 @@
         </div>
       <% else %>
         <% if !@attendee.blank? %>
-          <div class="button_block" id="attendee_block">
-            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true %>
-          </div>
+          <div class="add_new" id="attendee_block">
+            <%= render"add_more_attendees"%>
+          </div> 
         <% else %>
-          <div class="button_block" id="attendee_block"  style="margin-top:-25px">
-            <%= link_to "Add Attendees", "#", :id=>"add_attendees", :class=>"btn btn-success add_more_people", :remote=>true%>
+          <div class="add_new" id="attendee_block">
+            <%= render"add_more_attendees"%>
           </div>
         <% end %>
         
@@ -217,7 +216,7 @@
   </div>
 </div>
 
-<div style="float: right; width: 25%; border-left: 1px solid; color: #D1D0CE;text-align:center">
+<div style="float: right; width: 25%; border-left: 1px solid; text-align:center">
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
@@ -226,7 +225,7 @@
       <% else %>
         <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
       <% end %>
-      <div id="host_show">
+      <div id="host_show" >
         <%= render "host"%>
       </div>
     </div>
@@ -235,18 +234,21 @@
       <h4>  Venue </h4>
       
       <%= render "venue_list" %>
-      <% if !user_signed_in?  %>
-      <% elsif @event.user_id != current_user.id %> 
-           <div class="button_block" id="venue_block">
+      <% if !user_signed_in?  %>        
+        <% elsif @event.user_id != current_user.id %>
+        <% else %>
+        <% if !@venue.blank? %>
+          <div class="button_block" id="venue_block">
             <%#= link_to "Add venue", "#", :id=>"add_venues", :class=>"btn btn-success add_more_people", :remote=>true %>
-            <%#=  link_to(image_tag("edit1.png", :style=>"width: 15px;margin-top:-178px",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
+            <%#=  link_to(image_tag("edit1.png", :style=>"width: 15px;",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
           </div>
         <% else %>
-          <div id="venue_block"  style="margin-top:-25px">
+          <div id="venue_block"  style="margin:-25px 88px">
             <%#= link_to "Add venue", "#", :id=>"add_venues", :remote=>true%>
             <%=  link_to(image_tag("edit1.png", :style=>"width: 15px;",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
           </div>
         <% end %>
+      <% end %>
       <br/><br/>
       <b> Address </b> <br/><%= @event_user.address if !@event_user.nil? %><br/><br/>
       <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
@@ -272,8 +274,7 @@
 <style>
 
 .event_box{
-  border-bottom: 0px dashed;
-  border-bottom-color: #D1D0CE;
+  border-bottom: 1px solid;
 }
 
 #slideshow {
@@ -308,7 +309,15 @@
 
 .token-input-list-facebook, .token-input-dropdown-facebook{
   width: 135px !important;
+
 }
+.add_new{
+  float: left;
+  text-align:center;
+  width: 20%; 
+  padding: 8px;
+}
+
   
 </style>
 
@@ -320,8 +329,7 @@
 //  });
 
 //   });
-  function slideSwitch() 
-  {
+  function slideSwitch() {
     var $active = $('#slideshow IMG.active');
 
     if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
@@ -333,11 +341,9 @@
         
     $next.css({opacity: 0.0})
         .addClass('active')
-    
         .animate({opacity: 1.0}, 1000, function() {
             $active.removeClass('active last-active');
         });
-
   }
 
   $(function() {
@@ -357,7 +363,7 @@
       }); 
     }
     else{
-      alert("You must login to continue");
+       alertify.alert("You must login to continue");
       return false; 
     }
     
@@ -402,7 +408,7 @@
   var partner_height = $("#partner_list").height();
   var attendee_height = $("#attendee_list").height();
 
-  $("#attendee_box").css("height", attendee_height+40)
-  $("#speaker_box").css("height", speakers_height+40)
-  $("#partner_box").css("height", partner_height+40)
+  $("#attendee_box").css("height", 200)
+  $("#speaker_box").css("height", 200)
+  $("#partner_box").css("height", 200)
 </script>

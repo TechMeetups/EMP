@@ -72,7 +72,7 @@
 
           <div class="event_box">
             <h4>  Venue </h4>
-            <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
+             <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
             <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
             <b> City </b> <%= City.find(current_user.city_id).name %> <br/><br/>
             <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name if !current_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
@@ -104,10 +104,10 @@
 
   $(document).ready(function(){
     $("#event_s_date" ).datepicker();
-    $('#event_s_date').datepicker("option", "dateFormat", '%B %d, %Y')
+    $('#event_s_date').datepicker("option", "dateFormat", 'dd/mm/yy')
 
     $("#event_e_date" ).datepicker();
-    $('#event_e_date').datepicker("option", "dateFormat", '%B %d, %Y')
+    $('#event_e_date').datepicker("option", "dateFormat", 'dd/mm/yy')
 
     $('#event_s_time').timepicker();
     $('#event_e_time').timepicker();

@@ -33,13 +33,13 @@
 				  	<div class="well well-sm">
 
 					    <p><b> Date : </b>
-					    <%= event.s_date if !event.s_date.nil?  %>
+					    <%= event.s_date.strftime("%e %b %Y") if !event.s_date.nil?  %>
 					    <b> to </b>          
-					    <%= event.e_date if !event.e_date.nil?  %>
+					    <%= event.e_date.strftime("%e %b %Y") if !event.e_date.nil?  %>
 
 					    <div>
-					    	<b> Time : </b>
-								<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
+					    	<b style="font-size:12px;"> Time : </b>
+								<%= event.s_time.strftime("%I:%M%p") %><b style="font-size:12px;">  to </b>
 								<%= event.e_time.strftime("%I:%M%p") %></p>
 				   		</div>
 				   		<p><b> City : </b>
@@ -91,7 +91,7 @@ $("#add_new_event").click(function(){
     	$(".search_event").html("<%= escape_javascript(  render :partial => 'events/form' ) %>")
     }
     else{
-      alert("You must login to continue");
+      alertify.alert("You must login to continue");
       return false; 
     }
 })

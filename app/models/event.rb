@@ -6,5 +6,4 @@ class Event < ActiveRecord::Base
 	def can_validate
     	true
   	end
-  	
 end

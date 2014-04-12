@@ -33,11 +33,10 @@ class EventsController < ApplicationController
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
       @venue = @event.event_users.find_all_by_event_type("Venue")
       @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
-    end
-
-    respond_to do |format|
+      respond_to do |format|
       format.html
       format.json { render :json => @other_users }
+    end
     end
   end
 
@@ -120,7 +119,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    debugger
+    
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url }
@@ -130,7 +129,7 @@ class EventsController < ApplicationController
 
   
   def delete  
-  debugger  
+  
     @events = Event.find(params[:id])
     @events.destroy
     flash[:notice] = "Activity Succesfully Deleted"
@@ -143,7 +142,6 @@ class EventsController < ApplicationController
     params[:checked].each do |id|
       @events += User.find_by_city_id(id).events if !User.find_by_city_id(id).nil?
     end
-    #debugger
     end
   end
 
@@ -153,22 +151,12 @@ class EventsController < ApplicationController
       @events = Event.where(event_type: params[:checked]) 
     end
     #debugger
-    
-  # @users =[]
-  # if !params[:checked].blank?
-  # @users = User.where(event_type: params[:checked])
-  # end
-  # end
 
   end  
 
   def event_interaction
     Interaction.create(interaction_params)
   end
-
-  # def s_date=(val)
-  # Date.strptime(val, "%d/%m/%Y") if val.present?
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -186,12 +174,3 @@ class EventsController < ApplicationController
       params.require(:interaction).permit(:user_id, :event_id, :action, :memo)
     end
 end
-
-
-# @jobs =[]
-# if !params[:checked].blank?
-# params[:checked].each do |id|
-# @jobs += Job.where(city_id: id)
-# end
-# #debugger
-# end

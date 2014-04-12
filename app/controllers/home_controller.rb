@@ -45,6 +45,7 @@ class HomeController < ApplicationController
   end
 
   def add_more
+    @event = Event.find(params[:event_user][:event_id])
     if event_user_param["user_id"].split(",").count >= 2
       event_user_param["user_id"].split(",").each do |user_id|
         if EventUser.find_by_user_id_and_event_id_and_event_type(user_id, event_user_param["event_id"], event_user_param['event_type']).nil?
@@ -57,20 +58,20 @@ class HomeController < ApplicationController
       end
     end
     if !@event_user.nil?
-      if event_user_param['event_type'] == "Attendee"
-        @attendee = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Attendee"])
-      elsif event_user_param['event_type'] == "Speaker"
-        @speakers = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Speaker"])
-      elsif event_user_param['event_type'] == "Partner"
-        @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
-      end
+      add_participants
     end
   end
 
   def host_change
     @event=Event.find(params[:event_user][:event_id])
     @event_user=@event.event_users.where(event_type: "Host").first
-    #@event.update(user_id: event_user_param[:user_id])
+    @event_user.update(user_id: event_user_param[:user_id])
+     @add_event_user = EventUser.new
+  end
+
+  def venue_change
+    @event=Event.find(params[:event_user][:event_id])
+    @event_user=@event.event_users.where(event_type: "Venue").first
     @event_user.update(user_id: event_user_param[:user_id])
      @add_event_user = EventUser.new
   end
@@ -121,6 +122,16 @@ end
 
     def event_user_param
       params.require(:event_user).permit(:user_id, :event_id, :event_type)
+    end
+
+    def add_participants
+      if event_user_param['event_type'] == "Attendee"
+        @attendee = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Attendee"])
+      elsif event_user_param['event_type'] == "Speaker"
+        @speakers = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Speaker"])
+      elsif event_user_param['event_type'] == "Partner"
+        @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
+      end
     end
 
 end

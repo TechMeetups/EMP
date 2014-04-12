@@ -1,18 +1,23 @@
+<div  Style="height: 63px; width:73px;margin-bottom: 12px; ">
+  <%= image_tag "missing.png", :style=>"height: 63px; width:73px;" %>
+</div>
+<div Style="height: 34px; width:73px; ">
 <%= form_for @add_event_user, :url=> add_more_path, :remote=>true do |f| %>
 	<%= f.hidden_field :event_id, :value=>@event.id %>
 
 	<%= f.text_field :user_id, :id=>"event_user_partner_tokens" %>
 
-	<%= f.hidden_field :event_type, :id=>"dynamic_partner" %>
-	<%= image_submit_tag("plus.png", :style=>"margin-top: 70px;") %>
+	<%= f.hidden_field :event_type, :id=>"dynamic_partner",:value =>"Partner" %>
+	<%= image_submit_tag("plus.png", :style=>"margin: 4px 6px -12px 84px;") %>
 <% end %>
-
+</div>
 <script>
   $(function() {
     $("#event_user_partner_tokens").tokenInput("/events/<%= params[:id]%>.json", {
       crossDomain: false,
       prePopulate: $("#event_user_partner_tokens").data("pre"),
       theme: "facebook",
+      tokenLimit :1,
       preventDuplicates: true
     });
   });

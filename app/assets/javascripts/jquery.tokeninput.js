@@ -20,12 +20,15 @@ var DEFAULT_SETTINGS = {
     propertyToSearch: "name",
     jsonContainer: null,
 
+
 	// Display settings
-    hintText: "Type in a search term",
+    hintText: "Search User",
     noResultsText: "No results",
     searchingText: "Searching...",
     deleteText: "&times;",
     animateDropdown: true,
+    
+
 
 	// Tokenization settings
     tokenLimit: null,
