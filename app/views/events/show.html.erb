@@ -46,11 +46,8 @@
     <h6 style="float:right; margin-top:-40px;">
     <%= image_tag "linkedin.png", :style=>"width: 18px;"%>
     <% if !user_signed_in? %>
-     <%#= @event.event_type %>
-     <%#= !User.where(:id=>event.try(:user_id)).blank? ? City.where(:id => User.find(event.user_id).city_id).name  : ""  %>  
      <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
      <% elsif @event.user_id != current_user.id %> 
-    <%#= @event.event_type %>
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
     <% else %>
       <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]} %>

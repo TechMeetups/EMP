@@ -21,7 +21,8 @@
         <td><%= event.title %></td>
         <td><%= City.find(User.find(event.user_id).city_id).name %></td>
         <td><%= link_to(image_tag("edit.png", :style=>"width: 15px;"), event ) %></td>
-        <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), event_path(event),method: :delete, data: { confirm: 'Are you sure?' }) %></td>
+        <td>
+          <%= link_to(image_tag("trash.png", :style=>"width: 15px;"), destroy_event_path(event), data: { confirm: 'Are you sure?' }) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -44,4 +45,5 @@ $("#add_new_event").click(function(){
       return false; 
     }
   })
+
 </script>

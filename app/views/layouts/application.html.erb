@@ -56,7 +56,8 @@
               <% EventType.all.each do |event_type|%>               
                 <div class="checkbox">
                   <label>      
-                    <%= check_box_tag "event[]", event_type.id, false, :id => "#{event_type.id}",:class=>'checkbox2' -%> <b><%= event_type.name %></b>
+                    <%= check_box_tag "event[]", event_type.id, false, :id => "#{event_type.id}",:class=>'checkbox2' -%> 
+                    <b><%= event_type.name %></b>
                    </label>
                 </div>
 

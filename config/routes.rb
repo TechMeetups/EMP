@@ -25,6 +25,7 @@ TechMeetsUp::Application.routes.draw do
   get 'home/looking_for'
   get 'home/offer'
   get 'home/destroy_event_user'
+  get 'events/destroy_event/:event_id' => "events#destroy_event", as: :destroy_event
   post 'host_change'=> 'home#host_change', as: :host_change
   post 'venue_change'=> 'home#venue_change', as: :venue_change
   post 'events/new'

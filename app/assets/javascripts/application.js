@@ -38,4 +38,19 @@ $(document).ready(function() {
 	 jQuery(function($){
 	  $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
 	});
+	 $(".confirm").on( 'click', function () {
+    var user_trash = this
+    alertify.confirm("Are you sure to delete", function (e)   {
+        if (e) {
+          
+          window.location.href = user_trash.href
+        } else {
+          
+        }
+    });
+    return false;
+  });
+
 });
+
+

@@ -27,3 +27,16 @@ var attendee_height = $("#attendee_list").height();
 $("#attendee_box").css("height", 200)
   $("#speaker_box").css("height", 200)
   $("#partner_box").css("height", 200)
+
+$(".confirm").on( 'click', function () {
+    var user_trash = this
+    alertify.confirm("Are you sure to delete", function (e)   {
+        if (e) {
+         
+          window.location.href = user_trash.href
+        } else {
+          
+        }
+    });
+    return false;
+  });

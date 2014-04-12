@@ -118,24 +118,30 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   # DELETE /events/1.json
-  def destroy
-    
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url }
-      format.json { head :no_content }
-    end
-  end
+  #  def destroy
+  #   @event = Event.find(params[:id])
+  #   @event.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to events_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   
-  def delete  
-  
-    @events = Event.find(params[:id])
-    @events.destroy
-    flash[:notice] = "Activity Succesfully Deleted"
+  # def delete  
+  #   debugger
+  #   @events = Event.find(params[:id])
+  #   @events.destroy
+  #   flash[:notice] = "Activity Succesfully Deleted"
+  #   redirect_to :back
+  # end
+
+  def destroy_event
+    @event = Event.find(params[:event_id])
+    @event.destroy
+    flash[:notice] = "Event Succesfully Deleted"
     redirect_to :back
   end
-
   def event_search
     @events =[]
     if !params[:checked].blank?
