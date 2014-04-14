@@ -10,7 +10,7 @@ gem 'mysql2'
 gem 'sass-rails'
 
 gem 'devise'
-
+gem 'aws-sdk'
 gem "bootstrap-sass"
 
 gem "paperclip"

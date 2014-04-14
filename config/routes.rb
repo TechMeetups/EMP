@@ -18,7 +18,8 @@ TechMeetsUp::Application.routes.draw do
   get 'accept_proposal'=> 'home#accept_proposal', as: :accept_proposal
   post 'add_banners'=> 'home#add_banners', as: :add_banners
   post 'add_more'=> 'home#add_more', as: :add_more
-  post 'banner_destroy'=> 'home#banner_destroy', as: :banner_destroy
+  #post 'banner_destroy'=> 'home#banner_destroy', as: :banner_destroy
+  get 'banner_destroy'=> 'home#banner_destroy', as: :banner_destroy
   post 'update_avatar'=> 'home#update_avatar', as: :update_avatar
 
   get 'profile/:id' => "home#profile", as: :user_profile

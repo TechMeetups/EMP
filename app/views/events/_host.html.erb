@@ -1,16 +1,20 @@
 <div id="host_block" >
+  <%#debugger%>
+  <% if !@event.nil? %>
+  <% @user1 = @event.event_users.where(event_type: "Host").first.user %>
+  <% else %>
+  <% @user1=current_user %>
+  <% end %>
+    <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
 
-  <% @event_user1 = @event.event_users.where(event_type: "Host").first %>
-
-    <%= link_to @event_user1.user.name, user_profile_path(id: @event_user1.user.id) if !@event_user1.user.nil? %>
       </div>
       <br>
-      <%=  link_to(image_tag(@event_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event_user1.user.id) ) if !@event_user1.user.nil? %> 
+      <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> 
       
       <% if !user_signed_in?  %>
         <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
-      <% elsif @event.user_id != current_user.id %>
+      <% elsif !@event.nil? && @event.user_id != current_user.id %>
         <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
       <% end %>

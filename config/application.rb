@@ -20,5 +20,10 @@ module TechMeetsUp
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.paperclip_defaults = {
+            :storage => :s3,
+            :s3_host_name => 's3-eu-west-1.amazonaws.com'
+ }
+    
   end
 end

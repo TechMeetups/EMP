@@ -39,9 +39,11 @@ class HomeController < ApplicationController
 
   def banner_destroy
   	@event_banner = EventBanner.find(params["banner_id"])
+    @event_banner.destroy
   	@event = Event.find(@event_banner.event_id)
-  	@event_banner.destroy
   	@banners = @event.event_banners
+    redirect_to :back
+
   end
 
   def add_more

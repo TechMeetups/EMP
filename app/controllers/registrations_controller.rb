@@ -13,9 +13,10 @@ class RegistrationsController < Devise::RegistrationsController
   	if @user.save
   		flash[:notice] = "User Succesfully created"
       sign_in @user
-      redirect_to new_user_session_path
+      redirect_to root_url
     else
       flash[:notice] = "#{@user.errors.messages.first[0]}-#{@user.errors.messages.first[1][0]}"
+      @users = User.all
       redirect_to :back
     end
  end
