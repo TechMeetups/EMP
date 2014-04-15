@@ -75,7 +75,20 @@ TechMeetsUp::Application.configure do
 
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
+     config.action_mailer.default_url_options = { :host => 'http://tmuemp.herokuapp.com/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
 
+  ActionMailer::Base.smtp_settings = {
+  :address => "smtp.gmail.com",
+  :port => 587,
+  :authentication => :plain,
+  :domain => 'gmail.com',
+  :user_name => 'vaibhavyuvasoft122@gmail.com',
+  :password => 'yuvasoft122'
+}
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
