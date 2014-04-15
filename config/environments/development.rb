@@ -33,12 +33,12 @@ TechMeetsUp::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-  ActionMailer::Base.smtp_settings = {
+    ActionMailer::Base.smtp_settings = {
   :address => "smtp.gmail.com",
   :port => 587,
   :authentication => :plain,
   :domain => 'gmail.com',
-  :user_name => 'vaibhavyuvasoft122@gmail.com',
-  :password => 'yuvasoft122'
+  :user_name => 'arvindyuvasoft112@gmail.com',
+  :password => '9752368663'
 }
 end
