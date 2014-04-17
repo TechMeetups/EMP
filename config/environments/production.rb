@@ -86,8 +86,8 @@ TechMeetsUp::Application.configure do
   :port => 587,
   :authentication => :plain,
   :domain => 'gmail.com',
-  :user_name => 'arvindyuvasoft112@gmail.com',
-  :password => '9752368663'
+  :user_name => 'yuvasoftest@gmail.com',
+  :password => 'yuva_123456789'
 }
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new

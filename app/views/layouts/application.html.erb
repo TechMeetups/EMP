@@ -9,66 +9,67 @@
 	</head>
 	<body>
 		<%= render 'layouts/header' %>
-
-		<div class="row" style="overflow-x: hidden;">
-		  
-		  <div class="col-md-10 col-md-push-2 search_event">
-        <% if alert %>
-          <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" >
-            <button type="button" class="close" data-dismiss="alert">×</button><%= alert %>
-          </div>
-		  	<% end %>
-         <% if notice %>
-          <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" ><button type="button" class="close" data-dismiss="alert">×</button><%= notice %>
-          </div>
-        <% end %>
-        <%= yield %>
-
-		  </div>
-		  <div class="col-xs-2 col-md-pull-10">
-		  	<div class="jumbotron">
-		       <h5>Filter Events</h5>		     
-		      <div class="list-group list-group-item">
-	          <label>
-              <%= image_tag "home.png" , :style=>"width: 15px;"%>			     
-              <b><%= link_to "All", root_url  %></b>	    
-				    </label> 
-            <br/>
-            <label>    
-              <%= image_tag "building.png" , :style=>"width: 15px;"%>          
-              <b>City</b>       
-            </label> 
-            <div style="margin-left:10px margin-top:10px">
-  	          <% City.all.each do |city|%>		           
-  					    <div class="checkbox">
-  						    <label>      
-  						    	<%= check_box_tag "event[]", city.id, false, :id => "#{city.id}",:class=>'checkbox1' -%> <b><%= city.name %></b>
-  						     </label>
-  					    </div>
-
-  				    <%end%>
+    <div class="container-fluid">
+  		<div class="row" style="overflow-x: hidden;">
+  		  
+  		  <div class="col-md-10 col-md-push-2 search_event">
+          <% if alert %>
+            <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" >
+              <button type="button" class="close" data-dismiss="alert">×</button><%= alert %>
             </div>
-            <label>    
-              <%= image_tag "type.png" , :style=>"width: 15px;"%>          
-              <b>Type</b>       
-            </label> 
-            <div style="margin-left:20px">
-              <% EventType.all.each do |event_type|%>               
-                <div class="checkbox">
-                  <label>      
-                    <%= check_box_tag "event[]", event_type.id, false, :id => "#{event_type.id}",:class=>'checkbox2' -%> 
-                    <b><%= event_type.name %></b>
-                   </label>
-                </div>
-
-              <%end%>
+  		  	<% end %>
+           <% if notice %>
+            <div class="alert alert-dismissable alert-danger" style="font-weight:bold;font-size:12px;" ><button type="button" class="close" data-dismiss="alert">×</button><%= notice %>
             </div>
-		      </div>
-        
-		    </div>
-		  </div>
-		  
-		</div>
+          <% end %>
+          <%= yield %>
+
+  		  </div>
+  		  <div class="col-xs-2 col-md-pull-10">
+  		  	<div class="jumbotron">
+  		       <h5>Filter Events</h5>		     
+  		      <div class="list-group list-group-item">
+  	          <label>
+                <%= image_tag "home.png" , :style=>"width: 15px;"%>			     
+                <b><%= link_to "All", root_url  %></b>	    
+  				    </label> 
+              <br/>
+              <label>    
+                <%= image_tag "building.png" , :style=>"width: 15px;"%>          
+                <b>City</b>       
+              </label> 
+              <div style="margin-left:10px margin-top:10px">
+    	          <% City.all.each do |city|%>		           
+    					    <div class="checkbox">
+    						    <label>      
+    						    	<%= check_box_tag "event[]", city.id, false, :id => "#{city.id}",:class=>'checkbox1' -%> <b><%= city.name %></b>
+    						     </label>
+    					    </div>
+
+    				    <%end%>
+              </div>
+              <label>    
+                <%= image_tag "type.png" , :style=>"width: 15px;"%>          
+                <b>Type</b>       
+              </label> 
+              <div style="margin-left:20px">
+                <% EventType.all.each do |event_type|%>               
+                  <div class="checkbox">
+                    <label>      
+                      <%= check_box_tag "event[]", event_type.id, false, :id => "#{event_type.id}",:class=>'checkbox2' -%> 
+                      <b><%= event_type.name %></b>
+                     </label>
+                  </div>
+
+                <%end%>
+              </div>
+  		      </div>
+          
+  		    </div>
+  		  </div>
+  		  
+  		</div>
+    </div>
 	</body>
 </html>
 

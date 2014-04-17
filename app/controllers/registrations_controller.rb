@@ -3,23 +3,26 @@ class RegistrationsController < Devise::RegistrationsController
 
 	def new
 		super
+    @user= User.new
 	end
 
   def create
     debugger
+    @offer = params[:offer]
+    @looking=params[:looking_for]
     @user = User.new(user_params)
     @user.set_tag_list_on(:offer_tags,params[:offer])
     @user.set_tag_list_on(:looking_for_tags,params[:looking_for])
-  	if @user.save
-  		flash[:notice] = "User Succesfully created"
+    if @user.save
+      flash[:notice] = "User Succesfully created"
       sign_in @user
-      redirect_to root_url
+      redirect_to root_path 
     else
       flash[:notice] = "#{@user.errors.messages.first[0]}-#{@user.errors.messages.first[1][0]}"
-      @users = User.all
-      redirect_to :back
+      render :new
     end
  end
+ 
  def update
     @user = current_user
     respond_to do |format|

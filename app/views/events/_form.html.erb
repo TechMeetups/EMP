@@ -15,7 +15,7 @@
           </h2>
           <div class="col-lg-10 add_more_block" >
             <label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label>
-            <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 52%;" ,:required=>true %>
+            <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 52%;"%>
             <label class="col-lg-2 control-label" style="width: 93px; margin-left: -40px;">Featured : </label> <%= select_tag("banner[][feature]", options_for_select([["Yes",1],["No",0]]), :class=>"form-control dropdown_form" )%>
             <%= image_tag "plus.png", :style=>"margin-top: 7px; margin-left: 30px;",:title=>"Add more banners", :class=>"add_more" %>
           </div>
@@ -66,18 +66,14 @@
         <div style="margin-left:20px">
           <div class="event_box">
             <h4>  Host </h4>
-            <% if !user_signed_in?  %>
-            <% else %>
-            <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
-          <% end %>
-          <div id="host_show" >
-          <%= render "events/host"%>
-        </div>
+            <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control" ,:style=>"width: 193px; margin-left: 31px;"%><br />
+            <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"%> 
           </div>
 
           <div class="event_box">
             <h4>  Venue </h4>
-             <%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"width: 75%; height: 160px;" %><br/><br/>
+             <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control",:style=>"width: 193px; margin-left: 31px;" %><br />
+             <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> <br /><br/><br/>
             <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
             <b> City </b> <%= City.find(current_user.city_id).name %> <br/><br/>
             <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name if !current_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 

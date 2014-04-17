@@ -78,8 +78,9 @@ class EventsController < ApplicationController
           end
         end
         debugger
-        EventUser.create(user_id: current_user.id, event_id: @event.id, event_type: "Host")
-
+        EventUser.create(user_id: params[:host_id], event_id: @event.id, event_type: "Host")
+        debugger
+        EventUser.create(user_id: params[:venue_id], event_id: @event.id, event_type: "Venue")
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }
       else
@@ -142,24 +143,27 @@ class EventsController < ApplicationController
     flash[:notice] = "Event Succesfully Deleted"
     redirect_to :back
   end
-  def event_search
+   def event_search
     @events =[]
     if !params[:checked].blank?
-    params[:checked].each do |id|
+      params[:checked].each do |id|
       @events += User.find_by_city_id(id).events if !User.find_by_city_id(id).nil?
     end
+    else
+      @events = Event.all
     end
+    
   end
 
   def event_search_type
     @events =[]
     if !params[:checked].blank?
       @events = Event.where(event_type: params[:checked]) 
+    else
+      @events = Event.all
     end
     #debugger
-
-  end  
-
+  end
   def event_interaction
     Interaction.create(interaction_params)
   end
