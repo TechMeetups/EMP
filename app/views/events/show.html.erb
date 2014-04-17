@@ -46,27 +46,37 @@
     <h6 style="float:right; margin-top:-40px;">
     <%= image_tag "linkedin.png", :style=>"width: 18px;"%>
     <% if !user_signed_in? %>
-     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
+     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
      <% elsif @event.user_id != current_user.id %> 
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
     <% else %>
-      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]} %>
+      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
       <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;" %><% end %>    
     </h6>
     <div class="banner_block">
-      <div id="slideshow">
-        <% @banners.each_with_index do |banner, index| %>
+      <% if @banners.count == 1 %>
+      <% @banners.each_with_index do |banner, index| %>
           <% if index == 0 %>
             <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
           <% else %>
             <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
           <% end %>
+          <% end %>
+        <% else %>
+          <div id="slideshow">
+            <% @banners.count == 1 %>
+            <% @banners.each_with_index do |banner, index| %>
+              <% if index == 0 %>
+                <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
+              <% else %>
+                <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
+              <% end %>
+            <% end %>
+          </div>
         <% end %>
-      </div>
       <% if user_signed_in? && @event.user_id == current_user.id %> 
         <%= image_tag("edit1.png", :style=>"width: 15px; float:right", :id=>"edit_banners") %> 
       <% end %>
-      
     </div>
     <br/>
     <br/>
