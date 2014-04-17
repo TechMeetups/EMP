@@ -10,7 +10,6 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-
     if params[:format] == "img"
       @img_url = EventBanner.find(params[:banner_id]).file.path
       if Rails.env == "development"
@@ -32,7 +31,7 @@ class EventsController < ApplicationController
       @partners = @event.event_users.find_all_by_event_type("Partner")
       @attendee = @event.event_users.find_all_by_event_type("Attendee")
       @venue = @event.event_users.find_all_by_event_type("Venue")
-      @event_user = User.find(@event.event_users.find_by_event_type("Host").user_id) if !@event.event_users.find_by_event_type("Host").nil?
+      @event_user = @event.user
       respond_to do |format|
       format.html
       format.json { render :json => @other_users }

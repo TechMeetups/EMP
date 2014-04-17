@@ -48,13 +48,15 @@ ActiveAdmin.register Event do
        link_to image_tag( "../assets/trash.png", :style=>"width:15px;"),admin_event_path(event), :confirm => 'Are you sure?', :method => :delete 
     end
 
-    controller do
-      def create
-      super
-      @event.events_users.create(user_id: @event.user_id,event_type: "Host")
-    end 
-    end 
+    
 
   end
+  controller do
+      def create
+      super
+      debugger
+      @event.event_users.create(user_id: @event.user_id,event_type: "Host")
+    end 
+    end 
   permit_params  :user_id, :title, :s_date, :e_date, :s_time, :e_time, :description, :twitter_hash_tag, :event_type
 end

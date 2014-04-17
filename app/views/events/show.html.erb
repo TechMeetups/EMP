@@ -64,7 +64,6 @@
           <% end %>
         <% else %>
           <div id="slideshow">
-            <% @banners.count == 1 %>
             <% @banners.each_with_index do |banner, index| %>
               <% if index == 0 %>
                 <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>

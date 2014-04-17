@@ -6,7 +6,7 @@ class EventBanner < ActiveRecord::Base
                 :access_key_id => 'AKIAIUDOMFJ4ZGYKIO6Q',
                 :secret_access_key => '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'
               }
-
+   	validates_attachment_content_type :file, :content_type => /\Aimage\/.*\Z/ ,:message => 'Only .jpg/.png/.gif are allowed.'
 	belongs_to :event
 
 end
