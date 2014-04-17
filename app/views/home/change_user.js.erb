@@ -1,0 +1,5 @@
+<%if @venue_user.nil? %>
+$("#host_image").html("<%= escape_javascript(render 'events/user_image') %>")
+<%else%>
+$("#venue_image").html("<%= escape_javascript(render 'events/user_image') %>")
+<%end%>

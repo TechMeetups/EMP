@@ -71,6 +71,11 @@ class HomeController < ApplicationController
      @add_event_user = EventUser.new
   end
 
+  def change_user
+   @image_user = User.find(params[:user_id])
+   @venue_user = params[:user]
+  end
+
   def venue_change
     @event=Event.find(params[:event_user][:event_id])
     @event_user=@event.event_users.where(event_type: "Venue").first

@@ -14,7 +14,7 @@
     <div style="width: 50%; float: left;">
         <div id="users_avatar">
           <%=image_tag @user.avatar.url, :id=>"preview_image" ,:src=>"" ,:alt=>"" ,:style=>"max-width: 330px; max-height: 225px;" %>
-          <%=f.file_field :avatar ,:class=>"form-control" ,:id=>"user_avatar"%>
+          <%=f.file_field :avatar ,:class=>"form-control" ,:id=>"user_avatar" %>
           
         </div>
     </div>
@@ -121,12 +121,12 @@
           </tr>
         <tr>
           <th>Address</th>
-            <td> <%= f.text_area :address ,:class=>"form-control" ,:id=>"user_address" ,:placeholder=>"Address"%></td>
+            <td> <%= f.text_field :address ,:class=>"form-control" ,:id=>"user_address" ,:placeholder=>"Address"%></td>
         </tr>
         <tr>
           <th>City</th>
             <td> 
-              <%= f.select(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"user_city_id", :name=>"user[city_id]" )%> </td>
+              <%= f.select(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), :id=>"user_city_id", :name=>"user[city_id]",:class=>"form-control") %> </td>
         </tr> 
       </table>
     </div>

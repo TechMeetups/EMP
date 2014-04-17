@@ -66,14 +66,18 @@
         <div style="margin-left:20px">
           <div class="event_box">
             <h4>  Host </h4>
-            <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control" ,:style=>"width: 193px; margin-left: 31px;"%><br />
-            <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"%> 
+            <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control host_select" ,:style=>"width: 193px; margin-left: 31px;" %><br />
+            <div id="host_image">
+              <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            </div>
           </div>
 
           <div class="event_box">
             <h4>  Venue </h4>
-             <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control",:style=>"width: 193px; margin-left: 31px;" %><br />
-             <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> <br /><br/><br/>
+             <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control venue_select",:style=>"width: 193px; margin-left: 31px;" %><br />
+             <div id="venue_image">
+              <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            </div> <br /><br/><br/>
             <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
             <b> City </b> <%= City.find(current_user.city_id).name %> <br/><br/>
             <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(current_user.city_id).name if !current_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
@@ -103,15 +107,59 @@
   })
 
 
-  $(document).ready(function(){
-    $("#event_s_date" ).datepicker();
-    $('#event_s_date').datepicker("option", "dateFormat", 'dd/mm/yy')
+  $(".host_select").change(function(){
+    var user_id =$("#host_id").val()
+     var data = new FormData();
+     data.append('user_id', user_id);
+    $.ajax({
+          type: "POST",
+          url: "/home/change_user",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
 
-    $("#event_e_date" ).datepicker();
-    $('#event_e_date').datepicker("option", "dateFormat", 'dd/mm/yy')
+  })
+
+  $(".venue_select").change(function(){
+    var user_id =$("#venue_id").val()
+     var data = new FormData();
+     data.append('user_id', user_id);
+     data.append('user', "vanue");
+
+    $.ajax({
+          type: "POST",
+          url: "/home/change_user",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
+
+  })
+
+  $(document).ready(function(){
+    $("#event_s_date" ).datepicker({
+       minDate: 0,
+         onSelect: function(selected) {
+
+        $("#event_e_date").datepicker("option","minDate", selected)
+
+      }
+
+    });
+    $('#event_s_date').datepicker("option", "dateFormat", 'dd-mm-yy')
+
+    $("#event_e_date" ).datepicker({ minDate: 0
+    });
+    $('#event_e_date').datepicker("option", "dateFormat", 'dd-mm-yy')
 
     $('#event_s_time').timepicker();
     $('#event_e_time').timepicker();
+
 
     var add_more = $(".add_more_block").height();
     $(".add_more_block").css("height", add_more+40)
