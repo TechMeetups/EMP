@@ -24,10 +24,9 @@ var speakers_height = $("#speaker_list").height();
 var partner_height = $("#partner_list").height();
 var attendee_height = $("#attendee_list").height();
 
-$("#attendee_box").css("height", 200)
-  $("#speaker_box").css("height", 200)
-  $("#partner_box").css("height", 200)
-
+ $("#attendee_box").css("height", attendee_height+60)
+  $("#speaker_box").css("height", speakers_height+60)
+  $("#partner_box").css("height", partner_height+60)
 $(".confirm").on( 'click', function () {
     var user_trash = this
     alertify.confirm("Are you sure to delete", function (e)   {

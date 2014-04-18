@@ -1,7 +1,12 @@
 <table class="table">
   <tr>
     <% @partners.each_with_index do |partner, index| %>
-      <% if index+1 == 5 %> </tr><tr> <% end %>
+      <% if index+1 == 5 %> </tr><tr> 
+      <script>
+      var partner_height = $("#partner_list").height();
+      $("#partner_box").css("height", partner_height+180)
+      </script>
+      <% end %>
       <td style="text-align:center">
         <% if !User.where(:id => partner.user_id ).blank?  %>  
         <% @user = User.where(:id => partner.user_id ).first %>

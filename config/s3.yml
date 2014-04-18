@@ -1,0 +1,8 @@
+development:
+  access_key_id: AKIAIUDOMFJ4ZGYKIO6Q
+  secret_access_key: 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
+  bucket: tmu-events
+production:
+  access_key_id: AKIAIUDOMFJ4ZGYKIO6Q
+  secret_access_key: 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
+  bucket: tmu-events

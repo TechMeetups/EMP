@@ -1,11 +1,15 @@
 <table class="table">
   <tr>
     <% @attendee.each_with_index do |attendee, index| %>
-      <% if index+1 == 9 %> </tr><tr> <% end %>
+      <% if index+1 == 8 %> </tr><tr> 
+      <script>
+      var attendee_height = $("#attendee_list").height();
+      $("#attendee_box").css("height", attendee_height+180)
+    </script><% end %>
       <td style="text-align:center">
         <% if !User.where(:id => attendee.user_id ).blank?  %>  
         <% @user = User.where(:id => attendee.user_id ).first %>
-          <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;"),user_profile_path(id: @user.id) ) %> <br/>
+          <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 50px;height: 40px;"),user_profile_path(id: @user.id) ) %> <br/>
           <b><%= link_to @user.name, user_profile_path(id: @user.id) %></b><br />
           <% if user_signed_in? && @event.user_id == current_user.id %>
             <b><%=  link_to(image_tag("trash.png", :style=>"width: 20px;"),home_destroy_event_user_path(attendee), :class=>"confirm", :id=>"confirm_#{attendee.user_id}") %></b>

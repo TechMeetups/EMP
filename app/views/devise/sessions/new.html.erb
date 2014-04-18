@@ -1,10 +1,10 @@
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html=>{:class=>"form-horizontal"}) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html=>{:class=>"form-horizontal validate-form"}) do |f| %>
   <fieldset>
     <legend>Sign in</legend>
     <div class="form-group">
       <label for="inputEmail" class="col-lg-2 control-label">Email</label>
       <div class="col-lg-10">
-      	<%= f.email_field :email, :autofocus => true, :placeholder=>"Email" , :class=>"form-control"%>
+      	<%= f.email_field :email, :autofocus => true, :placeholder=>"Email" , :class=>"form-control", :required=> :true%>
       </div>
     </div>
     <div class="form-group">
@@ -31,5 +31,32 @@
 <style>
 .form-control{
   width: 250px;
+}
+</style>
+<script>
+function hasHtml5Validation () {
+  return typeof document.createElement('input').checkValidity === 'function';
+}
+ 
+if (hasHtml5Validation()) {
+  $('.validate-form').submit(function (e) {
+    if (!this.checkValidity()) {
+      e.preventDefault();
+      $(this).addClass('invalid');
+      $('#status').html('invalid');
+    } else {
+      $(this).addClass('valid');
+      $('#status').html('submitted');
+    }
+  });
+}
+</script>
+<style>
+.invalid input:required:invalid {
+    background: #BE4C54;
+}
+ 
+.invalid input:required:valid {
+    background: #17D654 ;
 }
 </style>

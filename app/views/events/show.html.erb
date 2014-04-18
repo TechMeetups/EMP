@@ -165,7 +165,7 @@
   </div>
 
   <br/>
-  <div  class="event_box" id="partner_box">
+  <div  class="event_box" id="partner_box" style="height: 169px;">
     <h4> Partner  </h4>
     <div class="table_block"  id="partner_list">
       <%= render "partners_list" %>
@@ -194,7 +194,7 @@
     <% end %>
   </div>
   <br/>
-  <div  class="event_box" id="attendee_box">
+  <div  class="event_box" id="attendee_box" style="height: 169px;">
     <h4> Attendees </h4>
     <div class="table_block" id="attendee_list">
       <%= render "attendees_list" %>
@@ -415,7 +415,7 @@
   var partner_height = $("#partner_list").height();
   var attendee_height = $("#attendee_list").height();
 
-  $("#attendee_box").css("height", 200)
-  $("#speaker_box").css("height", 200)
-  $("#partner_box").css("height", 200)
+  $("#attendee_box").css("min-height", 200)
+  $("#speaker_box").css("min-height", 200)
+  $("#partner_box").css("min-height", 200)
 </script>

@@ -3,6 +3,6 @@
 #
 # Examples:
 #
-cities = City.create([{ name: 'London' }, { name: 'Barlin' }, { name: 'New York' }])
+cities = City.create([{ name: 'London' }, { name: 'Berlin' }, { name: 'New York' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 event_types = EventType.create([{ name:'Hackathon'}, {name:'Startup Job Fair'}, {name:'Startup Workshop'}])
