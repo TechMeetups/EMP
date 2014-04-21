@@ -65,6 +65,15 @@
 			</div>
 		
 		<% end %>
+	<% else %>
+	<% if params[:action] == "event_search" %>
+	<h4 style="font-weight:bold">
+	There is no event for <%= City.find(params[:id]).name %>.</h6>
+	<% end %>
+	<% if params[:action] == "event_search_type" %>
+	<h4 style="font-weight:bold">
+	There is no event for <%= EventType.find(params[:id]).name %>.</h6>
+	<% end %>
 	<% end %>
 </div>
 
@@ -98,4 +107,5 @@ $("#add_new_event").click(function(){
       return false; 
     }
 })
+
 </script>

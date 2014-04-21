@@ -12,11 +12,10 @@
     </h2>
 
     <div style="width: 50%; float: left;">
-        <div id="users_avatar">
-          <%=image_tag @user.avatar.url, :id=>"preview_image" ,:src=>"" ,:alt=>"" ,:style=>"max-width: 330px; max-height: 225px;" %>
-          <%=f.file_field :avatar ,:class=>"form-control" ,:id=>"user_avatar" %>
-          
-        </div>
+      <div id="users_avatar">
+        <%=image_tag @user.avatar.url, :id=>"preview_image" ,:src=>"../assets/missing.png",:alt=>"",:style=>"max-width: 330px; max-height: 225px;" %>
+        <%=f.file_field :avatar ,:class=>"form-control" ,:id=>"user_avatar" %>
+      </div>
     </div>
 
 

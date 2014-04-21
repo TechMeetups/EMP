@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  validates_format_of :name, :with => /\A[a-zA-Z ]+[\s]+([a-zA-Z ]|\d)*\Z/
+  validates_format_of :name, :with => /\A[a-zA-Z ]+([a-zA-Z ]|\d)*\Z/
   has_attached_file :avatar, :styles => { :thumb => "300x300" },
                 :storage => :s3,
                 :s3_credentials => S3_CREDENTIALS,
