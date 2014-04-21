@@ -40,3 +40,21 @@
     background: #17D654 ;
 }
 </style>
+<script>
+function hasHtml5Validation () {
+  return typeof document.createElement('input').checkValidity === 'function';
+}
+ 
+if (hasHtml5Validation()) {
+  $('.validate-form').submit(function (e) {
+    if (!this.checkValidity()) {
+      e.preventDefault();
+      $(this).addClass('invalid');
+      $('#status').html('invalid');
+    } else {
+      $(this).addClass('valid');
+      $('#status').html('submitted');
+    }
+  });
+}
+</script>

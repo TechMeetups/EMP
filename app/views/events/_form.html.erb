@@ -13,11 +13,12 @@
           <h2>
              <%= f.text_field :title, :class=>"form-control", :placeholder=>"Title of the Event" ,:required=>true %>
           </h2>
-          <div class="col-lg-10 add_more_block" >
+          <div class="col-lg-10 add_more_block" style="height: 150px;">
             <label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label>
-            <%= file_field_tag 'banner[][file]', :class=>"form-control", :style=>"float:left; width: 52%;"%>
-            <label class="col-lg-2 control-label" style="width: 93px; margin-left: -40px;">Featured : </label> <%= select_tag("banner[][feature]", options_for_select([["Yes",1],["No",0]]), :class=>"form-control dropdown_form" )%>
-            <%= image_tag "plus.png", :style=>"margin-top: 7px; margin-left: 30px;",:title=>"Add more banners", :class=>"add_more" %>
+            <input class="form-control" id="banner__file" name="banner[][file]" style="float:left; width: 52%;" type="file">
+            <label class="col-lg-2 control-label" style="width: 93px; margin-left: -40px;">Featured : </label> <select class="form-control dropdown_form" id="banner__feature" name="banner[][feature]"><option value="1">Yes</option>
+              <option value="0">No</option></select>
+            <img alt="Plus" class="add_more" src="/assets/plus-fec32ff135d75e3fcbeea64f97e0b59a.png" style="margin-top: 7px; margin-left: 30px;" title="Add more banners">
           </div>
           <p style="height:20px;">
           </p>
@@ -174,10 +175,24 @@
 
     $('.dateselect-time').timepicker();
   });
-
-  
-
-  
+</script>
+<script>
+function hasHtml5Validation () {
+  return typeof document.createElement('input').checkValidity === 'function';
+}
+ 
+if (hasHtml5Validation()) {
+  $('.validate-form').submit(function (e) {
+    if (!this.checkValidity()) {
+      e.preventDefault();
+      $(this).addClass('invalid');
+      $('#status').html('invalid');
+    } else {
+      $(this).addClass('valid');
+      $('#status').html('submitted');
+    }
+  });
+}
 </script>
 <script>
 $(document).ready(function(){
