@@ -3,7 +3,7 @@
 <br/>
 <br/>
 <% if user_signed_in?%>
-  <%= form_for(Event.new, :html=>{:class=>"form-horizontal", :multipart=>true})  do |f| %>
+  <%= form_for(Event.new, :html=>{:class=>"form-horizontal validate-form", :multipart=>true})  do |f| %>
     <fieldset>
       <legend>Add a New Event</legend>
       
@@ -97,6 +97,14 @@
 .add_more_block{
   width: 100%;
 }
+.invalid input:required:invalid {
+    background: #BE4C54;
+}
+ 
+.invalid input:required:valid {
+    background: #17D654 ;
+
+}
 </style>
 
 <script>
@@ -175,4 +183,5 @@
 $(document).ready(function(){
   $('#new_form').validate();
 })
+
 </script>

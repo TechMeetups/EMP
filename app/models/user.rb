@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
+  validates_format_of :name, :with => /\A[a-zA-Z ]+[\s]+([a-zA-Z ]|\d)*\Z/
   has_attached_file :avatar, :styles => { :thumb => "300x300" },
                 :storage => :s3,
                 :s3_credentials => S3_CREDENTIALS,
                
                  :bucket =>"tmu-emp"
-            
+  validates_format_of :email, :with => /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/    
    validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/ ,:message => 'Only .jpg/.png/.gif are allowed.'
   acts_as_taggable # Alias for acts_as_taggable_on :tags
   acts_as_taggable_on :offer, :looking_for
@@ -18,14 +18,6 @@ class User < ActiveRecord::Base
   has_many :interactions, dependent: :destroy
   has_many :event_users , dependent: :destroy
   belongs_to :city
-end
 
-# :storage => :s3,
-# :s3_credentials => "#{Rails.root}/config/s3.yml",
-# :url => ":s3_domain_url",
-# :path => "/:class/avatars/:id.:style.:extension",
-# :bucket =>"ratherism#{Rails.env}",
-# :styles => {
-# :small => ['100x100#', :jpg],
-# :medium => ['250x250', :jpg]
-# }
+  
+end
