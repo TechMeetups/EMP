@@ -108,7 +108,6 @@
 		.alertify-buttons {
 		}
 			.alertify-button,
-			.alertify-button:hover,
 			.alertify-button:active,
 			.alertify-button:visited {
 				background: none;

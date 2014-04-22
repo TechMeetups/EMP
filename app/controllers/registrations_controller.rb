@@ -33,6 +33,12 @@ class RegistrationsController < Devise::RegistrationsController
       end
     end
  end
+
+ def destroy
+    cookies.delete(:secureusertokens)
+    reset_session
+    redirect_to root_url
+  end
   private
   def user_params
     params.require(:user).permit(:email,:name,:password,:password_confirmation,:company,:city_id,:address,:user_type,:description,:offer, :looking_for,:twitter,:facebook,:linkedin,:avatar)

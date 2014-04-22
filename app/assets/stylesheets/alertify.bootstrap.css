@@ -52,7 +52,6 @@
 			text-align: right;
 		}
 			.alertify-button,
-			.alertify-button:hover,
 			.alertify-button:focus,
 			.alertify-button:active {
 				margin-left: 10px;
@@ -76,7 +75,6 @@
 				box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
 			}
 				.alertify-button-cancel,
-				.alertify-button-cancel:hover,
 				.alertify-button-cancel:focus,
 				.alertify-button-cancel:active {
 					text-shadow: 0 -1px 0 rgba(255,255,255,.75);
@@ -89,13 +87,11 @@
 					background-image:      -o-linear-gradient(top, #FFF, #E6E6E6);
 					background-image:         linear-gradient(top, #FFF, #E6E6E6);
 				}
-				.alertify-button-cancel:hover,
 				.alertify-button-cancel:focus,
 				.alertify-button-cancel:active {
 					background: #E6E6E6;
 				}
 				.alertify-button-ok,
-				.alertify-button-ok:hover,
 				.alertify-button-ok:focus,
 				.alertify-button-ok:active {
 					text-shadow: 0 -1px 0 rgba(0,0,0,.25);
@@ -105,7 +101,6 @@
 					border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 					color: #FFF;
 				}
-				.alertify-button-ok:hover,
 				.alertify-button-ok:focus,
 				.alertify-button-ok:active {
 					background: #04C;

@@ -13,7 +13,9 @@ ActiveAdmin.register Event do
   #  permitted << :other if resource.something?
   #  permitted
   # end
-  
+  filter :title
+  filter :s_date
+  filter :e_date
   form do |f|
     f.inputs "Details" do
       f.input :user_id ,:as => :select, :collection => User.all.map {|a| ["#{a.name}",a.id]}

@@ -128,6 +128,7 @@
       <% elsif @event.user_id != current_user.id %> 
         <%= @event.description %>
       <% else %>
+      
         <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %>
         <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
       <% end %>
@@ -230,7 +231,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 76px; margin-top: -64px;" ,class: "change_host"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>

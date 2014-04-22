@@ -17,11 +17,11 @@
         <%= @user.user_type %>
       <% end %>
     </h6>
-    <div style="width: 50%; float: left;">
+    <div style="width: 50%; float: left;margin-top:-25px">
       <div id="users_avatar"><%= image_tag @user.avatar.url ,:style=>"height: 250px; width: 250px;"%></div>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
-          <input id="file" type="file" size="17" name="file" class="form-control" style="width: 38%;">
+          <input id="file" type="file" size="17" name="file" class="form-control" style="width: 56%;">
           <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 15px; margin-left: 83%; margin-top: -60px;" %>
         </div>
         <%= image_tag "edit1.png",:id=>"edit_user_avatar", :style=>"width: 15px; margin-left: 83%;" %>
@@ -121,7 +121,7 @@
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
 
         <b>Description </b>
-        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea %></th>
+        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea ,:inner_class => "css_class"%></th>
          <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
       <% else %>
         <%=  @user.description %>
@@ -133,7 +133,7 @@
       <table width="282px" cellpadding="10" class="table">
         <tr>
           <th>Email</th>
-          <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}" %>
+          <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}",:inner_class => "css_class" %>
           </td>
           <td><%= image_tag "edit1.png",:id=>"email-#{current_user.id}", :style=>"width: 15px;" %>
           </td>
@@ -145,7 +145,7 @@
         </tr>
         <tr>
           <th>Address</th>
-          <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}"%></td>
+          <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}" ,:inner_class => "css_class"%></td>
           <td><%= image_tag "edit1.png",:id=>"address-#{current_user.id}", :style=>"width: 15px;" %>
           </td>
         </tr>
@@ -246,15 +246,31 @@
   <div class="event_box">
     <h4>  Social Media Stream </h4>
     <% if user_signed_in? && params[:id].to_i == current_user.id %>
-      <%= image_tag "twitter.png", :style=>"width: 18px;" %>
-      <%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %>
-      <%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
-      <%= image_tag "facebook.png", :style=>"width: 18px;" %>
-      <%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %>
-      <%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
-      <%= image_tag "linkedin1.png", :style=>"width: 18px;" %>
-      <%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %>
-      <%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %><br/><br/>
+    <table align="center">
+      <tr>
+        <td><%= image_tag "twitter.png", :style=>"width: 18px;" %></td>
+        <td><%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %></td>
+        <td>&nbsp;&nbsp;</td>
+        <td><%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %>
+        </td>
+      </tr>
+      <tr>
+        <td><br /></td>
+        </tr>
+      <tr>
+        <td><%= image_tag "facebook.png", :style=>"width: 18px;" %></td>
+        <td><%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %></td>
+        <td>&nbsp;&nbsp;</td>
+        <td><%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %></td>
+      </tr>
+      <tr><td><br /></td></tr>
+      <tr>
+        <td><%= image_tag "linkedin1.png", :style=>"width: 18px;" %></td>
+        <td><%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %></td>
+        <td>&nbsp;&nbsp;</td>
+        <td><%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %></td>
+      </tr>
+    </table>
     <% else %>
       <%=  @user.twitter %><br/><br/>
       <%=  @user.facebook %><br/><br/>
@@ -282,6 +298,9 @@
 }
 legend{
   margin-bottom: -1px;
+}
+.css_class {
+    width:300px;
 }
 
 </style>

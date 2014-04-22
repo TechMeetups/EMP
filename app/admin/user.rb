@@ -14,8 +14,10 @@ ActiveAdmin.register User do
   #  permitted << :other if resource.something?
   #  permitted
   # end
-
-
+  filter :name
+  filter :city
+  filter :company
+  filter :user_type
   form do |f|
     f.inputs "Details" do
       

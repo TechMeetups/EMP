@@ -10,7 +10,7 @@ div.tagsinput div { display:block; float: left; }
     background-color: #CDE69C;
     color: #638421;
     float: left;
-    margin: 0 1px 1px 0;
+    margin: -1px 9px 1px -40px;
     overflow: hidden;
     padding: 5px 8px;
 }
