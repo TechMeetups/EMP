@@ -91,6 +91,7 @@
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
+
           <%= @event.s_time.strftime("%I:%M%p") %>
         <% elsif @event.user_id != current_user.id %> 
           <%= @event.s_time.strftime("%I:%M%p") %>
@@ -99,9 +100,9 @@
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_time") %>
         <% end %>
         
-      <b style="margin-left: 50px"> to </b>      
+      <b style="margin-left: 154px"> to </b>      
     </div> 
-    <div style="margin-left: 389px; margin-top: -31px;">
+    <div style="margin-left: 478px; margin-top: -31px;">
       <b>  End </b>
         <% if !user_signed_in?  %>
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
@@ -123,7 +124,7 @@
     </p>
     </div>
       
-      <p><br />
+      <p><b style="font-size:12px;">Description</b>
       <% if !user_signed_in?  %>
         <%= @event.description %>
       <% elsif @event.user_id != current_user.id %> 
@@ -233,7 +234,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 73px; margin-top: -58px;" ,class: "change_host"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>
@@ -246,7 +247,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_venue"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 83px; margin-top: -58px;" ,class: "change_venue"%>
       <% end %>
       <div id="venue_show" >
         <%= render "venue"%>
@@ -254,7 +255,7 @@
     </div>
       <br/><br/>
       <b> Address </b> 
-     
+
       <br/><%= User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).address if !@event_user.nil? %><br/><br/>
       <b> City </b> <%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).city_id).name %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id).last.user_id).city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
@@ -328,15 +329,6 @@
 </style>
 
 <script type="text/javascript" charset="utf-8">
-// jQuery(function($){
- 
-//  $("#event_twitter_hash_tag").Datepicker({"format": "%m/%d/%Y", "autoclose": true, 
-//   "startDate":new Date()
-//  });
-
-//   });
-  /* Activating Best In Place */
-  
    jQuery(function($){
     $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
   });
@@ -387,7 +379,7 @@
 
   var event_id = "<%= @event.id %>"
 
-  $("#best_in_place_event_"+event_id+"_s_time").timepicker();
+  
 
   $(".add_more_people").click(function(){
     var block_id = $(this).attr("id");
@@ -403,10 +395,7 @@
       $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
       $("#dynamic_attendee").val("Attendee")
     }
-    // else if(block_id == "add_venues"){
-    //   $("#venue_block").html("<%= escape_javascript(render :partial => 'add_more_venue')%>")
-    //   $("#dynamic_venue").val("Venue")
-    // }
+    
   });
   $(".change_host").click(function(){
     var block_id = $(this).attr("id");

@@ -6,7 +6,7 @@
 				<tr>
 					<th>User Name</th>
 					<th>Memo</th>
-					<th></th>
+					<th>Status</th>
 				</tr>
 				<% @interactions.each do |interaction| %>
 					<% if interaction.action == "Become Speaker" %>
@@ -15,9 +15,9 @@
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
 							<td> <% if interaction.status %>
-								Accepted
+								<h5>Accepted</h5>
 								<% else %>
-								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<h5><%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></h5>
 								<% end %>
 							</td>
 						</tr>
@@ -31,7 +31,7 @@
 				<tr>
 					<th>User Name</th>
 					<th>Memo</th>
-					<th></th>
+					<th>Status</th>
 				</tr>
 				<% @interactions.each do |interaction| %>
 					<% if interaction.action == "Become Partner" %>
@@ -40,9 +40,9 @@
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
 							<td> <% if interaction.status %>
-								Accepted
+								<h5>Accepted</h5>
 								<% else %>
-								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<h5><%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></h5>
 								<% end %>
 							</td>
 						</tr>
@@ -56,7 +56,7 @@
 				<tr>
 					<th>User Name</th>
 					<th>Memo</th>
-					<th></th>
+					<th>Status</th>
 				</tr>
 				<% @interactions.each do |interaction| %>
 					<% if interaction.action == "Attend event" %>
@@ -65,9 +65,9 @@
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
 							<td> <% if interaction.status %>
-								Accepted
+								<h5>Accepted</h5>
 								<% else %>
-								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<h5><%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></h5>
 								<% end %>
 							</td>
 						</tr>
@@ -81,7 +81,7 @@
 				<tr>
 					<th>User Name</th>
 					<th>Memo</th>
-					<th></th>
+					<th>Status</th>
 				</tr>
 				<% @interactions.each do |interaction| %>
 					<% if interaction.action == "Contact Host" %>
@@ -90,9 +90,9 @@
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
 							<td> <% if interaction.status %>
-								Accepted
+								<h5>Accepted</h5>
 								<% else %>
-								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<h5><%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></h5>
 								<% end %>
 							</td>
 						</tr>

@@ -9,52 +9,18 @@
   </div>
   <div class="navbar-collapse collapse navbar-inverse-collapse">
     <ul class="nav navbar-nav">
-      <li class="active"><%= link_to "Home", root_url %></li>
-      <li><%= link_to "Notifications", notifications_path if user_signed_in? %></li>
-     <!--  <li><%= link_to "Events", root_url %></li>
-      <li><%= link_to "Members", root_url %></li>
-      <li><%= link_to "Jobs", root_url %></li>
-      <li><%= link_to "About Us", root_url %></li> -->
-<!--       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li class="dropdown-header">Dropdown header</li>
-          <li><a href="#">Separated link</a></li>
-          <li><a href="#">One more separated link</a></li>
-        </ul>
-      </li> -->
+      <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
+        <li class="active"><%= link_to "Home", root_url %></li>
+        <li><%= link_to("Admin Login",admin_dashboard_path(id: current_user.id),:target => "_blank") %></li>
+        <li><%= link_to "Notifications", notifications_path if user_signed_in? %></li>
+      <% elsif user_signed_in? %>
+        <li class="active"><%= link_to "Home", root_url %></li>
+        <li><%= link_to "Notifications", notifications_path if user_signed_in? %></li>
+      <% end %>
     </ul>
     
     <ul class="nav navbar-nav navbar-right">
-      <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
-      <!-- <form class="navbar-form navbar-left">
-      <input class="form-control col-lg-8" placeholder="Search" type="text" style="margin-left:380px;"> -->
-        <%= form_tag events_search_path, :remote=>true ,:class=>"navbar-form navbar-left" do %>
-          <input name="val" class="form-control col-lg-8 " placeholder="Search" type="text">
-        <%end%>
-        
-          <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
-            
-            <ul class="dropdown-menu">
-              <li><%= link_to("AdminLogin",admin_dashboard_path(id: current_user.id),:target => "_blank") %></li>
-               <li class="divider"></li>
-              <li><%= link_to("Edit Profile",user_profile_path(id: current_user.id)) %></li>
-              <li class="divider"></li>
-              
-              <li><%= link_to("Manage Events",events_path) %></li>
-              <li class="divider"></li>
-
-              <li><%= link_to("Logout",destroy_user_session_path, method: :delete) %></li>
-            </ul>
-          </li>
-        <% elsif user_signed_in? %>
-      <!-- <form class="navbar-form navbar-left">
-      <input class="form-control col-lg-8" placeholder="Search" type="text" style="margin-left:380px;"> -->
+      <% if user_signed_in? %>
       <%= form_tag events_search_path, :remote=>true ,:class=>"navbar-form navbar-left" do %>
       <input name="val" class="form-control col-lg-8 " placeholder="Search" type="text">
       <%end%>

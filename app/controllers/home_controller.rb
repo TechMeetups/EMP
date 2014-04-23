@@ -116,13 +116,14 @@ class HomeController < ApplicationController
   end
 
   def destroy_event_user
-    debugger
     @event_user = EventUser.find(params[:format])
     @event_user.destroy
-    if @event_user.event_type == "Venue"
-      flash[:notice] = "Venue Succesfully Deleted"
+    if @event_user.event_type == "Speaker"
+      flash[:notice] = "Speaker Succesfully Deleted"
+    elsif @event_user.event_type == "Attendee"
+      flash[:notice] = "Attendee Succesfully Deleted"      
     else
-      flash[:notice] = "Activity Succesfully Deleted"
+      flash[:notice] = "Partner Succesfully Deleted"
     end
     redirect_to :back
 end
