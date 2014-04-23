@@ -6,8 +6,6 @@
   <% @user1=current_user %>
   <% end %>
     <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
-
-      </div>
       <br>
       <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> 
       

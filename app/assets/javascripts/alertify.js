@@ -32,8 +32,8 @@
 			buttons : {
 				holder : "<nav class=\"alertify-buttons\">{{buttons}}</nav>",
 				submit : "<button type=\"submit\" class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\">{{ok}}</button>",
-				ok     : "<button class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\">{{ok}}</button>",
-				cancel : "<button class=\"alertify-button alertify-button-cancel\" id=\"alertify-cancel\">{{cancel}}</button>"
+				cancel : "<button class=\"alertify-button alertify-button-cancel\" id=\"alertify-cancel\">{{cancel}}</button>",
+				ok     : "<button class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\">{{ok}}</button>"
 			},
 			input   : "<div class=\"alertify-text-wrapper\"><input type=\"text\" class=\"alertify-text\" id=\"alertify-text\"></div>",
 			message : "<p class=\"alertify-message\">{{message}}</p>",
@@ -111,7 +111,7 @@
 			 * Which button should be focused by default
 			 * @type {String}	"ok" (default), "cancel", or "none"
 			 */
-			buttonFocus : "ok",
+			// buttonFocus : "ok",
 
 			/**
 			 * Set the transition event on load

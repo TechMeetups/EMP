@@ -1,6 +1,6 @@
-<div style="float: left; width: 72%;">
+<div style="float: left; width: 72%;border-right: 1px solid ;color: #D1D0CE;">
   <div style="height: 270px;">
-    <h2> 
+    <h2 style="margin-top:20px;"> 
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place @user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
         <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
@@ -17,8 +17,8 @@
         <%= @user.user_type %>
       <% end %>
     </h6>
-    <div style="width: 50%; float: left;margin-top:-25px">
-      <div id="users_avatar"><%= image_tag @user.avatar.url ,:style=>"height: 250px; width: 250px;"%></div>
+    <div style="width: 50%; float: left;margin-top:-10px;">
+      <div id="users_avatar"><%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 300px; margin-top: 15px;"%></div>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 56%;">
@@ -242,7 +242,7 @@
 </div>
 
 
-<div style="float: right; width: 25%; border-left: 1px solid; color: #D1D0CE; text-align:center;">
+<div style="float: right; width: 25%; text-align:center;">
   <div class="event_box">
     <h4>  Social Media Stream </h4>
     <% if user_signed_in? && params[:id].to_i == current_user.id %>

@@ -35,9 +35,6 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
-	 jQuery(function($){
-	  $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
-	});
 	 $(".confirm").on( 'click', function () {
     var user_trash = this
     alertify.confirm("Are you sure to delete", function (e)   {

@@ -13,6 +13,8 @@ TechMeetsUp::Application.routes.draw do
   post 'events/event_search'
   get 'events/event_search'
   post 'events/event_search_type'
+  get 'events/search'=> 'events#search'
+  post 'events/search'=> 'events#search'
   get 'events/event_search_type'
   get 'notifications'=> 'home#notifications', as: :notifications
   get 'accept_proposal'=> 'home#accept_proposal', as: :accept_proposal

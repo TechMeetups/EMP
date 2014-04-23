@@ -12,8 +12,8 @@
 
       				<h4 class="panel-title"><%= truncate(event.title, :length => 30) %></h4>
 
-			      	<a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"top-margin: 0px; width: 15px; float: top; float:right")%>
-			      	</a>
+			      	<!-- <a href="#" data-toggle="tooltip" title="<%= User.find(event.try(:user_id)).address %>"><%= image_tag("setting.png", :style=>"top-margin: 0px; width: 15px; float: top; float:right")%>
+			      	</a> -->
 				</div>
 			      
 			
@@ -60,10 +60,8 @@
 			      </div>
 			    </div>
 			   </div>  
-
 			  </div>
-			</div>
-		
+			</div>		
 		<% end %>
 	<% else %>
 	<% if params[:action] == "event_search" %>

@@ -1,4 +1,5 @@
 <!-- Modal -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -31,7 +32,7 @@
 
 
 <div style="float: left; width: 72%;">
-  <div class="event_box">
+  <div class="event_box" style="border-bottom: 1px solid; border-color: #D1D0CE;">
     <h2>  
       <% if !user_signed_in?  %>
         <%= @event.title %>
@@ -128,7 +129,6 @@
       <% elsif @event.user_id != current_user.id %> 
         <%= @event.description %>
       <% else %>
-      
         <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %>
         <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
       <% end %>
@@ -137,7 +137,8 @@
 
   </div>
   
-  <div class="event_box" id="speaker_box" style="height: 169px;">
+  <div class="event_box" id="speaker_box" style="height: 169px;border-bottom: 1px solid;
+  border-color: #D1D0CE;">
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
@@ -166,7 +167,8 @@
   </div>
 
   <br/>
-  <div  class="event_box" id="partner_box" style="height: 169px;">
+  <div  class="event_box" id="partner_box" style="height: 169px;border-bottom: 1px solid;
+  border-color: #D1D0CE;">
     <h4> Partner  </h4>
     <div class="table_block"  id="partner_list">
       <%= render "partners_list" %>
@@ -224,14 +226,14 @@
   </div>
 </div>
 
-<div style="float: right; width: 25%; border-left: 1px solid; text-align:center">
+<div style="float: right; width: 25%; text-align:center">
   <div style="margin-left:20px">
     <div class="event_box">
       <h4>  Host </h4>
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 76px; margin-top: -64px;" ,class: "change_host"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_host"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>
@@ -241,26 +243,21 @@
     <div class="event_box">
       <h4>  Venue </h4>
       
-      <%= render "venue_list" %>
-      <% if !user_signed_in?  %>        
-        <% elsif @event.user_id != current_user.id %>
-        <% else %>
-        <% if !@venue.blank? %>
-          <div class="button_block" id="venue_block">
-            <%#= link_to "Add venue", "#", :id=>"add_venues", :class=>"btn btn-success add_more_people", :remote=>true %>
-            <%#=  link_to(image_tag("edit1.png", :style=>"width: 15px;",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
-          </div>
-        <% else %>
-          <div id="venue_block"  style="margin:-25px 88px">
-            <%#= link_to "Add venue", "#", :id=>"add_venues", :remote=>true%>
-            <%=  link_to(image_tag("edit1.png", :style=>"width: 15px;",:id=>"venue_block"),"#", :id=>"add_venues", :remote=>true,:class=>"add_more_people") %>
-          </div>
-        <% end %>
+      <% if !user_signed_in?  %>
+      <% elsif @event.user_id != current_user.id %> 
+      <% else %>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 170px; margin-top: -64px;" ,class: "change_venue"%>
       <% end %>
+      <div id="venue_show" >
+        <%= render "venue"%>
+      </div>
+    </div>
       <br/><br/>
-      <b> Address </b> <br/><%= @event_user.address if !@event_user.nil? %><br/><br/>
-      <b> City </b> <%= City.find(User.find(@event.user_id).city_id).name %> <br/><br/>
-      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(@event_user.city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+      <b> Address </b> 
+     
+      <br/><%= User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).address if !@event_user.nil? %><br/><br/>
+      <b> City </b> <%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).city_id).name %> <br/><br/>
+      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id).last.user_id).city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
     <div class="event_box">
       <h4>Social Media</h4><br /><br />
@@ -282,7 +279,8 @@
 <style>
 
 .event_box{
-  border-bottom: 1px solid;
+ /* border-bottom: 1px solid;
+  color: #D1D0CE;*/
 }
 
 #slideshow {
@@ -337,6 +335,11 @@
 //  });
 
 //   });
+  /* Activating Best In Place */
+  
+   jQuery(function($){
+    $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
+  });
   function slideSwitch() {
     var $active = $('#slideshow IMG.active');
 
@@ -400,10 +403,10 @@
       $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
       $("#dynamic_attendee").val("Attendee")
     }
-    else if(block_id == "add_venues"){
-      $("#venue_block").html("<%= escape_javascript(render :partial => 'add_more_venue')%>")
-      $("#dynamic_venue").val("Venue")
-    }
+    // else if(block_id == "add_venues"){
+    //   $("#venue_block").html("<%= escape_javascript(render :partial => 'add_more_venue')%>")
+    //   $("#dynamic_venue").val("Venue")
+    // }
   });
   $(".change_host").click(function(){
     var block_id = $(this).attr("id");
@@ -411,7 +414,12 @@
       $("#host_block").html("<%= escape_javascript(render :partial => 'events/change_host')%>")
       $("#dynamic_appplicant").val("change_host")
     });
+  $(".change_venue").click(function(){
+    var block_id = $(this).attr("id");
 
+      $("#venue_block").html("<%= escape_javascript(render :partial => 'events/change_venue')%>")
+      $("#dynamic_appplicant").val("change_venue")
+    });
   var speakers_height = $("#speaker_list").height();
   var partner_height = $("#partner_list").height();
   var attendee_height = $("#attendee_list").height();

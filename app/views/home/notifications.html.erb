@@ -14,7 +14,12 @@
 						<tr>
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
-							<td> <%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></td>
+							<td> <% if interaction.status %>
+								Accepted
+								<% else %>
+								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				<% end %>
@@ -34,7 +39,12 @@
 						<tr>
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
-							<td> <%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></td>
+							<td> <% if interaction.status %>
+								Accepted
+								<% else %>
+								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				<% end %>
@@ -54,7 +64,12 @@
 						<tr>
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
-							<td> <%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></td>
+							<td> <% if interaction.status %>
+								Accepted
+								<% else %>
+								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				<% end %>
@@ -74,13 +89,16 @@
 						<tr>
 							<td> <%= @request_user.name %> </td>
 							<td> <%= interaction.memo %> </td>
-							<td> <%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %></td>
+							<td> <% if interaction.status %>
+								Accepted
+								<% else %>
+								<%= link_to "Accept", accept_proposal_path(:interaction_id => interaction.id) %>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				<% end %>
 			</table>
 		<% end %>
-	<% else%>
-		<h4 style="color:#585858;">There is no notification for <%= current_user.name %>.</h4>
 	<% end %>
 </div>

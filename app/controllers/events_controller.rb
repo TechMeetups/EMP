@@ -116,33 +116,23 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1
-  # DELETE /events/1.json
-  #  def destroy
-  #   @event = Event.find(params[:id])
-  #   @event.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to events_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
-  
-  # def delete  
-  #   debugger
-  #   @events = Event.find(params[:id])
-  #   @events.destroy
-  #   flash[:notice] = "Activity Succesfully Deleted"
-  #   redirect_to :back
-  # end
-
   def destroy_event
     @event = Event.find(params[:event_id])
     @event.destroy
     flash[:notice] = "Event Succesfully Deleted"
     redirect_to :back
   end
-   def event_search
+
+  def search
+    @image_user = User.first
+    @image_user = current_user if user_signed_in?
+    @event=Event.new
+    @events1 = Event.where("title like ? ", "%#{params[:val]}%")
+    @events1 += Event.where("description like ?  ", "%#{params[:val]}%")
+    @events = @events1 & @events1
+  end
+
+  def event_search
     @events =[]
     if !params[:checked].blank?
       params[:checked].each do |id|
@@ -155,6 +145,7 @@ class EventsController < ApplicationController
   end
 
   def event_search_type
+
     @events =[]
     if !params[:checked].blank?
       @events = Event.where(event_type: params[:checked]) 

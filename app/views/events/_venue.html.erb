@@ -1,4 +1,4 @@
-<div id="venue_block" Style="height: 34px; width:73px; " >
+<div id="venue_block">
   <% @event_user1 = @event.event_users.where(event_type: "Venue").first %>
   <%= link_to @event_user1.user.name, user_profile_path(id: @event_user1.user.id) if !@event_user1.user.nil? %>
 </div>

@@ -14,16 +14,14 @@ class HomeController < ApplicationController
     end
   end
 
-  def accept_proposal
+  def accept_proposal    
   	@interaction = Interaction.find(params["interaction_id"])
   	@event_user = EventUser.new(event_id: @interaction.event_id, user_id: @interaction.user_id)
   	@event_user.event_type = "Speaker" if @interaction.action == "Become Speaker"
   	@event_user.event_type = "Partner" if @interaction.action == "Become Partner"
   	@event_user.event_type = "Attendee" if @interaction.action == "Attend event"
     @event_user.save
-
-  	@interaction.destroy
-
+    @interaction.update(status: true) 
   	redirect_to notifications_path
 
   end
@@ -118,10 +116,14 @@ class HomeController < ApplicationController
   end
 
   def destroy_event_user
-    #debugger
+    debugger
     @event_user = EventUser.find(params[:format])
     @event_user.destroy
-    flash[:notice] = "Activity Succesfully Deleted"
+    if @event_user.event_type == "Venue"
+      flash[:notice] = "Venue Succesfully Deleted"
+    else
+      flash[:notice] = "Activity Succesfully Deleted"
+    end
     redirect_to :back
 end
 
