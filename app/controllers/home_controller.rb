@@ -67,7 +67,7 @@ class HomeController < ApplicationController
     @event_user=@event.event_users.where(event_type: "Host").first   
      @add_event_user = EventUser.new
      if @event_user.nil?
-      @event.event_users.create(user_id: event_user_param[:user_id],event_type: "host")
+      @event.event_users.create(user_id: event_user_param[:user_id],event_type: "Host")
     else 
       @event_user.update(user_id: event_user_param[:user_id])
     end

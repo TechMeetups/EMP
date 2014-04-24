@@ -136,7 +136,12 @@ class EventsController < ApplicationController
     @events =[]
     if !params[:checked].blank?
       params[:checked].each do |id|
-      @events += User.find_by_city_id(id).events if !User.find_by_city_id(id).nil?
+       #
+        User.where(city_id: id).each do |user|
+          user.event_users.where(event_type: "Venue").each do |event_user|
+            @events += [event_user.event] if !event_user.nil?
+        end      
+    end
     end
     else
       @events = Event.all
