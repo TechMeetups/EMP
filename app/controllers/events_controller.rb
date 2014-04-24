@@ -151,7 +151,6 @@ class EventsController < ApplicationController
     else
       @events = Event.all
     end
-    #debugger
   end
   def event_interaction
     @flag = Interaction.find_by_user_id_and_event_id_and_action(interaction_params[:user_id],interaction_params[:event_id],interaction_params[:action]).nil?
@@ -160,10 +159,7 @@ class EventsController < ApplicationController
     end
   end
 
-#   @flag = Interaction.find_by_user_id_and_job_id_and_action(interaction_params[:user_id],interaction_params[:job_id],interaction_params[:action]).nil?
-# if @flag
-# Interaction.create(interaction_params)
-# end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

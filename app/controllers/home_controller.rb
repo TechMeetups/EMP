@@ -122,8 +122,10 @@ class HomeController < ApplicationController
       flash[:notice] = "Speaker Succesfully Deleted"
     elsif @event_user.event_type == "Attendee"
       flash[:notice] = "Attendee Succesfully Deleted"      
-    else
+    elsif @event_user.event_type == "Host"
       flash[:notice] = "Partner Succesfully Deleted"
+    else
+       flash[:notice] = "Venue Succesfully Deleted"
     end
     redirect_to :back
 end

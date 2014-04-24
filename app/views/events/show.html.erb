@@ -1,5 +1,5 @@
 <!-- Modal -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -55,12 +55,14 @@
       <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;" %><% end %>    
     </h6>
     <div class="banner_block">
-      <% if @banners.count == 1 %>
+      <% if @banners.count == 0%>
+      <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px" %>    
+      <% elsif @banners.count == 1 %>
       <% @banners.each_with_index do |banner, index| %>
           <% if index == 0 %>
             <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
           <% else %>
-            <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
+            <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 00px" %>
           <% end %>
           <% end %>
         <% else %>
@@ -74,6 +76,7 @@
             <% end %>
           </div>
         <% end %>
+
       <% if user_signed_in? && @event.user_id == current_user.id %> 
         <%= image_tag("edit1.png", :style=>"width: 15px; float:right", :id=>"edit_banners") %> 
       <% end %>
@@ -87,7 +90,7 @@
         <% elsif @event.user_id != current_user.id %>
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% else %>
-          <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
+         <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
           <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
@@ -255,7 +258,6 @@
     </div>
       <br/><br/>
       <b> Address </b> 
-
       <br/><%= User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).address if !@event_user.nil? %><br/><br/>
       <b> City </b> <%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).city_id).name %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id).last.user_id).city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 

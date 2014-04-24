@@ -6,7 +6,7 @@
       <th>Banner File</th>
       <th></th>
       <th></th>
-      <th></th>
+     
     </tr>
   </thead>
 
@@ -18,7 +18,7 @@
         <td><%= banner.file_file_name %></td>
         <td><%= link_to(image_tag("upload.png", :style=>"width: 15px;"), event_path(format: "img", banner_id: banner.id, id: @event.id )) %></td>
         <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), banner_destroy_path(banner_id: banner.id), :method=>"POST", confirm: "Are you sure?", :remote=>true) %></td>
-        <td><%= image_tag("star.png", :style=>"width: 15px;") %></td>
+       
       </tr>
     <% end %>
   </tbody>
@@ -33,7 +33,7 @@
     <option value="1">Yes</option>
     <option value="0">No</option>
   </select>
-  <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 20px; margin-left: 97%; margin-top: -60px;" %>
+  <%= image_tag "right_arrow.png",:id=>"uploadbutton", :style=>"width: 20px; margin-left: 97%; margin-top: -60px;" %>
 </div>
 <%= image_tag "plus.png", :style=>"float:right",:title=>"Add more banners", :class=>"add_more" %>
 

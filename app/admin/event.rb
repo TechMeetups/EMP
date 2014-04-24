@@ -27,6 +27,7 @@ ActiveAdmin.register Event do
       f.input :event_type ,:as => :select, :collection => EventType.all.map {|a| ["#{a.name}",a.id]}
       f.input :description 
       f.input :twitter_hash_tag  
+      #f.input :event_user ,:as => :select, :collection => EventUser.all.map {|a| ["#{a.name}",a.id]}
     end
     f.actions
   end
@@ -58,6 +59,7 @@ ActiveAdmin.register Event do
       super
       debugger
       @event.event_users.create(user_id: @event.user_id,event_type: "Host")
+      @event.event_users.create(user_id: @event.user_id,event_type: "Venue")
     end 
     end 
   permit_params  :user_id, :title, :s_date, :e_date, :s_time, :e_time, :description, :twitter_hash_tag, :event_type
