@@ -8,7 +8,7 @@
     <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
       <br>
       <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> 
-      <b><%=  link_to(image_tag("trash.png", :style=>"width: 20px;"),home_destroy_event_user_path(speaker), :class=>"confirm", :id=>"confirm_#{speaker.user_id}") %></b>
+      
       <% if !user_signed_in?  %>
         <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
