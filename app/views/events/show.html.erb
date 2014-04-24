@@ -258,10 +258,7 @@
     </div>
       <br/><br/>
       <b> Address </b> 
-      <% #debugger %>
       <br/><br/><%= @event.event_users.where(event_type: "Venue").first.user.address if !@event.event_users.where(event_type: "Venue").first.nil? %><br/><br/>
-<%#= !User.where(:id=>event.try(:user_id)).blank? ? City.where(:id => User.find(event.user_id).city_id).name  : ""  %>  
-
       <b> City </b> <%=  @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil? %> <br/><br/>
       <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil?  %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
