@@ -1,14 +1,15 @@
 <div id="host_block" >
-  <%#debugger%>
+  <% if !@event.event_users.where(event_type: "Host").first.nil? %>
   <% if !@event.nil? %>
   <% @user1 = @event.event_users.where(event_type: "Host").first.user %>
+  <% @host = @event.event_users.where(event_type: "Host").first %>
   <% else %>
   <% @user1=current_user %>
   <% end %>
     <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
       <br>
-      <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> 
-      
+      <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> <br />
+      <b><%=  link_to(image_tag("trash.png", :style=>"width: 20px;"),home_destroy_event_user_path(@host)) %></b>
       <% if !user_signed_in?  %>
         <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
@@ -17,3 +18,6 @@
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
       <% end %>
       <br/>
+      <% else %>
+      <% end %>
+    </div >

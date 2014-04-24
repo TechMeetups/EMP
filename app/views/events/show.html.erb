@@ -41,7 +41,7 @@
         <%= @event.title %>
         
       <% else %>
-        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_title") %>
+        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_title") %>
       <% end %>
     </h2>
     <h6 style="float:right; margin-top:-40px;">
@@ -52,7 +52,7 @@
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
     <% else %>
       <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
-      <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;" %><% end %>    
+      <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;cursor: pointer; cursor: hand; " %><% end %>    
     </h6>
     <div class="banner_block">
       <% if @banners.count == 0%>
@@ -78,7 +78,7 @@
         <% end %>
 
       <% if user_signed_in? && @event.user_id == current_user.id %> 
-        <%= image_tag("edit1.png", :style=>"width: 15px; float:right", :id=>"edit_banners") %> 
+        <%= image_tag("edit1.png", :style=>"width: 15px; float:right;cursor: pointer; cursor: hand; ", :id=>"edit_banners") %> 
       <% end %>
     </div>
     <br/>
@@ -91,7 +91,7 @@
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% else %>
          <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_date") %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_s_date") %>
         <% end %>
         <% if !user_signed_in?  %>
 
@@ -100,7 +100,7 @@
           <%= @event.s_time.strftime("%I:%M%p") %>
         <% else %>
           <%= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_s_time") %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_s_time") %>
         <% end %>
         
       <b style="margin-left: 154px"> to </b>      
@@ -113,7 +113,7 @@
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
         <% else %>
           <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_date") %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_e_date") %>
         <% end %>
         <% if !user_signed_in?  %>
           <%= @event.e_time.strftime("%I:%M%p") %>
@@ -121,7 +121,7 @@
           <%= @event.e_time.strftime("%I:%M%p") %>
         <% else %>
           <%= best_in_place @event, :e_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I:%M%p") }, :activator => "#edit_e_time" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_e_time") %>
+          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_e_time") %>
         <% end %>
 
     </p>
@@ -134,7 +134,7 @@
         <%= @event.description %>
       <% else %>
         <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %>
-        <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_description") %>
+        <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_description") %>
       <% end %>
     </p>
       
@@ -237,7 +237,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 73px; margin-top: -58px;" ,class: "change_host"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 73px; margin-top: -58px;cursor: pointer; cursor: hand; " ,class: "change_host"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>
@@ -250,7 +250,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 83px; margin-top: -58px;" ,class: "change_venue"%>
+        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 83px; margin-top: -58px;cursor: pointer; cursor: hand; " ,class: "change_venue"%>
       <% end %>
       <div id="venue_show" >
         <%= render "venue"%>
@@ -258,9 +258,12 @@
     </div>
       <br/><br/>
       <b> Address </b> 
-      <br/><%= User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).address if !@event_user.nil? %><br/><br/>
-      <b> City </b> <%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id ).last.user_id).city_id).name %> <br/><br/>
-      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= City.find(User.find(EventUser.where(event_type: "Venue", event_id: @event.id).last.user_id).city_id).name if !@event_user.nil? %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+      <% #debugger %>
+      <br/><br/><%= @event.event_users.where(event_type: "Venue").first.user.address if !@event.event_users.where(event_type: "Venue").first.nil? %><br/><br/>
+<%#= !User.where(:id=>event.try(:user_id)).blank? ? City.where(:id => User.find(event.user_id).city_id).name  : ""  %>  
+
+      <b> City </b> <%=  @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil? %> <br/><br/>
+      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil?  %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
     </div>
     <div class="event_box">
       <h4>Social Media</h4><br /><br />
@@ -272,7 +275,7 @@
         <%= @event.twitter_hash_tag %>
       <% else %>
         <%= best_in_place @event,:twitter_hash_tag,:path=> "/events/#{@event.id}" ,  :activator => "#edit_twitter_hash_tag" %>
-        <%= image_tag("edit1.png", :style=>"width: 15px;", :id=>"edit_twitter_hash_tag") %><br /><br />
+        <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_twitter_hash_tag") %><br /><br />
       <% end %>
     </p>
     </div>
@@ -281,9 +284,9 @@
 
 <style>
 
+
 .event_box{
- /* border-bottom: 1px solid;
-  color: #D1D0CE;*/
+ 
 }
 
 #slideshow {

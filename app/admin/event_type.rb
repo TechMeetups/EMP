@@ -28,5 +28,5 @@ ActiveAdmin.register EventType do
       link_to image_tag( "../assets/trash.png", :style=>"width:15px;"),admin_event_type_path(event_type) , :confirm => 'Are you sure?', :method => :delete      
     end
   end
-  
+    permit_params :name
 end

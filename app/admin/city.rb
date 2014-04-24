@@ -29,4 +29,5 @@ ActiveAdmin.register City do
       link_to image_tag( "../assets/trash.png", :style=>"width:15px;"),admin_city_path(city) , :confirm => 'Are you sure?', :method => :delete      
     end
   end
+  permit_params :name
 end

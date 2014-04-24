@@ -65,8 +65,14 @@ class HomeController < ApplicationController
   def host_change
     @event=Event.find(params[:event_user][:event_id])
     @event_user=@event.event_users.where(event_type: "Host").first
-    @event_user.update(user_id: event_user_param[:user_id])
+   
      @add_event_user = EventUser.new
+     if @event_user.nil?
+      debugger
+      @event.event_users.create(user_id: event_user_param[:user_id],event_type: "host")
+    else 
+       @event_user.update(user_id: event_user_param[:user_id])
+    end
   end
 
   def change_user
@@ -77,8 +83,13 @@ class HomeController < ApplicationController
   def venue_change
     @event=Event.find(params[:event_user][:event_id])
     @event_user=@event.event_users.where(event_type: "Venue").first
-    @event_user.update(user_id: event_user_param[:user_id])
      @add_event_user = EventUser.new
+     if @event_user.nil?
+      debugger
+      @event.event_users.create(user_id: event_user_param[:user_id],event_type: "Venue")
+    else 
+       @event_user.update(user_id: event_user_param[:user_id])
+    end
   end
 
   def looking_for
@@ -122,10 +133,10 @@ class HomeController < ApplicationController
       flash[:notice] = "Speaker Succesfully Deleted"
     elsif @event_user.event_type == "Attendee"
       flash[:notice] = "Attendee Succesfully Deleted"      
-    elsif @event_user.event_type == "Host"
-      flash[:notice] = "Partner Succesfully Deleted"
+    elsif @event_user.event_type == "Venue"
+      flash[:notice] = "Venue Succesfully Deleted"
     else
-       flash[:notice] = "Venue Succesfully Deleted"
+       flash[:notice] = "Host Succesfully Deleted"
     end
     redirect_to :back
 end

@@ -43,7 +43,7 @@
 								<%= event.e_time.strftime("%I:%M%p") %></p>
 				   		</div>
 				   		<p><b> City : </b>
-					   	<%= City.find(User.find(event.user_id).city_id).name %>       
+					   	<%= event.event_users.where(event_type: "Venue").first.user.city.name if !event.event_users.where(event_type: "Venue").first.nil? %>       
 				   		 <p><%= truncate(event.description, :length => 40)  %></p>
 				   	</div>	 
 
