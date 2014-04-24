@@ -6,7 +6,6 @@
   <%= link_to @event_user1.user.name, user_profile_path(id: @event_user1.user.id) if !@event_user1.user.nil? %>
   <br />
   
-</div>
   <br>
   <%=  link_to(image_tag(@event_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event_user1.user.id) ) if !@event_user1.user.nil? %> <br />
   <%=  link_to(image_tag("trash.png", :style=>"width: 20px;"),home_destroy_event_user_path(@venue)) %></b>
