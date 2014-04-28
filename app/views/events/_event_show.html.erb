@@ -40,8 +40,8 @@
 
 					    <div style="time">
 					    	<b > Time : </b>
-								<%= event.s_time.strftime("%I:%M%p") %><b>  to </b>
-								<%= event.e_time.strftime("%I:%M%p") %></p>
+								<%= event.s_time %><b>  to </b>
+								<%= event.e_time %></p>
 				   		</div>
 				   		<p><b> City : </b>
 					   	<%= event.event_users.where(event_type: "Venue").first.user.city.name if !event.event_users.where(event_type: "Venue").first.nil? %>       

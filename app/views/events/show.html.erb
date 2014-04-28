@@ -93,10 +93,11 @@
           <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
           <%= image_tag("edit1.png",:id=>"edit_s_date") %>
         <% end %> 
-        <span id="s_time_display"><%= @event.s_time.strftime("%I:%M%p") %></span>
-        <% if user_signed_in? && @event.user_id == current_user.id %>        
-          <span id="s_time_edit"><%= text_field_tag "s_time", @event.s_time %></span>
-          <%#= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
+        <!-- <span id="s_time_display"><%= @event.s_time %></span> -->
+        <% if user_signed_in? && @event.user_id == current_user.id %>  
+
+          <!-- <span id="s_time_edit"><%= text_field_tag "s_time", @event.s_time,:remote=> :true %></span> -->
+          <%= best_in_place @event, :s_time, :type => :input, :activator => "#edit_s_time" %>
           <%= image_tag("edit1.png", :id=>"edit_s_time") %>
         <% end %>
         
@@ -112,10 +113,9 @@
           <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
           <%= image_tag("edit1.png", :id=>"edit_e_date") %>
         <% end %>
-        <span id="e_time_display"><%= @event.e_time.strftime("%I:%M%p") %></span>
-        <% if user_signed_in? && @event.user_id == current_user.id %>        
-          <span id="e_time_edit"><%= text_field_tag "e_time", @event.e_time %></span>
-          <%#= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
+        <!-- <span id="e_time_display"><%= @event.e_time %></span> -->
+        <% if user_signed_in? && @event.user_id == current_user.id %>       
+          <%= best_in_place @event, :e_time, :type => :input, :activator => "#edit_e_time" %>
           <%= image_tag("edit1.png", :id=>"edit_e_time") %>
         <% end %>
 
@@ -274,44 +274,6 @@
 
 <script type="text/javascript" charset="utf-8">
 
-
-
-
-  $("#edit_s_time").click(function(){
-    $("#s_time_display").hide();
-    $("#s_time_edit").show();
-  });
-
-  $(document).click(function(e) {
-
-    if( e.target.id != 's_time' && e.target.id != 'edit_s_time') {
-     
-      time=$('#s_time').val();
-      debugger
-       $.ajax({
-          type: "POST",
-          url: "/events/update_time",
-          data: {t: time}
-         
-        
-      });
-      $("#s_time_edit").hide();
-      $("#s_time_display").show();
-    }
-
-  });
-  $("#edit_e_time").click(function(){
-    $("#e_time_display").hide();
-    $("#e_time_edit").show();
-  });
-
-  $(document).click(function(e) {
-    if( e.target.id != 'e_time' && e.target.id != 'edit_e_time') {      
-      $("#e_time_edit").hide();
-      $("#e_time_display").show();
-    }
-
-  });
 
   jQuery(function($){
 
