@@ -28,12 +28,12 @@
 
   <input id="file" type="file" size="17" name="file" class="form-control" style="float:left; width: 46%;">
 
-  <label class="col-lg-2 control-label"style="width: 93px;margin-top: 11px;">Featured : </label>
-  <select id="banner_feature" class="form-control dropdown_form" style="width: 100px;" name="banner[][feature]">
+ 
     <% if @banners.count >= 1 %>
-    <option value="1">Yes</option>
-    <option value="0" selected="selcted">No</option>
+    
     <% else %>
+     <label class="col-lg-2 control-label"style="width: 93px;margin-top: 11px;">Featured : </label>
+  <select id="banner_feature" class="form-control dropdown_form" style="width: 100px;" name="banner[][feature]">
     <option value="1" selected="selcted">Yes</option>
     <option value="0" >No</option>
     <% end %>

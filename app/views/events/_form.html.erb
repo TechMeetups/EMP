@@ -113,7 +113,7 @@
 
 <script>
   $(".add_more").click(function(){
-    $(".add_more_block").append('<br/><br/><br/><label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 52%;" name="banner[][file]"> <label class="col-lg-2 control-label"style="width: 93px;">Featured : </label><select id="banner_feature" class="form-control dropdown_form" name="banner[][feature]" style="100px;"><option value="1">Yes</option><option value="0" selected="selected">No</option></select>');
+    $(".add_more_block").append('<br/><br/><br/><label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 52%;" name="banner[][file]">');
     var add_more = $(".add_more_block").height();
     $(".add_more_block").css("height", add_more+50)
   })
