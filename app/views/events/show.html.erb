@@ -9,17 +9,17 @@
       </div>
       <%= form_for @interaction, :url=>event_interaction_path, :remote=>true do |f| %>
         <div class="modal-body">
-          <label class="col-lg-2 control-label" style="margin-top:10px">Subject </label>
-          <%= f.text_field "action",:class=>"form-control dynamic_action", :style=>"float:left; width: 30%;", :disabled=>true %>
+          <label class="col-lg-2 control-label">Subject </label>
+          <%= f.text_field "action",:class=>"form-control dynamic_action", :disabled=>true %>
           <%= f.hidden_field :action, :class=>"dynamic_action" %>
           <%= f.hidden_field :event_id, :value=>@event.id %>
           <%= f.hidden_field :user_id, :value=>current_user.id if user_signed_in? %> 
-          <label class="col-lg-2 control-label" style="width: 93px;margin-top:10px">Event </label> 
+          <label class="col-lg-2 control-label" id="control-label">Event </label> 
           <%= text_field_tag "event_id", @event.title,:class=>"form-control", :style=>"float:left; width: 30%;", :disabled=>true %>
           <br/>
           <br/>
           <br/>
-          <%= f.text_area :memo , :style=>"width: 566px; height: 95px;"%>
+          <%= f.text_area :memo ,:class=>"memo" %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -31,8 +31,8 @@
 </div>
 
 
-<div style="float: left; width: 72%;">
-  <div class="event_box" style="border-bottom: 1px solid; border-color: #D1D0CE;">
+<div class="title">
+  <div class="event_box_title">
     <h2>  
       <% if !user_signed_in?  %>
         <%= @event.title %>
@@ -41,10 +41,10 @@
         <%= @event.title %>
         
       <% else %>
-        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_title") %>
+        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png",  :id=>"edit_title") %>
       <% end %>
     </h2>
-    <h6 style="float:right; margin-top:-40px;">
+    <h6 class="event_type">
     <%= image_tag "linkedin.png", :style=>"width: 18px;"%>
     <% if !user_signed_in? %>
      <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
@@ -52,17 +52,17 @@
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
     <% else %>
       <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
-      <%= image_tag "edit1.png",:id=>"edit_event_type", :style=>"width: 15px;cursor: pointer; cursor: hand; " %><% end %>    
+      <%= image_tag "edit1.png",:id=>"edit_event_type",:class=>"edit_image" %><% end %>    
     </h6>
     <div class="banner_block">
       <% if @banners.count == 0%>
-      <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px" %>    
+      <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px",:id=>"banner" %>    
       <% elsif @banners.count == 1 %>
       <% @banners.each_with_index do |banner, index| %>
           <% if index == 0 %>
             <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
           <% else %>
-            <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 00px" %>
+            <%= image_tag banner.file.url(:medium), :class=>"banner" %>
           <% end %>
           <% end %>
         <% else %>
@@ -71,14 +71,14 @@
               <% if index == 0 %>
                 <%= image_tag banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
               <% else %>
-                <%= image_tag banner.file.url(:medium), :style=>"width: 100%; height: 300px" %>
+                <%= image_tag banner.file.url(:medium) ,:class=>"banner"%>
               <% end %>
             <% end %>
           </div>
         <% end %>
 
       <% if user_signed_in? && @event.user_id == current_user.id %> 
-        <%= image_tag("edit1.png", :style=>"width: 15px; float:right;cursor: pointer; cursor: hand; ", :id=>"edit_banners") %> 
+        <%= image_tag("edit1.png", :id=>"edit_banners",:class=>"edit_banners") %> 
       <% end %>
     </div>
     <br/>
@@ -90,22 +90,19 @@
         <% elsif @event.user_id != current_user.id %>
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% else %>
-         <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_s_date") %>
-        <% end %>
-        <% if !user_signed_in?  %>
-
-          <%= @event.s_time.strftime("%I:%M%p") %>
-        <% elsif @event.user_id != current_user.id %> 
-          <%= @event.s_time.strftime("%I:%M%p") %>
-        <% else %>
-          <%= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_s_time") %>
+          <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
+          <%= image_tag("edit1.png",:id=>"edit_s_date") %>
+        <% end %> 
+        <span id="s_time_display"><%= @event.s_time.strftime("%I:%M%p") %></span>
+        <% if user_signed_in? && @event.user_id == current_user.id %>        
+          <span id="s_time_edit"><%= text_field_tag "s_time", @event.s_time %></span>
+          <%#= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
+          <%= image_tag("edit1.png", :id=>"edit_s_time") %>
         <% end %>
         
-      <b style="margin-left: 154px"> to </b>      
+      <b class="to"> to </b>      
     </div> 
-    <div style="margin-left: 478px; margin-top: -31px;">
+    <div class="end">
       <b>  End </b>
         <% if !user_signed_in?  %>
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
@@ -113,46 +110,45 @@
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
         <% else %>
           <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_e_date") %>
+          <%= image_tag("edit1.png", :id=>"edit_e_date") %>
         <% end %>
-        <% if !user_signed_in?  %>
-          <%= @event.e_time.strftime("%I:%M%p") %>
-        <% elsif @event.user_id != current_user.id %> 
-          <%= @event.e_time.strftime("%I:%M%p") %>
-        <% else %>
-          <%= best_in_place @event, :e_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I:%M%p") }, :activator => "#edit_e_time" %>
-          <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_e_time") %>
+        <span id="e_time_display"><%= @event.e_time.strftime("%I:%M%p") %></span>
+        <% if user_signed_in? && @event.user_id == current_user.id %>        
+          <span id="e_time_edit"><%= text_field_tag "e_time", @event.e_time %></span>
+          <%#= best_in_place @event, :s_time, :type => :input, :display_with => Proc.new { |f| f.strftime("%I.%M%p") }, :activator => "#edit_s_time" %>
+          <%= image_tag("edit1.png", :id=>"edit_e_time") %>
         <% end %>
 
     </p>
     </div>
       
-      <p><b style="font-size:12px;">Description</b>
+      <p><b class="description">Description</b>
       <% if !user_signed_in?  %>
         <%= @event.description %>
       <% elsif @event.user_id != current_user.id %> 
         <%= @event.description %>
       <% else %>
-        <%= best_in_place @event,:description,:path=> "/events/#{@event.id}" , type: :textarea, :activator => "#edit_description" %>
-        <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_description") %>
+      <%= image_tag("edit1.png",:id=>"edit_description") %>
+      <br />
+        <%= best_in_place @event,:description,:path=> "/events/#{@event.id}",:type => :textarea , :html_attrs => { :cols => '112', :rows => '6' }, :activator => "#edit_description" %>
+        
       <% end %>
     </p>
       
 
   </div>
   
-  <div class="event_box" id="speaker_box" style="height: 169px;border-bottom: 1px solid;
-  border-color: #D1D0CE;">
+  <div class="event_box" id="speaker_box">
     <h4>  Speakers/Mentors </h4>
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
     </div>
       <% if !user_signed_in?  %>
-      <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
+      <div class="button_block" id="speaker_block"> 
         <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
         </div>
       <% elsif @event.user_id != current_user.id %> 
-      <div class="button_block" id="speaker_block" style="margin-top:-25px"> 
+      <div class="button_block" id="speaker_block"> 
         <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
         </div>
       <% else %>
@@ -171,8 +167,7 @@
   </div>
 
   <br/>
-  <div  class="event_box" id="partner_box" style="height: 169px;border-bottom: 1px solid;
-  border-color: #D1D0CE;">
+  <div  class="event_box" id="partner_box">
     <h4> Partner  </h4>
     <div class="table_block"  id="partner_list">
       <%= render "partners_list" %>
@@ -180,11 +175,11 @@
     
     
     <% if !user_signed_in?  %>
-      <div class="button_block" id="partner_block"  style="margin-top:-25px"> 
+      <div class="button_block" id="partner_block"> 
         <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
       </div>
     <% elsif @event.user_id != current_user.id %>
-      <div class="button_block" id="partner_block"  style="margin-top:-25px"> 
+      <div class="button_block" id="partner_block"> 
         <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
       </div>
     <% else %>
@@ -201,17 +196,17 @@
     <% end %>
   </div>
   <br/>
-  <div  class="event_box" id="attendee_box" style="height: 169px;">
+  <div  class="event_box" id="attendee_box">
     <h4> Attendees </h4>
     <div class="table_block" id="attendee_list">
       <%= render "attendees_list" %>
     </div>
       <% if !user_signed_in?  %>
-        <div class="button_block" id="attendee_block"  style="margin-top:-25px">
+        <div class="button_block" id="attendee_block">
           <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
         </div>
       <% elsif @event.user_id != current_user.id %>
-        <div class="button_block" id="attendee_block"  style="margin-top:-25px">
+        <div class="button_block" id="attendee_block">
           <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
         </div>
       <% else %>
@@ -230,14 +225,14 @@
   </div>
 </div>
 
-<div style="float: right; width: 25%; text-align:center">
+<div class="host">
   <div style="margin-left:20px">
     <div class="event_box">
-      <h4>  Host </h4>
+      <h4 >  Host </h4>
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 73px; margin-top: -58px;cursor: pointer; cursor: hand; " ,class: "change_host"%>
+        <%= image_tag "edit1.png" ,:class=> "change_host"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>
@@ -245,22 +240,20 @@
     </div>
 
     <div class="event_box">
-      <h4>  Venue </h4>
+      <h4 >  Venue </h4>
       
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :style=>"width: 15px; margin-left: 83px; margin-top: -58px;cursor: pointer; cursor: hand; " ,class: "change_venue"%>
+        <%= image_tag "edit1.png", :class=> "change_venue"%>
       <% end %>
       <div id="venue_show" >
+       
         <%= render "venue"%>
       </div>
-    </div>
-      <br/><br/>
-      <b> Address </b> 
-      <br/><br/><%= @event.event_users.where(event_type: "Venue").first.user.address if !@event.event_users.where(event_type: "Venue").first.nil? %><br/><br/>
-      <b> City </b> <%=  @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil? %> <br/><br/>
-      <img src="http://maps.google.com/maps/api/staticmap?size=155x155&maptype=roadmap&sensor=false&markers=color:blue|label:A|<%= @event.event_users.where(event_type: "Venue").first.user.city.name if !@event.event_users.where(event_type: "Venue").first.nil?  %>,IN" alt="Static, Marked Map of Chicago, Illinois and Hammond, Indiana with no Center and Zoom"></img> 
+      <div id ="event_address">
+      <%= render "event_address"%>
+      </div>
     </div>
     <div class="event_box">
       <h4>Social Media</h4><br /><br />
@@ -272,68 +265,61 @@
         <%= @event.twitter_hash_tag %>
       <% else %>
         <%= best_in_place @event,:twitter_hash_tag,:path=> "/events/#{@event.id}" ,  :activator => "#edit_twitter_hash_tag" %>
-        <%= image_tag("edit1.png", :style=>"width: 15px;cursor: pointer; cursor: hand; ", :id=>"edit_twitter_hash_tag") %><br /><br />
+        <%= image_tag("edit1.png", :id=>"edit_twitter_hash_tag") %><br /><br />
       <% end %>
     </p>
     </div>
   </div>
 </div>
 
-<style>
-
-
-.event_box{
- 
-}
-
-#slideshow {
-    position:relative;
-    height:300px;
-}
-
-#slideshow IMG {
-    position:absolute;
-    top:0;
-    left:0;
-    z-index:8;
-}
-
-#slideshow IMG.active {
-    z-index:10;
-}
-
-#slideshow IMG.last-active {
-    z-index:9;
-}
-
-.table_block{
-  width: 80%;
-  float: left;
-}
-.button_block{
-  float: right;
-  text-align:center;
-  width: 20%;
-}
-
-.token-input-list-facebook, .token-input-dropdown-facebook{
-  width: 135px !important;
-
-}
-.add_new{
-  float: left;
-  text-align:center;
-  width: 20%; 
-  padding: 8px;
-}
-
-  
-</style>
-
 <script type="text/javascript" charset="utf-8">
-   jQuery(function($){
-    $.extend($.fn.datepicker.defaults, { format: '%e %b %Y' });
+
+
+
+
+  $("#edit_s_time").click(function(){
+    $("#s_time_display").hide();
+    $("#s_time_edit").show();
   });
+
+  $(document).click(function(e) {
+
+    if( e.target.id != 's_time' && e.target.id != 'edit_s_time') {
+     
+      time=$('#s_time').val();
+      debugger
+       $.ajax({
+          type: "POST",
+          url: "/events/update_time",
+          data: {t: time}
+         
+        
+      });
+      $("#s_time_edit").hide();
+      $("#s_time_display").show();
+    }
+
+  });
+  $("#edit_e_time").click(function(){
+    $("#e_time_display").hide();
+    $("#e_time_edit").show();
+  });
+
+  $(document).click(function(e) {
+    if( e.target.id != 'e_time' && e.target.id != 'edit_e_time') {      
+      $("#e_time_edit").hide();
+      $("#e_time_display").show();
+    }
+
+  });
+
+  jQuery(function($){
+
+    $.extend($.fn.timepicker.defaults, { format: '%e %b %Y' });
+  });
+
+  $("#s_time").timepicker();
+  $("#e_time").timepicker();
   function slideSwitch() {
     var $active = $('#slideshow IMG.active');
 
@@ -404,6 +390,12 @@
 
       $("#host_block").html("<%= escape_javascript(render :partial => 'events/change_host')%>")
       $("#dynamic_appplicant").val("change_host")
+    });
+  $(".change_venue").click(function(){
+    var block_id = $(this).attr("id");
+
+      $("#venue_block").html("<%= escape_javascript(render :partial => 'events/change_venue')%>")
+      $("#dynamic_appplicant").val("change_venue")
     });
   $(".change_venue").click(function(){
     var block_id = $(this).attr("id");

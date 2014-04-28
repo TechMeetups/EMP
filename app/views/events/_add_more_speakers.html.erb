@@ -1,4 +1,4 @@
-<div  Style="height: 63px; width:73px;margin-bottom: 12px; ">
+<div  class="speaker">
   <%= image_tag "missing.png", :style=>"height: 63px; width:73px;" %>
 </div>
 <div Style="height: 34px; width:73px; ">
@@ -10,7 +10,8 @@
 	<%= f.hidden_field :event_type, :id=>"dynamic_speaker", :value =>"Speaker" %>
 	<br/>
 
-	<%= image_submit_tag("plus.png", :style=>"margin: -16px 6px 6px 84px;") %>
+	<%= image_submit_tag("plus.png", :class=>"plus_speakers") %>
+  <%= link_to(image_tag("cancel1.png", :class=>"cancel_speakers"), event_path) %>
 <% end %>
 </div>
 <script>

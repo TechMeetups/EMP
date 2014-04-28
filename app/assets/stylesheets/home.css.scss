@@ -7,3 +7,277 @@
     padding: 0.5em 0.6em;
    
 }
+.event_box{
+ 
+}
+.control-label{
+	margin-top:10px;
+}
+.dynamic_action{
+	float:left; 
+	width: 30%;
+}
+
+#control-label{
+	width: 93px;
+	margin-top:10px
+}
+
+#slideshow {
+    position:relative;
+    height:300px;
+}
+
+#slideshow IMG {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:8;
+}
+
+#slideshow IMG.active {
+    z-index:10;
+}
+
+#slideshow IMG.last-active {
+    z-index:9;
+}
+
+.memo{
+	width: 566px;
+	height: 95px;
+}
+
+.banner{
+	width: 100%;
+	 height: 300px;
+}
+
+.title{
+	float: left; 
+	width: 72%;
+}
+
+.table_block{
+  width: 80%;
+  float: left;
+}
+.button_block{
+  float: right;
+  text-align:center;
+  width: 20%;
+}
+
+.token-input-list-facebook, .token-input-dropdown-facebook{
+  width: 135px !important;
+
+}
+.add_new{
+  float: left;
+  text-align:center;
+  width: 20%; 
+  padding: 8px;
+}
+.css_class {
+    width:80px;
+}
+
+.to{
+	margin-left: 50px;
+}
+
+.description{
+	font-size:12px;
+}
+
+#s_time_edit{
+  display: none
+}  
+#e_time_edit{
+  display: none
+}  
+
+.event_box_title{
+	border-bottom: 1px solid;
+	border-color: #D1D0CE;
+}
+.event_type{
+	float:right;
+	margin-top:-40px;
+}
+.edit_image{
+	width: 15px;
+	cursor: pointer; 
+	cursor: hand; 
+}
+
+.edit_banners{
+	width: 15px; 
+	float:right;
+	cursor: pointer; 
+	cursor: hand; 
+}
+
+#edit_s_date
+{
+	width: 15px;
+}
+#edit_s_time
+{
+	width: 15px;
+}
+#edit_e_date
+{
+	width: 15px;
+}
+#edit_e_time
+{
+	width: 15px;
+}
+#edit_description{
+	width: 15px;
+	 cursor: pointer;
+}
+#speaker_box
+{
+	height: 169px;
+	border-bottom: 1px solid;
+  border-color: #D1D0CE;
+}
+#speaker_block{
+	margin-top:-25px;
+}
+#partner_box{
+	height: 169px;
+	border-bottom: 1px solid;
+  	border-color: #D1D0CE;
+}
+#partner_block{
+	margin-top:-25px;
+}
+#attendee_box{
+	height: 169px;
+}
+#attendee_block{
+	margin-top:-25px;
+}
+.host{
+	float: right;
+	width: 25%; 
+	text-align:center;
+}
+.change_host{
+	width: 15px;
+	margin-left: 73px;
+	margin-top: -24px;
+	cursor: pointer; 
+	cursor: hand; 
+	margin-bottom: -35px;
+}
+.change_venue{
+	width: 15px; 
+	margin-left: 83px;
+ 	margin-top: -84px;
+ 	cursor: pointer; 
+ 	cursor: hand;
+ 	margin-bottom: -93px; 
+}
+#edit_twitter_hash_tag{
+	width: 15px;
+	cursor: pointer; 
+	cursor: hand;
+}
+.end{
+	margin-left: 389px;
+	margin-top: -31px;
+}
+#edit_title{
+	width: 15px;cursor: pointer; cursor: hand; 
+}
+
+.col3{
+	width: 300px;
+
+}
+.col-md-9{
+  border: none ;
+}
+.time{
+	font-weight:bold;
+	font-size:12px;
+}
+
+.image{
+	height: 200px;
+}
+.well well-sm{
+	height:131px;
+}
+.time{
+	font-size:12px;
+}
+.pull-left{
+	margin-left: 15px;
+}
+.pull-right{
+	margin-right: 17px;
+}
+.btn-xs btn-info{
+	margin-left: 91px;
+}
+.event_search{
+	font-weight:bold;
+}
+#add_new_event{
+	margin-left: 900px;
+}
+.plus_attendee{
+	margin:4px 6px -12px 113px;
+}
+.plus_speakers{
+	margin:-16px 6px 6px 109px;
+}
+.plus_partners{
+	margin: 4px 16px -12px 110px;
+}
+.cancel_attendee{
+	width: 22px; 
+	margin: -15px 66px 26px 139px;
+}
+.cancel_speakers{
+	width: 22px; 
+	margin: -36px 66px 26px 134px;
+}
+.cancel_partners{
+	width: 22px; 
+	margin: -15px 66px 26px 136px;
+}
+.partner{
+	height: 63px; 
+	width:73px;
+	margin-bottom: 12px;
+}
+.attendee{
+	height: 63px;
+	 width:73px;
+	 margin-bottom: 12px;
+}
+.speaker{
+	height: 63px; 
+	width:73px;
+	margin-bottom: 12px;
+}
+.plus_host{
+	margin: 4px 35px 2px 110px;
+}
+.plus_venue{
+	margin:5px 60px -11px 110px;
+}
+.cancel_host{
+	width: 22px;
+	margin: -29px 66px 26px 138px;
+}
+.cancel_venue{
+	width: 22px; 
+	margin:-29px 66px -1px 138px;
+}

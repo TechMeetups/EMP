@@ -116,6 +116,10 @@ class EventsController < ApplicationController
     end
   end
 
+  def update_time
+    debugger  
+  end
+
   def destroy_event
     @event = Event.find(params[:event_id])
     @event.destroy

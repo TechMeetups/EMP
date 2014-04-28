@@ -24,18 +24,24 @@
   </tbody>
 </table>
 <div class="add_more_block" style="display:none;">
-  <label class="col-lg-2 control-label" style="width: 75px;">Banner: </label>
+  <label class="col-lg-2 control-label" style="width: 75px; margin-top: 11px;">Banner: </label>
 
   <input id="file" type="file" size="17" name="file" class="form-control" style="float:left; width: 46%;">
 
-  <label class="col-lg-2 control-label"style="width: 93px;">Featured : </label>
-  <select id="banner_feature" class="form-control dropdown_form" style="width: 170px; " name="banner[][feature]">
+  <label class="col-lg-2 control-label"style="width: 93px;margin-top: 11px;">Featured : </label>
+  <select id="banner_feature" class="form-control dropdown_form" style="width: 100px;" name="banner[][feature]">
+    <% if @banners.count >= 1 %>
     <option value="1">Yes</option>
-    <option value="0">No</option>
+    <option value="0" selected="selcted">No</option>
+    <% else %>
+    <option value="1" selected="selcted">Yes</option>
+    <option value="0" >No</option>
+    <% end %>
   </select>
-  <%= image_tag "right_arrow.png",:id=>"uploadbutton", :style=>"width: 20px; margin-left: 97%; margin-top: -60px;" %>
+  <%= image_tag "reload.png",:id=>"uploadbutton", :style=>"width: 21px; margin-left: 92%; margin-top: -60px;cursor: pointer; cursor: hand;",:title=>"Add banners" %>
+  <%= link_to (image_tag "cancel1.png", :style=>"width: 20px; margin-left: 96%; margin-top: -96px;"),events_path(@event) %>
 </div>
-<%= image_tag "plus.png", :style=>"float:right",:title=>"Add more banners", :class=>"add_more" %>
+<%= image_tag "plus.png", :style=>"float:right; cursor:pointer;",:title=>"Add more banners", :class=>"add_more" %>
 
 
 

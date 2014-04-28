@@ -13,8 +13,12 @@
 
     <div style="width: 50%; float: left;">
       <div id="users_avatar">
+        <% if !@user.avatar.nil? %>
         <%=image_tag @user.avatar.url, :id=>"preview_image" ,:src=>"../assets/missing.png",:alt=>"",:style=>"max-width: 330px; max-height: 225px;" %>
         <%=f.file_field :avatar ,:class=>"form-control" ,:id=>"user_avatar" %>
+        <% else %>
+        <%=image_tag "../assets/missing.png",:style=>"max-width: 330px; max-height: 225px;" %>
+        <% end %>
       </div>
     </div>
 

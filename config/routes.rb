@@ -33,7 +33,7 @@ TechMeetsUp::Application.routes.draw do
   post 'venue_change'=> 'home#venue_change', as: :venue_change
   post 'events/new'
   post 'event/interaction' => "events#event_interaction"
-
+  post 'events/update_time'=> "events#update_time"
    post "home/change_user"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view

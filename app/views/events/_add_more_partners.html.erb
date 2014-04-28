@@ -1,4 +1,4 @@
-<div  Style="height: 63px; width:73px;margin-bottom: 12px; ">
+<div class="partner">
   <%= image_tag "missing.png", :style=>"height: 63px; width:73px;" %>
 </div>
 <div Style="height: 34px; width:73px; ">
@@ -8,7 +8,8 @@
 	<%= f.text_field :user_id, :id=>"event_user_partner_tokens" %>
 
 	<%= f.hidden_field :event_type, :id=>"dynamic_partner",:value =>"Partner" %>
-	<%= image_submit_tag("plus.png", :style=>"margin: 4px 6px -12px 84px;") %>
+	<%= image_submit_tag("plus.png", :class=>"plus_partners") %>
+  <%= link_to(image_tag("cancel1.png", :class=>"cancel_partners"), event_path) %>
 <% end %>
 </div>
 <script>

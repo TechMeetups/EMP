@@ -1,11 +1,13 @@
-<div Style="height: 34px; width:73px;margin:-3px 24px -7px 89px; ">
+<div style="height: 34px; width:73px;margin:-3px 24px -7px 89px; ">
 <%= form_for @add_event_user, :url=>venue_change_path, :remote=>true do |f| %>
 	<%= f.hidden_field :event_id, :value=>@event.id %>
 
 	<%= f.text_field :user_id, :id=>"event_change_venue_tokens" %>
 
 	<%= f.hidden_field :event_type, :id=>"dynamic_partner" %>
-	<%= image_submit_tag("plus.png", :style=>"margin: 5px 60px -11px 87px;") %>
+	<%= image_submit_tag("plus.png", :class=>"plus_venue") %>
+  <%= link_to(image_tag("cancel1.png", :class=>"cancel_venue"), event_path) %>
+
 <% end %>
 </div>
 <script>

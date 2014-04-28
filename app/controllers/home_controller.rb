@@ -73,10 +73,10 @@ class HomeController < ApplicationController
     end
   end
 
-  # def change_user
-  #  @image_user = User.find(params[:user_id])
-  #  @venue_user = params[:user]
-  # end
+  def change_user
+   @image_user = User.find(params[:user_id])
+   @venue_user = params[:user]
+  end
 
   def venue_change
     @event=Event.find(params[:event_user][:event_id])
@@ -130,10 +130,8 @@ class HomeController < ApplicationController
       flash[:notice] = "Speaker Succesfully Deleted"
     elsif @event_user.event_type == "Attendee"
       flash[:notice] = "Attendee Succesfully Deleted"      
-    elsif @event_user.event_type == "Venue"
-      flash[:notice] = "Venue Succesfully Deleted"
     else
-       flash[:notice] = "Host Succesfully Deleted"
+       flash[:notice] = "Partner Succesfully Deleted"
     end
     redirect_to :back
 end

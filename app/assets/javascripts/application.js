@@ -35,6 +35,8 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
+  
+});
 	 $(".confirm").on( 'click', function () {
     var user_trash = this
     alertify.confirm("Are you sure to delete", function (e)   {
@@ -63,6 +65,5 @@ if (hasHtml5Validation()) {
     }
   });
 }
-});
 
 
