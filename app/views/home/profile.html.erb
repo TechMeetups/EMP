@@ -146,7 +146,7 @@
     <div  class="event_box">
       <table width="282px" cellpadding="10" class="table">
         <tr>
-          <th>Email</th>
+          <td>Email</td>
           <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}",:inner_class => "css_class" %>
           </td>
           <td><%= image_tag "edit1.png",:id=>"email-#{current_user.id}", :style=>"width: 15px;" %>
@@ -238,7 +238,7 @@
     </div>
   <% end %>
   <br/>
-  <div class="event_box" style="margin-left:8px;">
+  <div class="event_box" style="margin-left:6px;margin-top:-24px;">
         <p> 
           <% if user_signed_in? && params[:id].to_i == current_user.id %>
           <b>City </b>

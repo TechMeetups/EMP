@@ -15,14 +15,14 @@
           </h2>
           <div class="col-lg-10 add_more_block" style="height: 150px;">
             <label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label>
-            <input class="form-control" id="banner__file" name="banner[][file]" style="float:left; width: 52%;" type="file">
+            <input class="form-control" id="banner__file" name="banner[][file]" style="float:left; width: 40%;" type="file">
             <label class="col-lg-2 control-label" style="width: 93px;">Featured : </label>
 
              <select class="form-control dropdown_form" id="banner__feature" name="banner[][feature]" style="width: 100px; "><option value="1" selected="selected">Yes</option>
               <option value="0" >No</option></select>
-            <img alt="Plus" class="add_more" src="/assets/plus-fec32ff135d75e3fcbeea64f97e0b59a.png" style="margin-top: 7px; margin-left: 30px;" title="Add more banners">
+            <img alt="Plus" class="add_more" src="/assets/plus-fec32ff135d75e3fcbeea64f97e0b59a.png" style="margin-top: 7px; margin-left: 30px;cursor:pointer;cursor:hand;" title="Add more banners">
           </div>
-          <p style="height:20px;">
+          <p >
           </p>
           <div style="width: 300px; float: left;">
             <p><b> Start </b>
@@ -32,7 +32,7 @@
                 <%= f.text_field :s_time, :class=>"form-control", :placeholder=>"Start Time" ,:required=>true%>
               </div>
           </div> 
-          <div style="width: 20px; float: left; margin-left: 30px; margin-top: 45px;">
+          <div class="form_to">
             <b> To </b> 
           </div>
           <div style="margin-left: 389px; ">
@@ -65,7 +65,7 @@
         </div>  
       </div>
 
-      <div style="float: right; width: 25%;text-align:center">
+      <div class="right_content">
         <div style="margin-left:20px">
           <div class="event_box">
             <h4>  Host </h4>
@@ -94,13 +94,7 @@
 
 
 <style>
-.dropdown_form{
-  width: 150px !important;
-  float:left;
-}
-.add_more_block{
-  width: 100%;
-}
+
 .invalid input:required:invalid {
     background: #BE4C54;
 }
@@ -113,7 +107,7 @@
 
 <script>
   $(".add_more").click(function(){
-    $(".add_more_block").append('<br/><br/><br/><label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 52%;" name="banner[][file]">');
+    $(".add_more_block").append('<br/><br/><br/><label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 40%;" name="banner[][file]">');
     var add_more = $(".add_more_block").height();
     $(".add_more_block").css("height", add_more+50)
   })

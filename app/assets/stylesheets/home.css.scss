@@ -10,6 +10,11 @@ color: grey;
     padding: 0.5em 0.6em;
    
 }
+
+.alert-danger{
+	font-weight:bold;
+	font-size:12px;
+}
 .event_box{
  
 }
@@ -83,6 +88,13 @@ color: grey;
 }
 .css_class {
     width:80px;
+}
+
+.form_to{
+	width: 20px; 
+	float: left; 
+	margin-left: 30px; 
+	margin-top: 45px;
 }
 
 .to{
@@ -283,4 +295,17 @@ color: grey;
 .cancel_venue{
 	width: 22px; 
 	margin:-29px 66px -1px 138px;
+}
+
+.right_content{
+	float: right; 
+	width: 25%;
+	text-align:center;
+}
+.dropdown_form{
+  width: 150px !important;
+  float:left;
+}
+.add_more_block{
+  width: 100%;
 }
