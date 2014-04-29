@@ -1,4 +1,4 @@
-<div style="float: left; width: 72%;border-right: 1px solid ;color: #848484;">
+<div style="float: left; width: 72%;">
   <div style="height: 270px;">
     <h2 style="margin-top:20px;"> 
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
@@ -123,18 +123,23 @@
     </div>
   </div>
   <br/><br/><br/>
-  <div class="event_box" style="margin-top:20px;">
+  <div class="event_box" style="margin-top: 20px; margin-left: 9px;">
 
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
 
         <b>Description </b>
-        <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
+        
         <br />
-        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '100', :rows => '6' }%></th>
+        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '100', :rows => '6' }%>
+        <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
       <% else %>
-      <div style="margin-left:10px;">
+      <div style="margin-left:1px;">
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:390px;"%>
+        <br />
+         <b style="font-size:12px;">Description </b>
         <%=  @user.description %>
       <% end %>
+
     </p>
   </div>  
   <% if user_signed_in? && params[:id].to_i == current_user.id %>
@@ -154,23 +159,12 @@
         </tr>
         <tr>
           <th>Address</th>
-          <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}" ,:inner_class => "css_class"%></td>
+          <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '95', :rows => '6' }%></td>
           <td><%= image_tag "edit1.png",:id=>"address-#{current_user.id}", :style=>"width: 15px;" %>
           </td>
         </tr>
       </table>
-      <div class="event_box">
-        <p> <b>City </b>
-          <% if user_signed_in? && params[:id].to_i == current_user.id %>
-            <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
-            <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
-          <% else %>
-            <%= City.find(User.find(@user.id).city_id).name  %>
-          <% end %>
-          
-          <br/><br/>
-        </p>
-      </div>
+      
     </div>
   <% else %>
     <div  class="event_box" id="attendee_box">
@@ -244,6 +238,22 @@
     </div>
   <% end %>
   <br/>
+  <div class="event_box" style="margin-left:8px;">
+        <p> 
+          <% if user_signed_in? && params[:id].to_i == current_user.id %>
+          <b>City </b>
+            <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
+            <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
+          <% else %>
+          <div>
+            <b>City </b>
+            <%= City.find(User.find(@user.id).city_id).name  %>
+          </div>
+          <% end %>
+          
+          <br/><br/>
+        </p>
+      </div>
 </div> 
   <% if user_signed_in? && params[:id].to_i == current_user.id %>    
   <div style="float: right; width: 25%; text-align:center;">
@@ -277,7 +287,7 @@
     </div>
 
   <% else %>
-    <div style="margin-top:-679px;margin-left:852px; width: 25%; text-align:center;">
+    <div style="margin-top:-790px;margin-left:852px; width: 25%; text-align:center;">
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>

@@ -1,5 +1,6 @@
 <div id="masonry-container" class="transitions-enabled clearfix masonry-brick">
 	<% if !@interactions.blank? %>
+	
 		<% if @interactions.collect(&:action).include? "Become Speaker" %>
 			<h2> Following users want to Become Speaker/Mentor </h2>
 			<table class="table">
@@ -100,5 +101,8 @@
 				<% end %>
 			</table>
 		<% end %>
+	<% else %>
+
+		<h4 style="font-weight:bold">There is no notificationfor <%= current_user.name%>.</h4>
 	<% end %>
 </div>
