@@ -9,9 +9,11 @@
 
 	<%= f.hidden_field :event_type, :id=>"dynamic_speaker", :value =>"Speaker" %>
 	<br/>
+   <%= button_tag(type: "submit" ,:class=>"transparent_btn plus_speakers") do %>
+     <i class="fa fa-plus fa-2x"></i>
+     <%end%>
+     <%= link_to("",url_for(params) ,:class=>"cancel_speakers fa fa-times fa-2x") %>
 
-	<%= image_submit_tag("plus.png", :class=>"plus_speakers") %>
-  <%= link_to(image_tag("cancel1.png", :class=>"cancel_speakers"), event_path) %>
 <% end %>
 </div>
 <script>

@@ -21,9 +21,9 @@
         <td><%= event.title %></td>
         
         <td><%=  City.find(User.find(event.event_users.where(event_type: "Venue").first.user_id).city_id).name %></td>
-        <td><%= link_to(image_tag("edit1.png", :style=>"width: 15px;"), event ) %></td>
+        <td><%= link_to"", event, :class=>"fa fa-pencil-square-o" %></td>
         <td>
-          <%= link_to "", destroy_event_path(event),:class=>"fa fa-times" %>
+          <%= link_to "", destroy_event_path(event),:class=>"fa fa-trash-o" %>
 
           <%#= link_to "",activity_activity_form_path,:id=>"activity_form_show",:class=>"fa fa-plus fa-2x"%>
 
@@ -36,7 +36,7 @@
 
 <br>
 <div style="float:right">
-  <%= link_to( image_tag("plus.png"), "#" ,:title=>"Add a new Event", :id=>"add_new_event") %>
+  <%= link_to "" ,"#" ,:title=>"Add a new Event", :id=>"add_new_event" ,:class=>"fa fa-plus fa-2x" %>
 </div>
 
 <script>

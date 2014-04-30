@@ -13,7 +13,7 @@
           <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;"),user_profile_path(id: @user.id) ) %> <br/>
           <b><%= link_to @user.name, user_profile_path(id: @user.id) %></b><br />
           <% if user_signed_in? && @event.user_id == current_user.id %>
-            <b><%=  link_to(image_tag("trash.png", :style=>"width: 20px;"),home_destroy_event_user_path(partner), :class=>"confirm", :id=>"confirm_#{partner.user_id}") %></b>
+            <b><%=  link_to"",home_destroy_event_user_path(partner), :class=>"confirm fa fa-trash-o", :id=>"confirm_#{partner.user_id}" %></b>
           <% end %>
         <%end%>
       </td>

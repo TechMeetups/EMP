@@ -3,7 +3,7 @@
     <h2 style="margin-top:20px;"> 
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place @user,:name,:path=> "/users",:activator => "#name-#{current_user.id}" %>
-        <%= image_tag "edit1.png",:id=>"name-#{current_user.id}", :style=>"width: 15px;" %>
+        <%= link_to "","#",:id=>"name-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
         <%= @user.name %>
       <% end %>
@@ -12,7 +12,7 @@
       <i class="fa fa-user"></i>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
-        <%= image_tag "edit1.png",:id=>"user_type-#{current_user.id}", :style=>"width: 15px;" %>
+        <%= link_to "","#",:id=>"user_type-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
         <%= @user.user_type %>
       <% end %>
@@ -28,10 +28,10 @@
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 67%;">
-          <%= image_tag "plus.png",:id=>"uploadbutton", :style=>"width: 15px; margin-left: 70%; margin-top: -60px;" %>
-          <%= link_to (image_tag "cancel1.png", :style=>"width: 17px; margin-left: 75%; margin-top: -97px;"),user_profile_path %>
+          <%= link_to "","#",:class=>"fa fa-plus fa-2x",:id=>"uploadbutton", :style=>"float: right;margin: -29px 43px 0px 0px;  " %>
+          <%= link_to "",user_profile_path ,:class=>"fa fa-times fa-2x", :style=>"float: right;  margin: -30px 0px 0px 0px;" %>
         </div>
-        <%= image_tag "edit1.png",:id=>"edit_user_avatar", :style=>"width: 15px; margin-left: 83%;" %>
+        <%= link_to "","#",:id=>"edit_user_avatar",:class=>"fa fa-pencil-square-o", :style=>"width: 15px; margin-left: 83%;" %>
       <% end %>
       
     </div>
@@ -55,7 +55,7 @@
               </div>
             </td>
             <td>
-            <%= link_to(image_tag("edit1.png",:id=>"offer-#{current_user.id}", :style=>"width: 15px;"),home_offer_path,:remote=>true ) %>
+            <%= link_to  "",home_offer_path,:id=>"offer-#{current_user.id}",:class=>"fa fa-pencil-square-o" ,:remote=>true  %>
             </td>
           <% else %>
             <td> 
@@ -91,7 +91,7 @@
               </div>
             </td>
             <td>
-             <%= link_to(image_tag("edit1.png",:id=>"looking_for-#{current_user.id}", :style=>"width: 15px;"),home_looking_for_path,:remote=>true ) %>
+             <%= link_to "",home_looking_for_path,:id=>"looking_for-#{current_user.id}", :class=>"fa fa-pencil-square-o",:remote=>true  %>
              </div>
             </td>
           <% else %>
@@ -115,7 +115,7 @@
           <tr>
             <th> Company </th>
             <td> <%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
-            <td> <%= image_tag "edit1.png",:id=>"company-#{current_user.id}", :style=>"width: 15px;" %></td>
+            <td> <%= link_to "","#",:id=>"company-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
           </tr>
         <% end %>
 
@@ -131,7 +131,7 @@
         
         <br />
         <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '100', :rows => '6' }%>
-        <%= image_tag "edit1.png",:id=>"description-#{current_user.id}", :style=>"width: 15px;" %>
+        <%= link_to "","#",:id=>"description-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <div style="margin-left:1px;">
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:390px;"%>
@@ -149,18 +149,18 @@
           <td style="font-weight:bold;">Email</td>
           <td><%= best_in_place current_user,:email,:path=> "/users",:activator => "#email-#{current_user.id}",:inner_class => "css_class" %>
           </td>
-          <td><%= image_tag "edit1.png",:id=>"email-#{current_user.id}", :style=>"width: 15px;" %>
+          <td><%= link_to "","#",:id=>"email-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
           </td>
         </tr>
         <tr>
           <td style="font-weight:bold;">Password</td>
           <td><%= best_in_place current_user, :password,:path=> "/users" ,:activator => "#password-#{current_user.id}" %></td>
-          <td><%= image_tag "edit1.png",:id=>"password-#{current_user.id}", :style=>"width: 15px;" %></td>
+          <td><%= link_to "","#",:id=>"password-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
         </tr>
         <tr>
           <td style="font-weight:bold;">Address</td>
           <td><%= best_in_place current_user, :address,:path=> "/users",:activator => "#address-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '95', :rows => '6' }%></td>
-          <td><%= image_tag "edit1.png",:id=>"address-#{current_user.id}", :style=>"width: 15px;" %>
+          <td><%= link_to "","#",:id=>"address-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
           </td>
         </tr>
       </table>
@@ -243,7 +243,7 @@
           <% if user_signed_in? && params[:id].to_i == current_user.id %>
           <b>City </b>
             <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
-            <%= image_tag "edit1.png",:id=>"city_id-#{current_user.id}", :style=>"width: 15px;" %>
+            <%= link_to "","#",:id=>"city_id-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
           <% else %>
           <div>
             <b>City </b>
@@ -264,7 +264,7 @@
           <td><i class="fa fa-twitter fa-2x"></i></td>
           <td><%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
-          <td><%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %>
+          <td><%= link_to "","#",:id=>"twitter-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
           </td>
         </tr>
         <tr>
@@ -274,14 +274,14 @@
           <td><i class="fa fa-facebook-square fa-2x"></i></td>
           <td><%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
-          <td><%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %></td>
+          <td><%= link_to "","#",:id=>"facebook-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
         </tr>
         <tr><td><br /></td></tr>
         <tr>
           <td><i class="fa fa-linkedin-square fa-2x"></i></td>
           <td><%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
-          <td><%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %></td>
+          <td><%= link_to "","#",:id=>"linkedin-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
         </tr>
       </table>
     </div>

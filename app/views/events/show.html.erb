@@ -41,7 +41,7 @@
         <%= @event.title %>
         
       <% else %>
-        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= image_tag("edit1.png",  :id=>"edit_title") %>
+        <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= link_to "","#",:class=>"fa fa-pencil-square-o",  :id=>"edit_title" %>
       <% end %>
     </h2>
     <h6 class="event_type">
@@ -52,7 +52,7 @@
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
     <% else %>
       <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
-      <%= image_tag "edit1.png",:id=>"edit_event_type",:class=>"edit_image" %><% end %>    
+      <%= link_to "","#",:id=>"edit_event_type",:class=>"edit_image fa fa-pencil-square-o" %><% end %>    
     </h6>
     <div class="banner_block">
       <% if @banners.count == 0%>
@@ -78,7 +78,7 @@
         <% end %>
 
       <% if user_signed_in? && @event.user_id == current_user.id %> 
-        <%= image_tag("edit1.png", :id=>"edit_banners",:class=>"edit_banners") %> 
+        <%= link_to "","#", :id=>"edit_banners",:class=>"edit_banners fa fa-pencil-square-o" %> 
       <% end %>
     </div>
     <br/>
@@ -91,14 +91,14 @@
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
         <% else %>
           <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
-          <%= image_tag("edit1.png",:id=>"edit_s_date") %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_s_date" %>
         <% end %> 
         <!-- <span id="s_time_display"><%= @event.s_time %></span> -->
         <% if user_signed_in? && @event.user_id == current_user.id %>  
 
           <!-- <span id="s_time_edit"><%= text_field_tag "s_time", @event.s_time,:remote=> :true %></span> -->
           <%= best_in_place @event, :s_time, :type => :input, :activator => "#edit_s_time" %>
-          <%= image_tag("edit1.png", :id=>"edit_s_time") %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o" ,:id=>"edit_s_time" %>
         <% end %>
         
       <b class="to"> to </b>      
@@ -111,12 +111,12 @@
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
         <% else %>
           <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
-          <%= image_tag("edit1.png", :id=>"edit_e_date") %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o", :id=>"edit_e_date" %>
         <% end %>
         <!-- <span id="e_time_display"><%= @event.e_time %></span> -->
         <% if user_signed_in? && @event.user_id == current_user.id %>       
           <%= best_in_place @event, :e_time, :type => :input, :activator => "#edit_e_time" %>
-          <%= image_tag("edit1.png", :id=>"edit_e_time") %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o", :id=>"edit_e_time" %>
         <% end %>
 
     </p>
@@ -128,7 +128,7 @@
       <% elsif @event.user_id != current_user.id %> 
         <%= @event.description %>
       <% else %>
-      <%= image_tag("edit1.png",:id=>"edit_description") %>
+      <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_description" %>
       <br />
         <%= best_in_place @event,:description,:path=> "/events/#{@event.id}",:type => :textarea , :html_attrs => { :cols => '112', :rows => '6' }, :activator => "#edit_description" %>
         
@@ -232,7 +232,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png" ,:class=> "change_host"%>
+        <%= link_to "","#",:class=> "change_host fa fa-pencil-square-o"%>
       <% end %>
       <div id="host_show" >
         <%= render "host"%>
@@ -245,7 +245,7 @@
       <% if !user_signed_in?  %>
       <% elsif @event.user_id != current_user.id %> 
       <% else %>
-        <%= image_tag "edit1.png", :class=> "change_venue"%>
+        <%= link_to "","#", :class=> "change_venue fa fa-pencil-square-o"%>
       <% end %>
       <div id="venue_show" >
        
@@ -265,7 +265,7 @@
         <%= @event.twitter_hash_tag %>
       <% else %>
         <%= best_in_place @event,:twitter_hash_tag,:path=> "/events/#{@event.id}" ,  :activator => "#edit_twitter_hash_tag" %>
-        <%= image_tag("edit1.png", :id=>"edit_twitter_hash_tag") %><br /><br />
+        <%= link_to "","#" ,:class=>"fa fa-pencil-square-o", :id=>"edit_twitter_hash_tag" %><br /><br />
       <% end %>
     </p>
     </div>

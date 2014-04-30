@@ -254,16 +254,16 @@
 	margin: 4px 16px -12px 110px;
 }
 .cancel_attendee{
-	width: 22px; 
-	margin: -15px 66px 26px 139px;
+	float: right;
+	margin: -26px -93px 0px 0px;
 }
 .cancel_speakers{
-	width: 22px; 
-	margin: -36px 66px 26px 134px;
+	float: right;
+	margin: -33px -93px 0px 0px;
 }
 .cancel_partners{
-	width: 22px; 
-	margin: -15px 66px 26px 136px;
+    float: right;
+	margin: -26px -93px 0px 0px;
 }
 .partner{
 	height: 63px; 
@@ -287,12 +287,12 @@
 	margin:5px 60px -11px 110px;
 }
 .cancel_host{
-	width: 22px;
-	margin: -29px 66px 26px 138px;
+	float: right;
+	margin: -29px -83px 0px 0px;
 }
 .cancel_venue{
-	width: 22px; 
-	margin:-29px 66px -1px 138px;
+	float: right;
+	margin: -27px -83px 0px 0px;
 }
 
 .right_content{
@@ -306,4 +306,9 @@
 }
 .add_more_block{
   width: 100%;
+}
+
+.transparent_btn{
+   background: transparent;
+   border: none;
 }
