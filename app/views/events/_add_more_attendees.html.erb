@@ -8,6 +8,8 @@
 	<%= f.text_field :user_id , :id=>"event_user_attendee_tokens"%>
 	<%= f.hidden_field :event_type, :id=>"dynamic_attendee", :value =>"Attendee"%>
 	<%= image_submit_tag("plus.png",:class=>"plus_attendee")%>
+  
+
   <%= link_to(image_tag("cancel1.png", :class=>"cancel_attendee"), event_path) %>
 <% end %>
 </div>

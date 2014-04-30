@@ -1,11 +1,12 @@
-<link rel="stylesheet" href="css/font-awesome.min.css">
 <!DOCTYPE html>
 <html>
 	<head>
 
+
 	  <title>TechMeetups</title>
 	  <%= stylesheet_link_tag    "application", media: "all" %>
 	  <%= javascript_include_tag "application" %>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
@@ -31,12 +32,13 @@
   		       <h5>Filter Events</h5>		     
   		      <div class="list-group list-group-item">
   	          <label>
-                <h6 style="font-weight:bold;"><%= image_tag "home.png" , :style=>"width: 15px;"%>			     
+                <h6 style="font-weight:bold;"><i class="fa fa-home fa-2x"></i>
+
                 <%= link_to "All", root_url  %></h6>	    
   				    </label> 
               <br/>
               <label>    
-                <h6 style="font-weight:bold;"><%= image_tag "building.png" , :style=>"width: 15px;"%>          
+                <h6 style="font-weight:bold;"><i class="fa fa-home"></i>          
                 <b>City</b></h6>      
               </label> 
               <div style="margin-left:20px;">
@@ -50,7 +52,7 @@
     				    <%end%>
               </div>
               <label>    
-                <h6 style="font-weight:bold;"><%= image_tag "type.png" , :style=>"width: 15px;"%>          
+                <h6 style="font-weight:bold;"><i class="fa fa-info"></i>
                 <b>Type</b></h6>       
               </label> 
               <div style="margin-left:20px">

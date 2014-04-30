@@ -9,7 +9,7 @@
       <% end %>
     </h2>
     <h6 style="float:right;margin-top:-34px;margin-right:33px;">
-      <%= image_tag "linkedin.png", :style=>"width: 18px;" %>
+      <i class="fa fa-user"></i>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
         <%= image_tag "edit1.png",:id=>"user_type-#{current_user.id}", :style=>"width: 15px;" %>
@@ -261,7 +261,7 @@
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>
-          <td><%= image_tag "twitter.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-twitter fa-2x"></i></td>
           <td><%= best_in_place current_user, :twitter,:path=> "/users",:activator => "#twitter-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
           <td><%= image_tag "edit1.png",:id=>"twitter-#{current_user.id}", :style=>"width: 15px;" %>
@@ -271,14 +271,14 @@
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= image_tag "facebook.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-facebook-square fa-2x"></i></td>
           <td><%= best_in_place current_user, :facebook,:path=> "/users",:activator => "#facebook-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
           <td><%= image_tag "edit1.png",:id=>"facebook-#{current_user.id}", :style=>"width: 15px;" %></td>
         </tr>
         <tr><td><br /></td></tr>
         <tr>
-          <td><%= image_tag "linkedin1.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-linkedin-square fa-2x"></i></td>
           <td><%= best_in_place current_user, :linkedin,:path=> "/users",:activator => "#linkedin-#{current_user.id}" %></td>
           <td>&nbsp;&nbsp;</td>
           <td><%= image_tag "edit1.png",:id=>"linkedin-#{current_user.id}", :style=>"width: 15px;" %></td>
@@ -291,21 +291,21 @@
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>
-          <td><%= image_tag "twitter.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-twitter fa-2x"></i></td>
           <td><%=  @user.twitter %></td>
         </tr>
         <tr>
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= image_tag "facebook.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-facebook-square fa-2x"></i></td>
           <td><%=  @user.facebook %></td>
         </tr>
         <tr>
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= image_tag "linkedin1.png", :style=>"width: 18px;" %></td>
+          <td><i class="fa fa-linkedin-square fa-2x"></i></td>
           <td><%=  @user.linkedin %></td>
         </tr>
       </table>

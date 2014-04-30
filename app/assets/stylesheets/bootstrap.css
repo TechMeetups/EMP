@@ -1,4 +1,4 @@
-@import url("//fonts.googleapis.com/css?family=Ubuntu");
+@import url("/assets/fonts.googleapis.com/css?family=Ubuntu");
 /*!
  * Bootswatch v3.1.1
  * Homepage: http://bootswatch.com
@@ -2963,7 +2963,7 @@ input[type="button"].btn-block {
   content: "\e190";
 }
 .glyphicon-sound-5-1:before {
-  content: "\e191";
+ 
 }
 .glyphicon-sound-6-1:before {
   content: "\e192";

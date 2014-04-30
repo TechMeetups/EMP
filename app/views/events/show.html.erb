@@ -45,7 +45,7 @@
       <% end %>
     </h2>
     <h6 class="event_type">
-    <%= image_tag "linkedin.png", :style=>"width: 18px;"%>
+     <i class="fa fa-user"></i>
     <% if !user_signed_in? %>
      <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
      <% elsif @event.user_id != current_user.id %> 
