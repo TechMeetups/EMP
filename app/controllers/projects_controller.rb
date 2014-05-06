@@ -24,9 +24,9 @@ class ProjectsController < InheritedResources::Base
         @other_users = User.find(:all, :conditions=>["id != ?", current_user.id] ) if user_signed_in?
       end
       @project = Project.find(params[:id])
-      @speakers = @project.project_users.find_all_by_project_type("Speaker")
+      @speakers = @project.project_users.find_all_by_project_type("Team")
       @partners = @project.project_users.find_all_by_project_type("Partner")
-      @attendee = @project.project_users.find_all_by_project_type("Attendee")
+      @attendee = @project.project_users.find_all_by_project_type("Follower")
       @venue = @project.project_users.find_all_by_project_type("Venue")
       @peoject_user = @project.user
       respond_to do |format|
@@ -48,9 +48,9 @@ class ProjectsController < InheritedResources::Base
       @project = Project.find(params[:id])
       @project_banners = @project.project_banners
       @interaction = Interaction.new
-      @speakers = @project.project_users.find_all_by_project_type("Speaker")
+      @speakers = @project.project_users.find_all_by_project_type("Team")
       @partners = @project.project_users.find_all_by_project_type("Partner")
-      @attendee = @project.project_users.find_all_by_project_type("Attendee")
+      @attendee = @project.project_users.find_all_by_project_type("Follower")
       @venue = @project.project_users.find_all_by_project_type("Venue")
 
     end

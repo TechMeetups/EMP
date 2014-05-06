@@ -271,7 +271,7 @@
     var block_id = $(this).attr("id");
     if(block_id == "add_speaker"){
       $("#speaker_block").html("<%= escape_javascript(render :partial => 'add_more_team')%>")
-      $("#dynamic_speaker").val("Speaker")
+      $("#dynamic_speaker").val("Team")
     }
     else if(block_id == "add_partner"){
       $("#partner_block").html("<%= escape_javascript(render :partial => 'add_more_partners')%>")
@@ -279,7 +279,7 @@
     }
     else if(block_id == "add_attendees"){
       $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
-      $("#dynamic_attendee").val("Attendee")
+      $("#dynamic_attendee").val("Follower")
     }
     
   });
