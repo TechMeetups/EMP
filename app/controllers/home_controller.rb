@@ -227,7 +227,7 @@ class HomeController < ApplicationController
     @project_user.destroy
     if @project_user.project_type == "Team"
       flash[:notice] = "Team Succesfully Deleted"
-    elsif @project_user.project_type == "Followers"
+    elsif @project_user.project_type == "Follower"
       flash[:notice] = "Followers Succesfully Deleted"      
     else
        flash[:notice] = "Partner Succesfully Deleted"
