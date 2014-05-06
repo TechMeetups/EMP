@@ -6,7 +6,7 @@
 	<%= f.hidden_field :project_id, :value=>@project.id %>
 
 	<%= f.text_field :user_id , :id=>"project_user_attendee_tokens"%>
-	<%= f.hidden_field :project_type, :id=>"dynamic_attendee", :value =>"Attendee"%>
+	<%= f.hidden_field :project_type, :id=>"dynamic_attendee", :value =>"Follower"%>
  <%= button_tag(type: "submit" ,:class=>"transparent_btn plus_attendee") do %>
  <i class="fa fa-plus fa-2x"></i>
  <%end%>

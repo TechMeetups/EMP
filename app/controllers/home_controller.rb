@@ -267,7 +267,7 @@ class HomeController < ApplicationController
 
 
     def add_project_participants
-      if project_user_param['project_type'] == "Followers"
+      if project_user_param['project_type'] == "Follower"
         @attendee = Project.find(@project_user.project_id).project_users.find(:all, :conditions=>["project_type = ?", "follower"])
       elsif project_user_param['project_type'] == "Team"
         @speakers = Project.find(@project_user.project_id).project_users.find(:all, :conditions=>["project_type = ?", "Team"])
