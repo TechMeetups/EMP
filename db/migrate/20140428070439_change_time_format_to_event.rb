@@ -8,5 +8,4 @@ class ChangeTimeFormatToEvent < ActiveRecord::Migration
    change_column :events, :s_time, :time
    change_column :events, :e_time, :time
   end
-  s
 end

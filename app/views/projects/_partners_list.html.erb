@@ -1,0 +1,22 @@
+<table class="table">
+  <tr>
+    <% @partners.each_with_index do |partner, index| %>
+      <% if index+1 == 5 %> </tr><tr> 
+      <script>
+      var partner_height = $("#partner_list").height();
+      $("#partner_box").css("height", partner_height+180)
+      </script>
+      <% end %>
+      <td style="text-align:center">
+        <% if !User.where(:id => partner.user_id ).blank?  %>  
+        <% @user = User.where(:id => partner.user_id ).first %>
+          <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;"),user_profile_path(id: @user.id) ) %> <br/>
+          <b><%= link_to @user.name, user_profile_path(id: @user.id) %></b><br />
+          <% if user_signed_in? && @project.user_id == current_user.id %>
+            <b><%=  link_to"",home_destroy_project_user_path(partner), :class=>"confirm fa fa-trash-o", :id=>"confirm_#{partner.user_id}" %></b>
+          <% end %>
+        <%end%>
+      </td>
+    <% end %>
+  </tr>
+</table>

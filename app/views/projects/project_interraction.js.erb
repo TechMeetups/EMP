@@ -1,0 +1,6 @@
+<%if @flag%>
+alertify.alert("Request Successfully Sent")
+<%else%>
+alertify.alert("Request Already Sent")
+<%end%>
+$(".modal-footer .btn-default").trigger("click");

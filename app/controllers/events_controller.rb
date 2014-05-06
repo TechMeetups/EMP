@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    @interaction =Interaction.new
   end
 
   # GET /events/1
@@ -66,10 +67,6 @@ class EventsController < ApplicationController
   def create
     debugger
     @event = Event.new(event_params)
-    hh = params[:event]["s_time"].split(":")[0]
-    mm = params[:event]["s_time"].split(":")[1]
-    
-    params[:event]["s_time"] = hh+ ":" + mm 
     respond_to do |format|
       if @event.save
         if !params[:banner].blank?
@@ -126,6 +123,7 @@ class EventsController < ApplicationController
     flash[:notice] = "Event Succesfully Deleted"
     redirect_to :back
   end
+
 
   def search
     @image_user = User.first

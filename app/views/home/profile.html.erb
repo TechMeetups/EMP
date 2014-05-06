@@ -8,7 +8,16 @@
         <%= @user.name %>
       <% end %>
     </h2>
-    <h6 style="float:right;margin-top:-34px;margin-right:33px;">
+    <h6 style="float:right;margin-top:-48px;margin-right:33px;margin-left: -143px;">
+     <b style="font-size:11px;">Joined</b>
+      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
+        <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
+      <% else %>
+        <%= @user.member_since %>
+      <% end %>
+    </h6>
+    <h6 style="float:right;margin-top: -48px;margin-right: 311px;">
       <i class="fa fa-user"></i>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
@@ -116,6 +125,25 @@
             <th> Company </th>
             <td> <%= best_in_place current_user, :company,:path=> "/users",:activator => "#company-#{current_user.id}" %></td>
             <td> <%= link_to "","#",:id=>"company-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
+          </tr>
+          <tr>
+            <th> Expertise </th>
+            <td> <%= best_in_place current_user, :expertise,:path=> "/users",:activator => "#expertise-#{current_user.id}" %></td>
+            <td> <%= link_to "","#",:id=>"expertise-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
+          </tr>
+          <tr>
+            <th> Audience </th>
+            <td> <%= best_in_place current_user, :audience,:path=> "/users",:activator => "#audience-#{current_user.id}" %></td>
+            <td> <%= link_to "","#",:id=>"audience-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
+          </tr>
+          <tr>
+            <th>Interested in volunteering? </th>
+            <td> <%= best_in_place current_user, :volunteering,:type => :checkbox, :collection => ["No", "Yes"] ,:path=> "/users",:activator => "#volunteering-#{current_user.id}" %></td>
+            <td> <%= link_to "","#",:id=>"volunteering-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
+
+            <%#= best_in_place @user, :receive_emails, :type => :checkbox, :collection => ["No, thanks", "Yes, of course!"] %>
+
+
           </tr>
         <% end %>
 
@@ -238,7 +266,7 @@
     </div>
   <% end %>
   <br/>
-  <div class="event_box" style="margin-left:6px;margin-top:-24px;">
+  <div class="event_box" style="margin-left:8px;margin-top:-32px;">
         <p> 
           <% if user_signed_in? && params[:id].to_i == current_user.id %>
           <b>City </b>

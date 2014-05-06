@@ -1,0 +1,22 @@
+<table class="table">
+  <tr>
+    <% @speakers.each_with_index do |speaker, index| %>
+      <% if index+1 == 5%> </tr><tr>
+      <script>
+      var speakers_height = $("#speaker_list").height();
+      $("#speaker_box").css("height", speakers_height+180)
+      </script>
+       <% end %>
+      <td style="text-align:center">
+        <% if !User.where(:id => speaker.user_id ).blank?  %>  
+        <% @user = User.where(:id => speaker.user_id ).first %>
+          <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 100px;height: 80px;"),user_profile_path(id: @user.id) ) %> <br/>
+          <b><%= link_to @user.name, user_profile_path(id: @user.id) %></b><br />
+          <%if user_signed_in? && @project.user_id == current_user.id%>
+          <b><%=  link_to "",home_destroy_project_user_path(speaker), :class=>"confirm fa fa-trash-o ", :id=>"confirm_#{speaker.user_id}" %></b>
+          <% end %>
+        <%end%>
+      </td>
+    <% end %>
+  </tr>
+</table>

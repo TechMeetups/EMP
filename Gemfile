@@ -74,3 +74,6 @@ gem 'rails_best_practices'
 
 gem 'jquery-colorbox-rails'
 
+gem 'rMeetup'
+
+gem "httparty"

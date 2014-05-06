@@ -1,0 +1,29 @@
+<div class="speaker">
+  <%= image_tag "missing.png", :style=>"height: 63px; width:73px;" %>
+</div>
+<div Style="height: 34px; width:73px; ">
+<%= form_for @add_project_user, :url=> add_more_project_path, :remote=>true do |f| %>
+	<%= f.hidden_field :project_id, :value=>@project.id %>
+
+	<%= f.text_field :user_id , :id=>"project_user_speaker_tokens"%>
+
+	<%= f.hidden_field :project_type, :id=>"dynamic_speaker", :value =>"Speaker" %>
+	<br/>
+   <%= button_tag(type: "submit" ,:class=>"transparent_btn plus_speakers") do %>
+     <i class="fa fa-plus fa-2x"></i>
+     <%end%>
+     <%= link_to("",url_for(params) ,:class=>"cancel_speakers fa fa-times fa-2x") %>
+
+<% end %>
+</div>
+<script>
+  $(function() {
+    $("#project_user_speaker_tokens").tokenInput("/projects/<%= params[:id]%>.json", {
+      crossDomain: false,
+      prePopulate: $("#project_user_speaker_tokens").data("pre"),
+      theme: "facebook",
+      tokenLimit :1,
+      preventDuplicates: true
+    });
+  });
+</script>

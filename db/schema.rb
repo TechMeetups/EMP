@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428070439) do
+ActiveRecord::Schema.define(version: 20140506125051) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140428070439) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city_meetup_url"
   end
 
   create_table "event_banners", force: true do |t|
@@ -89,6 +90,8 @@ ActiveRecord::Schema.define(version: 20140428070439) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "event_type"
+    t.integer  "eventbrite_id",    limit: 8
+    t.string   "eventbrite_url"
   end
 
   create_table "interactions", force: true do |t|
@@ -99,6 +102,69 @@ ActiveRecord::Schema.define(version: 20140428070439) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "status"
+  end
+
+  create_table "meetup_groups", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetup_resources", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetup_users", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "project_banners", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.boolean  "featured"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
+  create_table "project_interactions", force: true do |t|
+    t.integer  "project_id"
+    t.string   "project_type"
+    t.integer  "user_id"
+    t.string   "action"
+    t.text     "memo"
+    t.boolean  "status",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "project_types", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  create_table "project_users", force: true do |t|
+    t.integer  "project_id"
+    t.string   "project_type"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "title"
+    t.date     "s_date"
+    t.date     "e_date"
+    t.string   "description"
+    t.string   "twitter_hash_tag"
+    t.string   "project_type"
   end
 
   create_table "taggings", force: true do |t|
@@ -120,12 +186,12 @@ ActiveRecord::Schema.define(version: 20140428070439) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -147,6 +213,13 @@ ActiveRecord::Schema.define(version: 20140428070439) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "eventbrite_id"
+    t.integer  "meetup_id"
+    t.string   "meetup_member_url"
+    t.date     "member_since"
+    t.string   "expertise"
+    t.string   "audience"
+    t.boolean  "volunteering",           default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -1,0 +1,94 @@
+<div id="masonry-container" class="transitions-enabled infinite-scroll clearfix masonry-brick">
+	
+
+	<% if !@projects.blank? %>
+		<% @projects.each do |event| %>
+
+			<div class="box panel default-panel col3">
+
+			  <div >
+
+			  	<div class="panel-heading">
+
+      				<h4 class="panel-title"><%= truncate(project.title, :length => 30) %></h4>
+
+				</div>
+			      
+			
+			   <div class="panel-body">
+
+			    <div class="thumbnail">			    	
+			      <% if !project.project_banners.blank? %>
+			      	<%= image_tag project.project_banners.first.file.url(:medium),
+			      	:style=>"height: 200px;"  %>
+			      <%else%>
+			      	<%= image_tag "Fantasy_wallpapers_174.jpg", :style=>"height: 200px;" %>
+			      <% end %>
+
+			      
+
+			      	<div class="caption">
+			        
+				  	<div class="well well-sm" style="height:131px">
+
+					    <p><b> Date : </b>
+					    <%= project.s_date.strftime("%e %b %Y") if !project.s_date.nil?  %>
+					    <b> to </b>          
+					    <%= project.e_date.strftime("%e %b %Y") if !project.e_date.nil?  %>
+				   		<p><b> City : </b>
+					   	<%= project.project_users.where(project_type: "Venue").first.user.city.name if !project.project_users.where(project_type: "Venue").first.nil? %>       
+				   		 <p><%= truncate(project.description, :length => 40)  %></p>
+				   	</div>	 
+
+			        
+			        	<div class="row">
+			        		<p class= "pull-left">
+				        	<%= link_to 'Attend',project,  :class=>"btn btn-xs btn-primary" %>
+				        	</p>
+				        	<p class= "pull-right">
+				            <%= link_to 'Learn More',project,  :class=>"btn btn-xs btn-info"%>
+				        	</p>
+			        	</div>
+					</p>
+			      </div>
+			    </div>
+			   </div>  
+			  </div>
+			</div>		
+		<% end %>
+	<% else %>
+	<% if params[:action] == "project_search" %>
+	<h4 class="project_search">
+	There is no project for <%= City.find(params[:id]).name %>.</h6>
+	<% end %>
+	<% if params[:action] == "project_search_type" %>
+	<h4 class="project_search">
+	There is no project for <%= ProjectType.find(params[:id]).name %>.</h6>
+	<% end %>
+	<% if params[:action] == "search" %>
+	<h4><b>
+	There is no project.</b></h4>
+	<% end %>
+	<% end %>
+</div>
+
+<div style="display:block;" >
+	<%= link_to 'Add your Project',"#", :class=>"btn btn-sm btn-danger", :id=>"add_new_project" %>
+</div>
+
+
+
+<script>
+$("#add_new_project").click(function(){
+	var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+    	$(".search_project").html("<%= escape_javascript(  render :partial => 'projects/form' ) %>")
+    }
+    else{
+      alertify.alert("You must login to continue");
+      return false; 
+    }
+})
+
+</script>

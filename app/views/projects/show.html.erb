@@ -1,0 +1,306 @@
+<!-- Modal -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+
+<div class="title">
+	<div class="event_box_title">
+		<h2>  
+			<% if !user_signed_in?  %>
+				<%= @project.title %>
+			<% elsif @project.user_id != current_user.id %> 
+				%= @project.title %>
+			<% else %>
+				<%= best_in_place @project,:title,:path=> "/projects/#{@project.id}", :activator => "#edit_title"  %><%= link_to "","#",:class=>"fa fa-pencil-square-o",  :id=>"edit_title" %>
+			<% end %>
+		</h2>
+		 
+	</div>
+	<div class="project_banner_block">
+      <% if @project_banners.count == 0%>
+      <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px",:id=>"project_banner" %>    
+      <% elsif @project_banners.count == 1 %>
+      <% @project_banners.each_with_index do |project_banner, index| %>
+          <% if index == 0 %>
+            <%= image_tag project_banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
+          <% else %>
+            <%= image_tag project_banner.file.url(:medium), :class=>"banner" %>
+          <% end %>
+          <% end %>
+        <% else %>
+          <div id="slideshow">
+            <% @project_banners.each_with_index do |project_banner, index| %>
+              <% if index == 0 %>
+                <%= image_tag project_banner.file.url(:medium),:class=>"active", :style=>"width: 100%; height: 300px" %>
+              <% else %>
+                <%= image_tag project_banner.file.url(:medium) ,:class=>"banner"%>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+
+      <% if user_signed_in? && @project.user_id == current_user.id %> 
+        <%= link_to "","#", :id=>"edit_project_banners",:class=>"edit_banners fa fa-pencil-square-o" %> 
+      <% end %>
+    </div>
+    <br/>
+    <br/>
+    <div>
+      <p><b> Start </b>
+        <% if !user_signed_in?  %>
+          <%= @project.s_date.strftime("%e %b %Y")  if !@project.s_date.nil?  %>
+        <% elsif @project.user_id != current_user.id %>
+          <%= @project.s_date.strftime("%e %b %Y")  if !@project.s_date.nil?  %>
+        <% else %>
+          <%= best_in_place @project,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/projects/#{@project.id}", :activator => "#edit_s_date" %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_s_date" %>
+        <% end %> 
+        
+      <b class="to"> to </b>      
+    </div> 
+    <div class="end">
+      <b>  End </b>
+        <% if !user_signed_in?  %>
+          <%= @project.e_date.strftime("%B %d, %Y") if !@project.e_date.nil?  %>
+        <% elsif @project.user_id != current_user.id %>
+          <%= @project.e_date.strftime("%B %d, %Y") if !@project.e_date.nil?  %>
+        <% else %>
+          <%= best_in_place @project,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/projects/#{@project.id}", :activator => "#edit_e_date" %>
+          <%= link_to "","#",:class=>"fa fa-pencil-square-o", :id=>"edit_e_date" %>
+        <% end %>
+    </p>
+    </div>
+      
+      <p><b class="description">Description</b>
+      <% if !user_signed_in?  %>
+        <%= @project.description %>
+      <% elsif @project.user_id != current_user.id %> 
+        <%= @project.description %>
+      <% else %>
+      <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_description" %>
+      <br />
+        <%= best_in_place @project,:description,:path=> "/projects/#{@project.id}",:type => :textarea , :html_attrs => { :cols => '112', :rows => '6' }, :activator => "#edit_description" %>
+        
+      <% end %>
+    </p>
+    <div class="event_box" id="speaker_box">
+    <h4>  Team </h4>
+    <div class="table_block" id="speaker_list">
+      <%= render "team_list" %>
+    </div>
+      <% if !user_signed_in?  %>
+      <div class="button_block" id="speaker_block"> 
+        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        </div>
+      <% elsif @project.user_id != current_user.id %> 
+      <div class="button_block" id="speaker_block"> 
+        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        </div>
+      <% else %>
+        <% if !@speakers.blank? %>
+          <div class="add_new" id="add_speaker">
+            <%= render"add_more_team"%>
+          </div> 
+        <% else %>
+          <div class="add_new" id="add_speaker">
+            <%= render"add_more_team"%>
+          </div>
+        <% end %>
+        
+      <% end %>
+    
+  </div>
+
+  <br/>
+  <div  class="event_box" id="partner_box">
+    <h4> Partner  </h4>
+    <div class="table_block"  id="partner_list">
+      <%= render "partners_list" %>
+    </div>
+    
+    
+    <% if !user_signed_in?  %>
+      <div class="button_block" id="partner_block"> 
+        <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+      </div>
+    <% elsif @project.user_id != current_user.id %>
+      <div class="button_block" id="partner_block"> 
+        <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
+      </div>
+    <% else %>
+      <% if !@partners.blank? %>
+        <div class="add_new" id="partner_block">
+            <%= render"add_more_partners"%>
+          </div> 
+        <% else %>
+          <div class="add_new" id="partner_block">
+            <%= render"add_more_partners"%>
+          </div>
+        <% end %>
+
+    <% end %>
+  </div>
+  <br/>
+  <div  class="event_box" id="attendee_box">
+    <h4> Followers</h4>
+    <div class="table_block" id="attendee_list">
+      <%= render "attendees_list" %>
+    </div>
+      <% if !user_signed_in?  %>
+        <div class="button_block" id="attendee_block">
+          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+        </div>
+      <% elsif @project.user_id != current_user.id %>
+        <div class="button_block" id="attendee_block">
+          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+        </div>
+      <% else %>
+        <% if !@attendee.blank? %>
+          <div class="add_new" id="attendee_block">
+            <%= render"add_more_attendees"%>
+          </div> 
+        <% else %>
+          <div class="add_new" id="attendee_block">
+            <%= render"add_more_attendees"%>
+          </div>
+        <% end %>
+        
+      <% end %>
+    
+  </div>
+</div>  
+      
+	<div class="host">
+  <div style="margin-left:20px">
+    <div class="event_box">
+      <h4 >  Host </h4>
+      <% if !user_signed_in?  %>
+      <% elsif @project.user_id != current_user.id %> 
+      <% else %>
+        <%= link_to "","#",:class=> "change_host fa fa-pencil-square-o"%>
+      <% end %>
+      <div id="host_show" >
+        <%= render "host"%>
+      </div>
+    </div>
+
+    <div class="event_box">
+      <h4 >  Venue </h4>
+      
+      <% if !user_signed_in?  %>
+      <% elsif @project.user_id != current_user.id %> 
+      <% else %>
+        <%= link_to "","#", :class=> "change_venue fa fa-pencil-square-o"%>
+      <% end %>
+      <div id="venue_show" >
+       
+        <%= render "venue"%>
+      </div>
+      <div id ="project_address">
+      <%= render "project_address"%>
+      </div>
+    </div>
+    <div class="event_box">
+      <h4>Social Media</h4><br /><br />
+      <p>
+        <b>twitter#tag</b>
+      <% if !user_signed_in?  %>
+        <%= @project.twitter_hash_tag %>
+      <% elsif @project.user_id != current_user.id %> 
+        <%= @project.twitter_hash_tag %>
+      <% else %>
+        <%= best_in_place @project,:twitter_hash_tag,:path=> "/projects/#{@project.id}" ,  :activator => "#edit_twitter_hash_tag" %>
+        <%= link_to "","#" ,:class=>"fa fa-pencil-square-o", :id=>"edit_twitter_hash_tag" %><br /><br />
+      <% end %>
+    </p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  function slideSwitch() {
+    var $active = $('#slideshow IMG.active');
+
+    if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
+
+    var $next =  $active.next().length ? $active.next()
+        : $('#slideshow IMG:first');
+
+    $active.addClass('last-active');
+        
+    $next.css({opacity: 0.0})
+        .addClass('active')
+        .animate({opacity: 1.0}, 1000, function() {
+            $active.removeClass('active last-active');
+        });
+  }
+
+  $(function() {
+    setInterval( "slideSwitch()", 5000 );
+  });
+
+
+  $(document).on("click", ".open_my_modal", function () {
+    var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+      var myModalAction = $(this).attr('id');
+      $(".dynamic_action").val(myModalAction);
+      $("#interaction_memo").val("");
+      $('#myModal').modal({
+        show: 'true'
+      }); 
+    }
+    else{
+       alertify.alert("You must login to continue");
+      return false; 
+    }
+    
+  });
+
+  $("#edit_project_banners").click(function(){
+    $(".project_banner_block").html("<%= escape_javascript(render :partial => 'project_banners') %> ")
+  })
+
+
+  var project_id = "<%= @project.id %>"
+
+  
+
+  $(".add_more_people").click(function(){
+    var block_id = $(this).attr("id");
+    if(block_id == "add_speaker"){
+      $("#speaker_block").html("<%= escape_javascript(render :partial => 'add_more_team')%>")
+      $("#dynamic_speaker").val("Speaker")
+    }
+    else if(block_id == "add_partner"){
+      $("#partner_block").html("<%= escape_javascript(render :partial => 'add_more_partners')%>")
+      $("#dynamic_partner").val("Partner")
+    }
+    else if(block_id == "add_attendees"){
+      $("#attendee_block").html("<%= escape_javascript(render :partial => 'add_more_attendees')%>")
+      $("#dynamic_attendee").val("Attendee")
+    }
+    
+  });
+
+  $(".change_host").click(function(){
+    var block_id = $(this).attr("id");
+
+      $("#host_block").html("<%= escape_javascript(render :partial => 'projects/change_host')%>")
+      $("#dynamic_appplicant").val("change_host")
+    });
+  $(".change_venue").click(function(){
+    var block_id = $(this).attr("id");
+
+      $("#venue_block").html("<%= escape_javascript(render :partial => 'projects/change_venue')%>")
+      $("#dynamic_appplicant").val("change_venue")
+    });
+  $(".change_venue").click(function(){
+    var block_id = $(this).attr("id");
+
+      $("#venue_block").html("<%= escape_javascript(render :partial => 'projects/change_venue')%>")
+      $("#dynamic_appplicant").val("change_venue")
+    });
+  
+</script>

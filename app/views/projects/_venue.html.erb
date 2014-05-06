@@ -1,0 +1,14 @@
+<div id="venue_block">
+	 <% if !@project.project_users.where(project_type: "Venue").first.nil? %>
+  <% @project_user1 = @project.project_users.where(project_type: "Venue").first %>
+  <% @venue = @project.project_users.where(project_type: "Venue").first %>
+<div style ="margin-top:-12px">
+  <%= link_to @project_user1.user.name, user_profile_path(id: @project_user1.user.id) if !@project_user1.user.nil? %>
+  <br />
+  </div>
+  <br>
+  <%=  link_to(image_tag(@project_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @project_user1.user.id) ) if !@project_user1.user.nil? %> <br />
+  
+  <% else %>
+  <% end %>
+</div>

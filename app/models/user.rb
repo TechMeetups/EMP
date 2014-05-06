@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   has_many :interactions, dependent: :destroy
   has_many :event_users , dependent: :destroy
   belongs_to :city
+  has_many :projects, dependent: :destroy
+  has_many :project_interactions, dependent: :destroy
+  has_many :project_users , dependent: :destroy
+  
 
   
 end

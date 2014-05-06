@@ -1,0 +1,187 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<br/>
+<br/>
+<% if user_signed_in?%>
+  <%= form_for(Project.new, :html=>{:class=>"form-horizontal validate-form", :multipart=>true})  do |f| %>
+    <fieldset>
+      <legend>Add a New Project</legend>
+      
+      <div style="float: left; width: 72%;">
+        <div class="event_box">
+          <%= f.hidden_field :user_id, :value=>current_user.id %>
+          <h2>
+             <%= f.text_field :title, :class=>"form-control", :placeholder=>"Title of the Project" ,:required=>true %>
+          </h2>
+          <div class="col-lg-10 add_more_project_block" style="height: 150px;width:800px;">
+            <label class="col-lg-2 control-label" style="margin-left: -25px;">Upload Image : </label>
+            <input class="form-control" id="banner__file" name="banner[][file]" style="float:left; width: 40%;" type="file">
+            <label class="col-lg-2 control-label" style="width: 93px;">Featured : </label>
+
+             <select class="form-control dropdown_form" id="banner__feature" name="banner[][feature]" style="width: 100px; "><option value="1" selected="selected">Yes</option>
+              <option value="0" >No</option></select>
+            <i class="fa fa-plus fa-2x add_more_project" style="margin-top:8px;margin-left:10px;cursor:pointer;cursor:hand;"></i>
+          </div>
+          <p >
+          </p>
+          <div style="width: 300px; float: left;">
+            <p><b> Start </b>
+              <%= f.text_field :s_date, :class=>"form-control", :placeholder=>"Start Date"  %>
+            </p>
+          </div> 
+          <div style="margin-left: 389px;margin-top:31px ">
+            <p><b>  End </b>
+              <%= f.text_field :e_date, :class=>"form-control", :placeholder=>"End Date"  %>
+            </p>
+          </div>
+          <br/><br/>
+          <p>
+            <%= select_tag 'project_type', options_for_select(ProjectType.all.collect {|a| [a.name, a.id]}), :class=>"form-control", :id=>"project_type", :name=>"project[project_type]" %>
+          </p>
+          <br/><br/>
+          <p>
+            <%= f.text_area :description , :class=>"form-control" , :placeholder=>"Description of the Project"%>
+          </p>
+
+          <p>
+            <%= f.text_field :twitter_hash_tag , :class=>"form-control", :placeholder=>"Twitter Hash Tag" %>
+          </p>
+            
+
+        </div>  
+        <div class="form-group">
+          <div class="col-lg-10">
+            <%= f.submit :class=>"btn btn-primary" %>
+          </div>
+        </div>  
+      </div>
+
+      <div class="right_content">
+        <div style="margin-left:20px">
+          <div class="event_box">
+            <h4>  Host </h4>
+            <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control host_select" ,:style=>"width: 193px; margin-left: 31px;" %><br />
+            <div id="host_image">
+              <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            </div>
+          </div>
+
+          <div class="event_box">
+            <h4>  Venue </h4>
+             <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control venue_select",:style=>"width: 193px; margin-left: 31px;" %><br />
+             <div id="venue_image">
+              <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            </div> <br /><br/><br/>
+            <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
+            <b> City </b> <%= City.find(current_user.city_id).name %> <br/><br/>
+
+            <iframe width="200" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?client=ubuntu&amp;channel=cs&amp;ie=UTF8&amp;q=<%= City.find(current_user.city_id).name if !current_user.nil? %>&amp;fb=1&amp;gl=in&amp;hq=&amp;iwloc=A&amp;output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+<% end %>
+
+
+<style>
+
+.invalid input:required:invalid {
+    background: #BE4C54;
+}
+ 
+.invalid input:required:valid {
+    background: #17D654 ;
+
+}
+</style>
+
+<script>
+  $(".add_more_project").click(function(){
+    $(".add_more_project_block").append('<br/><br/><br/><label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label><input id="banner_file" class="form-control" type="file" style="float:left; width: 40%;" name="banner[][file]">');
+    var add_more = $(".add_more_project_block").height();
+    $(".add_more_project_block").css("height", add_more+50)
+  })
+
+
+  $(".host_select").change(function(){
+    var user_id =$("#host_id").val()
+     var data = new FormData();
+     data.append('user_id', user_id);
+    $.ajax({
+          type: "POST",
+          url: "/home/change_user",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
+
+  })
+
+  $(".venue_select").change(function(){
+    var user_id =$("#venue_id").val()
+     var data = new FormData();
+     data.append('user_id', user_id);
+     data.append('user', "vanue");
+
+    $.ajax({
+          type: "POST",
+          url: "/home/change_user",
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          enctype: 'multipart/form-data'
+      });
+
+  })
+
+  $(document).ready(function(){
+    $("#project_s_date" ).datepicker({
+       minDate: 0,
+         onSelect: function(selected) {
+
+        $("#project_e_date").datepicker("option","minDate", selected)
+
+      }
+
+    });
+    $('#project_s_date').datepicker("option", "dateFormat", 'dd-mm-yy')
+
+    $("#project_e_date" ).datepicker({ minDate: 0
+    });
+    $('#project_e_date').datepicker("option", "dateFormat", 'dd-mm-yy')
+
+
+    var add_more = $(".add_more_project_block").height();
+    $(".add_more_project_block").css("height", add_more+40)
+
+    $('.dateselect-time').timepicker();
+  });
+</script>
+<script>
+function hasHtml5Validation () {
+  return typeof document.createElement('input').checkValidity === 'function';
+}
+ 
+if (hasHtml5Validation()) {
+  $('.validate-form').submit(function (e) {
+    if (!this.checkValidity()) {
+      e.preventDefault();
+      $(this).addClass('invalid');
+      $('#status').html('invalid');
+    } else {
+      $(this).addClass('valid');
+      $('#status').html('submitted');
+    }
+  });
+}
+</script>
+<script>
+$(document).ready(function(){
+  $('#new_form').validate();
+})
+
+</script>

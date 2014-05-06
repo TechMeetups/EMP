@@ -1,0 +1,25 @@
+<div style="height: 34px; width:73px;margin:-3px 24px -7px 89px; ">
+<%= form_for @add_project_user, :url=>host_change_path, :remote=>true do |f| %>
+	<%= f.hidden_field :project_id, :value=>@project.id %>
+
+	<%= f.text_field :user_id, :id=>"project_change_host_tokens" %>
+
+	<%= f.hidden_field :project_type, :id=>"dynamic_partner" %>
+
+  <%= button_tag(type: "submit" ,:class=>"transparent_btn plus_host") do %>
+ <i class="fa fa-plus fa-2x"></i>
+ <%end%>
+ <%= link_to("",project_path ,:class=>"cancel_host fa fa-times fa-2x") %>
+<% end %>
+</div>
+<script>
+  $(function() {
+    $("#project_change_host_tokens").tokenInput("/projects/<%= params[:id]%>.json", {
+      crossDomain: false,
+      prePopulate: $("#project_change_host_tokens").data("pre"),
+      theme: "facebook",
+	    tokenLimit: 1,
+      preventDuplicates: true
+    });
+  });
+</script>

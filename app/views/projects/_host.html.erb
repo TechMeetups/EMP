@@ -1,0 +1,24 @@
+<div id="host_block" >
+  <% if !@project.project_users.where(project_type: "Host").first.nil? %>
+  <% if !@project.nil? %>
+  <% @user1 = @project.project_users.where(project_type: "Host").first.user %>
+  <% @host = @project.project_users.where(project_type: "Host").first %>
+  <% else %>
+  <% @user1=current_user %>
+  <% end %>
+  <div style ="margin-top:-11px">
+    <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
+  </div>
+      <br>
+      <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> <br />
+      <% if !user_signed_in?  %>
+        <br/>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% elsif !@project.nil? && @project.user_id != current_user.id %>
+        <br/>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>
+      <% end %>
+      <br/>
+      <% else %>
+      <% end %>
+    </div >

@@ -1,4 +1,42 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<% if user_signed_in? && current_user.email == "vaibhav@gmail.com" %>
+<div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Import Events and Attendee</h4>
+      </div>
+      <%= form_tag  home_import_event_path ,:id=>"import_admin_event_form" do %>
+
+        <div class="modal-body">
+          <label class="col-lg-2 control-label">Date </label>
+          <%= text_field_tag :s_date ,nil,:class=>"form-control dynamic_action" %>
+           <label class="col-lg-2 control-label" style="margin-left:10px;"> To </label>
+           <%= text_field_tag :e_date ,nil,:class=>"form-control dynamic_action", :style=>"float:left;margin-left: -36px;", :id=>"to_time"%>
+               
+          <br/>
+          <br/>         
+        </div>
+
+        <div class="modal-footer">
+
+           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_event" %>
+         
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        <div>
+          <%#= render "import_event" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% end%>
+
 <div class="navbar navbar-inverse">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
@@ -10,13 +48,16 @@
   </div>
   <div class="navbar-collapse collapse navbar-inverse-collapse">
     <ul class="nav navbar-nav">
-      <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
+      <% if user_signed_in? && current_user.email == "vaibhav@gmail.com" %>
         <li class="active"><%= link_to "Home", root_url %></li>
         <li><%= link_to("Admin Login",admin_dashboard_path(id: current_user.id),:target => "_blank") %></li>
         <li><%= link_to "Notifications", notifications_path if user_signed_in? %></li>
+        <li><%= link_to "Import Events", "#",:class=>"btn btn-info import_event" if user_signed_in? %></li>
+        <li><%= link_to "Import Members", "#",:class=>"btn btn-info import_member" if user_signed_in? %></li>
       <% elsif user_signed_in? %>
         <li class="active"><%= link_to "Home", root_url %></li>
         <li><%= link_to "Notifications", notifications_path if user_signed_in? %></li>
+        
       <% end %>
     </ul>
     
@@ -49,3 +90,75 @@
     </ul>
   </div>
 </div>
+<script>
+$(document).on("click", ".import_event", function () {
+ 
+    var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+      var myModalAction = $(this).attr('id');
+      $(".dynamic_action").val(myModalAction);
+      $("#interaction_memo").val("");
+      $('#import_event').modal({
+        show: 'true'
+      }); 
+      
+    }
+    else{
+       alertify.alert("You must login to continue");
+      return false; 
+    }
+    
+  });
+$(document).on("click", ".import_member", function () {
+ 
+    var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+      var myModalAction = $(this).attr('id');
+      $(".dynamic_action").val(myModalAction);
+      $("#interaction_memo").val("");
+      $('#import_member').modal({
+        show: 'true'
+      }); 
+    }
+    else{
+       alertify.alert("You must login to continue");
+      return false; 
+    }
+    
+  });
+
+$(document).ready(function(){
+    $("#s_date" ).datepicker({
+       minDate: 0,
+         onSelect: function(selected) {
+
+        $("#s_date").datepicker("option","minDate", selected)
+
+      }
+    });
+  
+  });
+$("#import_admin_event").click(function(){
+      $.ajax({
+        type: "POST",
+        url: "/home/import_event",
+        data: $("#import_admin_event_form").serialize()
+    
+    });
+      return false;
+  
+  });
+$(document).ready(function(){
+    $("#to_time" ).datepicker({
+       minDate: 0,
+         onSelect: function(selected) {
+
+        $("#to_time").datepicker("option","minDate", selected)
+
+      }
+    });
+  
+  });
+</script>

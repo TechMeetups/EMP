@@ -1,0 +1,53 @@
+<h1>Listing Projects</h1>
+
+<table id="events" class="display">
+  <thead>
+    <tr>
+      <th>Start Date & Time</th>
+      <th>End Date & Time</th>
+      <th>Event</th>
+      <th>City</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <% current_user.projects.each do |project| %>
+      <tr>
+        <td><%= project.s_date.strftime("%B %d, %Y") if !project.s_date.nil?  %> 
+        <td><%= project.e_date.strftime("%B %d, %Y") if !project.e_date.nil? %>   
+        <td><%= project.title %></td>
+        
+        <td><%#=  City.find(User.find(project.project_users.where(project_type: "Venue").first.user_id).city_id).name %></td>
+        <td><%= link_to"", project, :class=>"fa fa-pencil-square-o" %></td>
+        <td>
+          <%= link_to "", destroy_project_path(project),:class=>"fa fa-trash-o" %>
+
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div style="float:right">
+  <%= link_to "" ,"#" ,:title=>"Add a new Project", :id=>"add_new_project" ,:class=>"fa fa-plus fa-2x" %>
+</div>
+
+<script>
+$("#add_new_project").click(function(){
+  var signed_in = '<%= user_signed_in? %>'
+
+    if(signed_in == "true") {
+      $(".search_event").html("<%= escape_javascript(  render :partial => 'projects/form' ) %>")
+    }
+    else{
+      alert("You must login to continue");
+      return false; 
+    }
+  })
+
+</script>

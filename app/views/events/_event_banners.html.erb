@@ -16,8 +16,8 @@
         <td><%= index+1 %></td>
         <td><%= banner.featured %></td>
         <td><%= banner.file_file_name %></td>
-        <td><%= link_to(image_tag("upload.png", :style=>"width: 15px;"), event_path(format: "img", banner_id: banner.id, id: @event.id )) %></td>
-        <td><%= link_to(image_tag("trash.png", :style=>"width: 15px;"), banner_destroy_path(banner_id: banner.id), :method=>"POST", confirm: "Are you sure?", :remote=>true) %></td>
+        <td><%= link_to "", event_path(format: "img", banner_id: banner.id, id: @event.id ),:class=>"fa fa-cloud-download" %></td>
+        <td><%= link_to "", banner_destroy_path(banner_id: banner.id, :method=>"POST", confirm: "Are you sure?", :remote=>true),:class=>"fa fa-trash-o" %></td>
        
       </tr>
     <% end %>

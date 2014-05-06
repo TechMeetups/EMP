@@ -1,0 +1,41 @@
+<% if @project_user.nil? %>
+	$(".token-input-delete-token-facebook").trigger("click")
+	alertify.alert("Selected Users Already added.")
+<% else %>	
+	$(".token-input-delete-token-facebook").trigger("click")
+	<% if !@attendee.nil? %>
+		$("#attendee_block").css("margin-top", "5px")
+
+		$("#attendee_list").html("<%= escape_javascript(render 'projects/attendees_list') %>")
+	<% elsif !@speakers.nil? %>
+		$("#speaker_block").css("margin-top", "5px")
+
+		$("#speaker_list").html("<%= escape_javascript(render 'projects/team_list') %>")
+	<% elsif !@partners.nil? %>
+		$("#partner_block").css("margin-top", "5px")
+
+		$("#partner_list").html("<%= escape_javascript(render 'projects/partners_list') %>")
+	<% end %>
+<% end %>
+
+
+
+var speakers_height = $("#speaker_list").height();
+var partner_height = $("#partner_list").height();
+var attendee_height = $("#attendee_list").height();
+
+ $("#attendee_box").css("height", attendee_height+60)
+  $("#speaker_box").css("height", speakers_height+60)
+  $("#partner_box").css("height", partner_height+60)
+$(".confirm").on( 'click', function () {
+    var user_trash = this
+    alertify.confirm("Are you sure to delete", function (e)   {
+        if (e) {
+         
+          window.location.href = user_trash.href
+        } else {
+          
+        }
+    });
+    return false;
+  });
