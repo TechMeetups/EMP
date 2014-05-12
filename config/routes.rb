@@ -51,8 +51,9 @@ TechMeetsUp::Application.routes.draw do
   post 'event/interaction' => "events#event_interaction"
   post 'project/interaction' => "projects#project_interaction"
   post 'events/update_time'=> "events#update_time"
-   post "home/change_user"
-   post 'home/import_event'
+  post "home/change_user"
+  post 'home/import_event'
+  post 'home/import_member'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view
   # Example of named route that can be invoked with purchase_url(id: product.id)

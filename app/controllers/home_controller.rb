@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
-
   def index
-  
+   debugger
     @events = Event.all
     @user = current_user if user_signed_in?
    
@@ -235,17 +234,45 @@ class HomeController < ApplicationController
     redirect_to :back
   end
 
-  def import_event
-     results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
-    results["events"].each_with_index do |event,index|
-     event_exist= Event.find_all_by_title(event["name"]["text"])
-     if event_exist.blank?
-       event = Event.create(:title=>event["name"]["text"])
-     end 
-    end
+  def import_event   
+      @import_event=[]
+      results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
+      results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| (p if p["created"] <= string_to_datetime(params[:e_date]) && p["created"] >= string_to_datetime(params[:s_date])  ) }.reject(&:blank?)
+      results_events.each_with_index do |event,index|
+        debugger
+        event_exist= Event.find_all_by_title(event["name"]["text"])
+        if event_exist.blank?
+           
+           @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
+           @import_event[index] = @event
+           
+        else      
+          #@a[index].update(:title=>event["name"]["text"]
+      end
+      end
+      #@events= Event.all(:conditions => ["start_at >= ? AND end_at <= ?")
   end
 
+  def import_member
+    debugger
+    @import_member=[]
+    debugger
+    results = JSON.parse(open("https://api.meetup.com/2/groups?lat=51.509980&lon=-0.133700&page=20&key=7e3b5f36645b5273316346473fa67").read)
+    debugger
+    results["results"].each_with_index do |result,index|
+    user_exist= User.find_all_by_name(result["organizer"]["name"])
+    if user_exist.blank?
+       @user = User.create(:name=>result["organizer"]["name"],:password=>"12345678",:email=>"a@gmail.com") 
+       @import_member[index] = @user.name
+     end
+   end
+  end  
+
   private
+
+    def event_params
+      params.require(:event).permit(:user_id, :title, :s_date, :e_date, :s_time, :e_time, :event_type, :description, :twitter_hash_tag)
+    end
 
     def event_user_param
       params.require(:event_user).permit(:user_id, :event_id, :event_type)
@@ -276,4 +303,8 @@ class HomeController < ApplicationController
       end
     end
 
+    def string_to_datetime(string)
+      format="%m-%d-%Y"
+      real_date = DateTime.strptime(string.gsub("/","-"), format).to_time
+    end
 end

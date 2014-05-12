@@ -3,7 +3,7 @@
     <% @attendee.each_with_index do |attendee, index| %>
       <% if index+1 == 8 %> </tr><tr> 
       <script>
-      var attendee_height = $("#attendee_list").height();
+      var attendee_height = $("#attendees_list").height();
       $("#attendee_box").css("height", attendee_height+180)
     </script><% end %>
       <td style="text-align:center">

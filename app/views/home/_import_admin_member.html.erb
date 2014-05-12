@@ -1,0 +1,22 @@
+<div id="import_member">
+
+	<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Title</th>
+     
+     
+    </tr>
+  </thead>
+<tbody>
+<% @a.each_with_index do |a, index|  %>
+<tr>
+  <td><%= index+1 %></td>
+  <td> <%= a %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+</div>
+</div>

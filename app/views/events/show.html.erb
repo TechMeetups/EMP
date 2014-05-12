@@ -50,7 +50,7 @@
      <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
      <% elsif @event.user_id != current_user.id %> 
     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
-    <% else %>
+    <% else %>/events/3107#/events/3107#
       <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
       <%= link_to "","#",:id=>"edit_event_type",:class=>"edit_image fa fa-pencil-square-o" %><% end %>    
     </h6>
@@ -118,7 +118,13 @@
           <%= best_in_place @event, :e_time, :type => :input, :activator => "#edit_e_time" %>
           <%= link_to "","#",:class=>"fa fa-pencil-square-o", :id=>"edit_e_time" %>
         <% end %>
+        <%if !@event.eventbrite_id.blank? %>
+        <%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:25px;float:right"),"#{@event.eventbrite_url}",:target=>"blank",) %>
 
+
+        <% end %>
+
+        
     </p>
     </div>
       

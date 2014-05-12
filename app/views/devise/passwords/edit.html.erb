@@ -13,6 +13,6 @@
   <div><%= f.submit "Change my password",:class=>"btn btn-primary" %></div>
 <% end %>
 <br />
-<%= button_to "Sign in", new_session_path(resource_name),:class=>"btn btn-primary":style =>"margin-left:80px;margin-top:-56px;" %>
+<%= button_to "Sign in", new_session_path(resource_name),:class=>"btn btn-primary",:style =>"margin-left:80px;margin-top:-56px;" %>
 <%= button_to "Sign up", new_user_registration_path,:class=>"btn btn-primary",:method => :get, :style =>"margin-left:80px;margin-top:-56px;"%>
 <%#= render "devise/shared/links" %>

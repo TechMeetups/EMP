@@ -20,7 +20,7 @@
         <td><%= event.e_date.strftime("%B %d, %Y") if !event.e_date.nil? %>   <%= event.e_time %></td>
         <td><%= event.title %></td>
         
-        <td><%=  City.find(User.find(event.event_users.where(event_type: "Venue").first.user_id).city_id).name %></td>
+        <td><%=  City.find(User.find(event.event_users.where(event_type: "Venue").first.user_id).city_id).name if !event.event_users.where(event_type: "Venue").first.nil? %></td>
         <td><%= link_to"", event, :class=>"fa fa-pencil-square-o" %></td>
         <td>
           <%= link_to "", destroy_event_path(event),:class=>"fa fa-trash-o" %>

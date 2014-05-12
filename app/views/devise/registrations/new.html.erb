@@ -92,15 +92,15 @@
       <table width="282px" cellpadding="10" class="table">
         <tr>
           <th>Email</th>
-            <td><%= f.email_field :email,:class=>"form-control",:id=>"user_email" ,:placeholder=>"Email" ,:required =>"true"%>
+            <td><%= f.email_field :email,:class=>"form-control",:id=>"user_email" ,:placeholder=>"Email" %>
         </tr>
         <tr>
           <th>Password</th>
-            <td><%= f.password_field :password,:class=>"form-control", :id=>"user_password" ,:placeholder=>"Password" , :required =>"true" %></td>
+            <td><%= f.password_field :password,:class=>"form-control", :id=>"user_password" ,:placeholder=>"Password"  %></td>
         </tr>
           <tr>
             <th>Password Confirmation</th>
-            <td><%=f.password_field :password_confirmation ,:class=>"form-control" ,:id=>"user_password_confirmation" , :placeholder=>"Password Confirmation",:required =>"true" %></td>
+            <td><%=f.password_field :password_confirmation ,:class=>"form-control" ,:id=>"user_password_confirmation" , :placeholder=>"Password Confirmation" %></td>
           </tr>
           <tr>
             <th>Type</th>

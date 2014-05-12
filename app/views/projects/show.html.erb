@@ -3,7 +3,7 @@
 
 
 <div class="title">
-	<div class="event_box_title">
+	<div class="event_box_title" style="border">
 		<h2>  
 			<% if !user_signed_in?  %>
 				<%= @project.title %>
@@ -13,8 +13,7 @@
 				<%= best_in_place @project,:title,:path=> "/projects/#{@project.id}", :activator => "#edit_title"  %><%= link_to "","#",:class=>"fa fa-pencil-square-o",  :id=>"edit_title" %>
 			<% end %>
 		</h2>
-		 
-	</div>
+	
 	<div class="project_banner_block">
       <% if @project_banners.count == 0%>
       <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px",:id=>"project_banner" %>    
@@ -35,6 +34,7 @@
                 <%= image_tag project_banner.file.url(:medium) ,:class=>"banner"%>
               <% end %>
             <% end %>
+
           </div>
         <% end %>
 
@@ -44,7 +44,6 @@
     </div>
     <br/>
     <br/>
-    <div>
       <p><b> Start </b>
         <% if !user_signed_in?  %>
           <%= @project.s_date.strftime("%e %b %Y")  if !@project.s_date.nil?  %>
@@ -56,7 +55,6 @@
         <% end %> 
         
       <b class="to"> to </b>      
-    </div> 
     <div class="end">
       <b>  End </b>
         <% if !user_signed_in?  %>
@@ -78,10 +76,11 @@
       <% else %>
       <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_description" %>
       <br />
-        <%= best_in_place @project,:description,:path=> "/projects/#{@project.id}",:type => :textarea , :html_attrs => { :cols => '112', :rows => '6' }, :activator => "#edit_description" %>
+        <%= best_in_place @project,:description,:path=> "/projects/#{@project.id}",:type => :textarea , :html_attrs => { :cols => '102', :rows => '6' }, :activator => "#edit_description" %>
         
       <% end %>
     </p>
+  </div>
     <div class="event_box" id="speaker_box">
     <h4>  Team </h4>
     <div class="table_block" id="speaker_list">
@@ -142,7 +141,7 @@
   <br/>
   <div  class="event_box" id="attendee_box">
     <h4> Followers</h4>
-    <div class="table_block" id="attendee_list">
+    <div class="table_block" id="follower_list">
       <%= render "attendees_list" %>
     </div>
       <% if !user_signed_in?  %>
@@ -302,5 +301,13 @@
       $("#venue_block").html("<%= escape_javascript(render :partial => 'projects/change_venue')%>")
       $("#dynamic_appplicant").val("change_venue")
     });
+
+  var speakers_height = $("#speaker_list").height();
+  var partner_height = $("#partner_list").height();
+  var attendee_height = $("#follower_list").height();
+
+  $("#attendee_box").css("min-height", 200)
+  $("#speaker_box").css("min-height", 200)
+  $("#partner_box").css("min-height", 200)
   
 </script>

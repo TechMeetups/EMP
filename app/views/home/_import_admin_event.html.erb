@@ -1,0 +1,22 @@
+<div id="import_event">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Title</th>
+     <th>Eventbrite Url</th>
+     
+    </tr>
+  </thead>
+<tbody>
+<% @import_event.each_with_index do |import_event, index|  %>
+<tr>
+  <td><%= index+1 %></td>
+  <td> <%= import_event.title %>..............</td>
+  <td> <%= import_event.eventbrite_url %>  ..................</td>
+</tr>
+<% end %>
+</tbody>
+</table>
+</div>
+<%#= @b %>

@@ -1,13 +1,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <% if user_signed_in? && current_user.email == "vaibhav@gmail.com" %>
 <div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" >Import Events and Attendee</h4>
+        <h4 class="modal-title" >Import Events and Attendee from</h4>
+        <%= image_tag "/assets/eventbrite1.png",:style=>"margin-left:320px; margin-top:-40px" %>
       </div>
       <%= form_tag  home_import_event_path ,:id=>"import_admin_event_form" do %>
 
@@ -15,20 +16,52 @@
           <label class="col-lg-2 control-label">Date </label>
           <%= text_field_tag :s_date ,nil,:class=>"form-control dynamic_action" %>
            <label class="col-lg-2 control-label" style="margin-left:10px;"> To </label>
-           <%= text_field_tag :e_date ,nil,:class=>"form-control dynamic_action", :style=>"float:left;margin-left: -36px;", :id=>"to_time"%>
-               
+           <%= text_field_tag :e_date ,nil,:class=>"form-control dynamic_action", :style=>"float:left;margin-left: -36px;", :id=>"to_time"%>               
           <br/>
-          <br/>         
+          <br/> 
+        <div class="modal-footer">          
+           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_event" %>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        <div id="import-admin-event">
+          </div>        
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="import_member" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" style="margin-left:20px;">Import Membars from</h4>
+        <%= image_tag "/assets/meetup.png",:style=>"margin-left:320px; margin-top:-40px" %>
+      </div>
+      <%= form_tag home_import_member_path ,:id=>"import_admin_member_form" do %>
+
+        <div class="modal-body">
+          <label class="col-lg-2 control-label">City </label>
+          <%= select_tag 'city_id', options_for_select(City.all.collect{|u| [u.name, u.id]}),:class=>"form-control dynamic_action" ,:id=>"city_import"%><br/><br />
+          
+           <label class="col-lg-2 control-label" style="float:left;margin-left:-260px;">Meetup Url</label>
+           <%= text_field_tag :meetup_url,nil,:class=>"form-control dynamic_action hidden_option",:style=>"float:left;margin-left:-167px;margin-top:16px;"%>
+          
+          <br/>
+          <br/> 
+           <div id="import-admin-member">
+        </div>        
         </div>
 
         <div class="modal-footer">
 
-           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_event" %>
-         
+           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
+            <span class="" style="margin-left: 40%;display:none;">Importing....
+          <img src = '/assets/loader.gif' style="height: 24px; width: 24px;"/></span>
            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
         </div>
-        <div>
-          <%#= render "import_event" %>
+       </div>
+       
         </div>
       <% end %>
     </div>
@@ -129,17 +162,7 @@ $(document).on("click", ".import_member", function () {
     
   });
 
-$(document).ready(function(){
-    $("#s_date" ).datepicker({
-       minDate: 0,
-         onSelect: function(selected) {
 
-        $("#s_date").datepicker("option","minDate", selected)
-
-      }
-    });
-  
-  });
 $("#import_admin_event").click(function(){
       $.ajax({
         type: "POST",
@@ -150,15 +173,77 @@ $("#import_admin_event").click(function(){
       return false;
   
   });
-$(document).ready(function(){
-    $("#to_time" ).datepicker({
-       minDate: 0,
-         onSelect: function(selected) {
 
-        $("#to_time").datepicker("option","minDate", selected)
-
-      }
+$("#import_admin_member").click(function(){
+      $.ajax({
+        type:"POST",
+        url: "/home/import_member",
+        data: $("#import_admin_member_form").serialize()
+    
     });
+      return false;
   
   });
+
+$(document).ready(function(){
+    $("#s_date" ).datepicker({
+      
+  });
+    });
+
+$(document).ready(function(){
+    $("#to_time" ).datepicker({
+       
+  
+  });
+    });
+
+(function() {
+
+var bar = $('.bar');
+var percent = $('.percent');
+var status = $('#status');
+$('.submit').click(function(){
+$('.progress').show();
+$('span').show();
+})
+$('#import_event').ajaxForm({
+beforeSend: function() {
+status.empty();
+var percentVal = '0%';
+bar.width(percentVal)
+percent.html(percentVal);
+},
+uploadProgress: function(event, position, total, percentComplete) {
+var percentVal = percentComplete + '%';
+bar.width(percentVal)
+percent.html(percentVal);
+},
+success: function() {
+$('span').hide();
+$('.imported').show();
+var percentVal = '100%';
+bar.width(percentVal)
+percent.html(percentVal);
+},
+complete: function(xhr) {
+status.html(xhr.responseText);
+}
+
+});
+
+})();
+
+$(document).ready(function(){
+    $("#city_import").change(function(){
+        if($("#city_import").val()){
+          $(".hidden_option").fadeIn('fast');   
+        }            
+    });        
+});
 </script>
+<style>
+.hidden_option{
+ display: none;   
+}
+</style>

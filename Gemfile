@@ -68,12 +68,10 @@ end
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development]
 
 gem 'rails_best_practices'
 
 gem 'jquery-colorbox-rails'
 
 gem 'rMeetup'
-
-gem "httparty"
