@@ -76,7 +76,7 @@
       <% else %>
       <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_description" %>
       <br />
-        <%= best_in_place @project,:description,:path=> "/projects/#{@project.id}",:type => :textarea , :html_attrs => { :cols => '102', :rows => '6' }, :activator => "#edit_description" %>
+        <%= best_in_place @project,:description,:path=> "/projects/#{@project.id}",:type => :textarea , :html_attrs => { :cols => '80', :rows => '6' }, :activator => "#edit_description" %>
         
       <% end %>
     </p>
@@ -88,11 +88,11 @@
     </div>
       <% if !user_signed_in?  %>
       <div class="button_block" id="speaker_block"> 
-        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        <%= link_to "Join", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
         </div>
       <% elsif @project.user_id != current_user.id %> 
       <div class="button_block" id="speaker_block"> 
-        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+        <%= link_to "Join", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
         </div>
       <% else %>
         <% if !@speakers.blank? %>
@@ -146,11 +146,11 @@
     </div>
       <% if !user_signed_in?  %>
         <div class="button_block" id="attendee_block">
-          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
+          <%= link_to "Follow", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
         </div>
       <% elsif @project.user_id != current_user.id %>
         <div class="button_block" id="attendee_block">
-          <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
+          <%= link_to "Follow", "#", :class=>"btn btn-success open_my_modal", :id=>"Attend event"  %>
         </div>
       <% else %>
         <% if !@attendee.blank? %>
@@ -171,7 +171,7 @@
 	<div class="host">
   <div style="margin-left:20px">
     <div class="event_box">
-      <h4 >  Host </h4>
+      <h4 >  Project Started by </h4>
       <% if !user_signed_in?  %>
       <% elsif @project.user_id != current_user.id %> 
       <% else %>
@@ -183,7 +183,7 @@
     </div>
 
     <div class="event_box">
-      <h4 >  Venue </h4>
+      <h4 >  Location </h4>
       
       <% if !user_signed_in?  %>
       <% elsif @project.user_id != current_user.id %> 

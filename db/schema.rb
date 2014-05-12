@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20140506125051) do
     t.text     "memo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "status"
+    t.boolean  "status",     default: false
   end
 
   create_table "meetup_groups", force: true do |t|

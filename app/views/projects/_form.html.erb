@@ -59,7 +59,7 @@
       <div class="right_content">
         <div style="margin-left:20px">
           <div class="event_box">
-            <h4>  Host </h4>
+            <h4>  Started by </h4>
             <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control host_select" ,:style=>"width: 193px; margin-left: 31px;" %><br />
             <div id="host_image">
               <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
@@ -67,7 +67,7 @@
           </div>
 
           <div class="event_box">
-            <h4>  Venue </h4>
+            <h4>  Location </h4>
              <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control venue_select",:style=>"width: 193px; margin-left: 31px;" %><br />
              <div id="venue_image">
               <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
