@@ -1,12 +1,9 @@
 class HomeController < ApplicationController
   def index
-   debugger
     @events = Event.all
     @user = current_user if user_signed_in?
    
     @interaction =Interaction.new
-    
-
   end
 
   def notifications

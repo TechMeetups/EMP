@@ -81,13 +81,11 @@ TechMeetsUp::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-  ActionMailer::Base.smtp_settings = {
-  :address => "smtp.gmail.com",
-  :port => 587,
-  :authentication => :plain,
-  :domain => 'gmail.com',
-  :user_name => 'yuvasoftest@gmail.com',
-  :password => 'yuva_123456789'
+   ActionMailer::Base.smtp_settings = {
+  :address => "send.one.com",
+  :port => 2525,
+  :user_name => 'admin@techmeetups.com',
+  :password => 'admin123'
 }
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new

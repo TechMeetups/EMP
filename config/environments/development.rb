@@ -34,11 +34,10 @@ TechMeetsUp::Application.configure do
   config.action_mailer.default :charset => "utf-8"
 
   ActionMailer::Base.smtp_settings = {
-  :address => "smtp.gmail.com",
-  :port => 587,
-  :authentication => :plain,
-  :domain => 'gmail.com',
-  :user_name => 'shawn@techmeetups.com',
-  :password => 'yuva_123456789'
+  :address => "send.one.com",
+  :port => 2525,
+  :user_name => 'admin@techmeetups.com',
+  :password => 'admin123'
 }
 end
+
