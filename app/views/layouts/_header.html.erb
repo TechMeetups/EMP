@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
 <script src="http://malsup.github.com/jquery.form.js"></script>
-<% if user_signed_in? && current_user.email == "vaibhav@gmail.com" %>
+<% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
 <div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -29,6 +29,7 @@
     </div>
   </div>
 </div>
+</div>
 <div class="modal fade" id="import_member" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -47,25 +48,17 @@
            <%= text_field_tag :meetup_url,nil,:class=>"form-control dynamic_action hidden_option",:style=>"float:left;margin-left:-167px;margin-top:16px;"%>
           
           <br/>
-          <br/> 
-           <div id="import-admin-member">
-        </div>        
+          <br/>                 
         </div>
-
         <div class="modal-footer">
-
-           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
-            <span class="" style="margin-left: 40%;display:none;">Importing....
-          <img src = '/assets/loader.gif' style="height: 24px; width: 24px;"/></span>
-           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-        </div>
-       </div>
-       
-        </div>
+          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
+        </div>  
+        <div id="import-admin-member">
+          </div>       
       <% end %>
     </div>
   </div>
+</div>
 </div>
 
 <% end%>

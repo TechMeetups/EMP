@@ -8,3 +8,4 @@ cities = City.create([{ name: 'London' }, { name: 'Berlin' }, { name: 'New York'
 event_types = EventType.create([{ name:'Hackathon'}, {name:'Startup Job Fair'}, {name:'Startup Workshop'}])
 
 project_types = ProjectType.create([{ name:'WebApp'}, {name:'MobileApp'}, {name:'Hardware'},{name: 'Others'}])
+

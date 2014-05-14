@@ -232,16 +232,15 @@ class HomeController < ApplicationController
   end
 
   def import_event   
-      @import_event=[]
+     @results_events=[]
       results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
-      results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| (p if p["created"] <= string_to_datetime(params[:e_date]) && p["created"] >= string_to_datetime(params[:s_date])  ) }.reject(&:blank?)
+      results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:e_date])) }.reject(&:blank?)
       results_events.each_with_index do |event,index|
-        debugger
         event_exist= Event.find_all_by_title(event["name"]["text"])
         if event_exist.blank?
            
            @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
-           @import_event[index] = @event
+           @results_events[index] = @event
            
         else      
           #@a[index].update(:title=>event["name"]["text"]
@@ -252,15 +251,14 @@ class HomeController < ApplicationController
 
   def import_member
     debugger
-    @import_member=[]
-    debugger
+    @user_exist=[]
     results = JSON.parse(open("https://api.meetup.com/2/groups?lat=51.509980&lon=-0.133700&page=20&key=7e3b5f36645b5273316346473fa67").read)
-    debugger
     results["results"].each_with_index do |result,index|
     user_exist= User.find_all_by_name(result["organizer"]["name"])
     if user_exist.blank?
-       @user = User.create(:name=>result["organizer"]["name"],:password=>"12345678",:email=>"a@gmail.com") 
-       @import_member[index] = @user.name
+       @user = User.create(:name=>result["organizer"]["name"],:password=>result["organizer"]["member_id"],:email=>"#{result["organizer"]["member_id"]}@gmail.com") 
+       #@user = User.create(:name=>results["results"].first["organizer"]["name"],:password=>"12345678",:email=>"#{results["results"].first["organizer"]["member_id"]}@gmail.com") 
+       @user_exist[index] = @user.name
      end
    end
   end  
