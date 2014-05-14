@@ -259,6 +259,8 @@ class HomeController < ApplicationController
        @user = User.create(:name=>result["organizer"]["name"],:password=>result["organizer"]["member_id"],:email=>"#{result["organizer"]["member_id"]}@gmail.com") 
        #@user = User.create(:name=>results["results"].first["organizer"]["name"],:password=>"12345678",:email=>"#{results["results"].first["organizer"]["member_id"]}@gmail.com") 
        @user_exist[index] = @user.name
+    else 
+      debugger
      end
    end
   end  
