@@ -273,7 +273,7 @@ class HomeController < ApplicationController
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          user_exist.update(:name=>"vaibhav",:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
           @user_exist[index] = user_exist.name
         end
       end
