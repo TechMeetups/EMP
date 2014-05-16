@@ -249,7 +249,6 @@ class HomeController < ApplicationController
 
   def import_member
     @user_exist=[]
-    debugger
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
       results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=20&sig_id=144415902&sig=179d898d82c545353f39b1ca4fb9404b4d2fbe89").read)
       results["results"].each_with_index do |result,index|
@@ -259,6 +258,7 @@ class HomeController < ApplicationController
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
+          debugger
           user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
           @user_exist[index] = user_exist.name
         end
@@ -288,7 +288,6 @@ class HomeController < ApplicationController
         end
         if  !user_exist.blank?
           user_exist.update(:name=>"vaibhav",:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
-          debugger
           @user_exist[index] = user_exist.name
         end
       end
