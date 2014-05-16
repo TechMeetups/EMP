@@ -248,9 +248,10 @@ class HomeController < ApplicationController
   end
 
   def import_member
+    debugger
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=20&sig_id=144415902&sig=179d898d82c545353f39b1ca4fb9404b4d2fbe89").read)
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
@@ -265,7 +266,7 @@ class HomeController < ApplicationController
       end
     end
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=london-silicon-roundabout&offset=0&format=json&page=20&sig_id=144415902&sig=4b780ea6c6183317be46c117d099d2314b92920d").read)
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=http%3A%2F%2Fwww.meetup.com%2Flondon-silicon-roundabout%2F&offset=0&format=json&page=500&sig_id=144415902&sig=0e2e33a92d2032ad926cf3282d2e58d5e9cf9edb").read)
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
@@ -273,13 +274,13 @@ class HomeController < ApplicationController
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
-          user_exist.update(:name=>"vaibhav",:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
           @user_exist[index] = user_exist.name
         end
       end
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=0&format=json&page=20&sig_id=144415902&sig=92fd8b133cfafa3f63519d3d059f9f70f0153ca9").read)       
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=0&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
