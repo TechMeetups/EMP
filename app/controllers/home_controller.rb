@@ -248,7 +248,6 @@ class HomeController < ApplicationController
   end
 
   def import_member
-
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
       results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)

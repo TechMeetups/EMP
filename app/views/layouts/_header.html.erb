@@ -186,6 +186,7 @@ $("#import_admin_event").click(function(){
   });
 
 $("#import_admin_member").click(function(){
+  $('#import-admin-member').append('<img src="/assets/ajax-loader (2).gif" alt=""  />')
       $.ajax({
         type:"POST",
         url: "/home/import_member",
