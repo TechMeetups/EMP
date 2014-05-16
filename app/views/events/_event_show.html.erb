@@ -42,7 +42,8 @@
 								<%= event.e_time %></p>
 				   		</div>
 				   		<p><b> City : </b>
-					   	<%= event.event_users.where(event_type: "Venue").first.user.city.name if !event.event_users.where(event_type: "Venue").first.nil? %>       
+				   			
+					   	<%#= event.event_users.where(event_type: "Venue").first.user.city.name if !event.event_users.where(event_type: "Venue").first.user.city.nil? %>       
 				   		 <p><%= truncate(event.description, :length => 40)  %></p>
 				   	</div>	 
 

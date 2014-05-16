@@ -1,3 +1,7 @@
+<% content_for :scripts do %>
+    <%= javascript_include_tag 'upload' %>
+<% end %>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
 <script src="http://malsup.github.com/jquery.form.js"></script>
@@ -22,9 +26,18 @@
         <div class="modal-footer">          
            <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_event" %>
            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           <div id='progress' style='display: none;'>
+              File upload in progress
+              <div id='bar' style='width: 0%;'>
+                  0%
+              </div>
+            </div>
         </div>
         <div id="import-admin-event">
-          </div>        
+          </div>  
+           <div id="progress">
+              <div class="bar" style="width: 0%;"></div>``
+          </div>      
       <% end %>
     </div>
   </div>
@@ -42,10 +55,10 @@
 
         <div class="modal-body">
           <label class="col-lg-2 control-label">City </label>
-          <%= select_tag 'city_id', options_for_select(City.all.collect{|u| [u.name, u.id]}),:class=>"form-control dynamic_action" ,:id=>"city_import"%><br/><br />
+          <%= select_tag 'city_id', options_for_select(City.all.collect{|u| [u.name, u.city_meetup_url]}),:class=>"form-control dynamic_action" ,:id=>"city_import"%><br/><br />
           
-           <label class="col-lg-2 control-label" style="float:left;margin-left:-260px;">Meetup Url</label>
-           <%= text_field_tag :meetup_url,nil,:class=>"form-control dynamic_action hidden_option",:style=>"float:left;margin-left:-167px;margin-top:16px;"%>
+           <label class="col-lg-2 control-label" style="float: left; margin-left: -260px; margin-top: 25px;">Meetup Url</label>
+           <%= text_field_tag :meetup_url,nil,:class=>"form-control dynamic_action hidden_option",:style=>"float:left;margin-left:-167px;margin-top:16px;",:id=>"meetup_url" %>
           
           <br/>
           <br/>                 
@@ -54,7 +67,9 @@
           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
         </div>  
         <div id="import-admin-member">
-          </div>       
+          <span style="margin-left: 40%;display:none;">Importing....
+          <img src = '/assets/upload1.png' style="height: 24px; width: 24px;"/></span>
+        </div>       
       <% end %>
     </div>
   </div>
@@ -195,45 +210,12 @@ $(document).ready(function(){
   });
     });
 
-(function() {
 
-var bar = $('.bar');
-var percent = $('.percent');
-var status = $('#status');
-$('.submit').click(function(){
-$('.progress').show();
-$('span').show();
-})
-$('#import_event').ajaxForm({
-beforeSend: function() {
-status.empty();
-var percentVal = '0%';
-bar.width(percentVal)
-percent.html(percentVal);
-},
-uploadProgress: function(event, position, total, percentComplete) {
-var percentVal = percentComplete + '%';
-bar.width(percentVal)
-percent.html(percentVal);
-},
-success: function() {
-$('span').hide();
-$('.imported').show();
-var percentVal = '100%';
-bar.width(percentVal)
-percent.html(percentVal);
-},
-complete: function(xhr) {
-status.html(xhr.responseText);
-}
-
-});
-
-})();
 
 $(document).ready(function(){
     $("#city_import").change(function(){
         if($("#city_import").val()){
+          $("#meetup_url").val(this.value);
           $(".hidden_option").fadeIn('fast');   
         }            
     });        
@@ -241,6 +223,15 @@ $(document).ready(function(){
 </script>
 <style>
 .hidden_option{
- display: none;   
+ display: none; 
+ width:400px;  
 }
 </style>
+<script>
+ $("#import_admin_member").bind("ajax:beforeSend", function(){
+     $.fancybox({ content:"Going Back to Activity...   <img src='/assets/upload1.png' width='25'>" });
+    })
+    $("#import_admin_member").bind("ajax:complete", function(){
+   })
+
+</script>

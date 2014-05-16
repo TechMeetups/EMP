@@ -82,7 +82,7 @@
               <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
             </div> <br /><br/><br/>
             <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
-            <b> City </b> <%= City.find(current_user.city_id).name %> <br/><br/>
+            <b> City </b> <%= City.find(current_user.city_id).name if !current_user.nil?%> <br/><br/>
 
             <iframe width="200" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?client=ubuntu&amp;channel=cs&amp;ie=UTF8&amp;q=<%= City.find(current_user.city_id).name if !current_user.nil? %>&amp;fb=1&amp;gl=in&amp;hq=&amp;iwloc=A&amp;output=embed"></iframe>
           </div>

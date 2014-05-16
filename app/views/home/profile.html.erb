@@ -30,20 +30,18 @@
       <div id="users_avatar">
         <% if !@user.avatar.blank? %>
           <%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 265px; margin-top: 15px;"%>
-        <% else %>      
-          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: 15px;"%>
-        <% end %>
-      </div>
-      <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <% elsif user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 67%;">
           <%= link_to "","#",:class=>"fa fa-plus fa-2x",:id=>"uploadbutton", :style=>"float: right;margin: -29px 43px 0px 0px;  " %>
           <%= link_to "",user_profile_path ,:class=>"fa fa-times fa-2x", :style=>"float: right;  margin: -30px 0px 0px 0px;" %>
         </div>
         <%= link_to "","#",:id=>"edit_user_avatar",:class=>"fa fa-pencil-square-o", :style=>"width: 15px; margin-left: 83%;" %>
-      <% end %>
-      
-    </div>
+        <% else %>      
+          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: 15px;"%>
+        <% end %>
+      </div>
+     </div>
 
     <div>
       <table class="table" style="width: 50%;">
@@ -275,7 +273,7 @@
           <% else %>
           <div>
             <b>City </b>
-            <%= City.find(User.find(@user.id).city_id).name  %>
+            <%= City.find(User.find(@user.id).city_id).name if !@user.city_id.nil? %>
           </div>
           <% end %>
           
@@ -315,7 +313,7 @@
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#") %></td>          
+          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td>          
         </tr>
         <tr>
           <td><br /></td>
@@ -352,7 +350,7 @@
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#") %></td>          
+          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td>          
         </tr>
         <tr>
           <td><br /></td>

@@ -232,37 +232,67 @@ class HomeController < ApplicationController
   end
 
   def import_event   
-     @results_events=[]
-      results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
-      results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:e_date])) }.reject(&:blank?)
-      results_events.each_with_index do |event,index|
-        event_exist= Event.find_all_by_title(event["name"]["text"])
-        if event_exist.blank?
-           
-           @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
-           @results_events[index] = @event
-           
-        else      
-          #@a[index].update(:title=>event["name"]["text"]
+    @results_events=[]
+    results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
+    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:e_date])) }.reject(&:blank?)
+    results_events.each_with_index do |event,index|
+      event_exist= Event.find_by_title(event["name"]["text"])
+      if event_exist.blank?           
+        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
+        @results_events[index] = @event           
       end
+      if !event_exist.blank?      
+        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
       end
-      #@events= Event.all(:conditions => ["start_at >= ? AND end_at <= ?")
+    end
   end
 
   def import_member
-    debugger
     @user_exist=[]
-    results = JSON.parse(open("https://api.meetup.com/2/groups?lat=51.509980&lon=-0.133700&page=20&key=7e3b5f36645b5273316346473fa67").read)
-    results["results"].each_with_index do |result,index|
-    user_exist= User.find_all_by_name(result["organizer"]["name"])
-    if user_exist.blank?
-       @user = User.create(:name=>result["organizer"]["name"],:password=>result["organizer"]["member_id"],:email=>"#{result["organizer"]["member_id"]}@gmail.com") 
-       #@user = User.create(:name=>results["results"].first["organizer"]["name"],:password=>"12345678",:email=>"#{results["results"].first["organizer"]["member_id"]}@gmail.com") 
-       @user_exist[index] = @user.name
-    else 
-      debugger
-     end
-   end
+    debugger
+    if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=20&sig_id=144415902&sig=179d898d82c545353f39b1ca4fb9404b4d2fbe89").read)
+      results["results"].each_with_index do |result,index|
+        user_exist= User.find_by_name(result["name"])    
+        if user_exist.blank?
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user_exist[index] = @user.name
+        end
+        if  !user_exist.blank?
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          @user_exist[index] = user_exist.name
+        end
+      end
+    end
+    if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=london-silicon-roundabout&offset=0&format=json&page=20&sig_id=144415902&sig=4b780ea6c6183317be46c117d099d2314b92920d").read)
+      results["results"].each_with_index do |result,index|
+        user_exist= User.find_by_name(result["name"])    
+        if user_exist.blank?
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user_exist[index] = @user.name
+        end
+        if  !user_exist.blank?
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          @user_exist[index] = user_exist.name
+        end
+      end
+    end
+    if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=0&format=json&page=20&sig_id=144415902&sig=92fd8b133cfafa3f63519d3d059f9f70f0153ca9").read)       
+      results["results"].each_with_index do |result,index|
+        user_exist= User.find_by_name(result["name"])    
+        if user_exist.blank?
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user_exist[index] = @user.name
+        end
+        if  !user_exist.blank?
+          user_exist.update(:name=>"vaibhav",:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          debugger
+          @user_exist[index] = user_exist.name
+        end
+      end
+    end
   end  
 
   private
@@ -303,5 +333,9 @@ class HomeController < ApplicationController
     def string_to_datetime(string)
       format="%m-%d-%Y"
       real_date = DateTime.strptime(string.gsub("/","-"), format).to_time
+    end
+
+    def user_params
+    params.require(:user).permit(:email,:name,:password,:password_confirmation,:company,:city_id,:address,:user_type,:description,:offer, :looking_for,:twitter,:facebook,:linkedin,:avatar)
     end
 end

@@ -4,7 +4,6 @@
     <tr>
       <th>No</th>
       <th>Title</th>
-     <th>Eventbrite Url</th>
      
     </tr>
   </thead>
@@ -12,10 +11,9 @@
 <%  @results_events.each_with_index do |import_event, index|  %>
 <tr>
   <td><%= index+1 %></td>
-  <td> <%= import_event.title %>..............</td>
-  <td> <%= import_event.eventbrite_url %>  ..................</td>
+  <td> <%= import_event.title if !import_event.title.nil? %>..............added.</td>
+  
 </tr>
 <% end %>
 </tbody>
-</tabl
-<%#= @b %>
+</table>
