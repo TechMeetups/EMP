@@ -175,6 +175,7 @@ $(document).on("click", ".import_member", function () {
 
 
 $("#import_admin_event").click(function(){
+   $('#import-admin-event').append('<img src="/assets/ajax-loader(1).gif" alt="" style="margin-left: 230px;" />')
       $.ajax({
         type: "POST",
         url: "/home/import_event",
@@ -186,7 +187,7 @@ $("#import_admin_event").click(function(){
   });
 
 $("#import_admin_member").click(function(){
-  $('#import-admin-member').append('<img src="/assets/ajax-loader (2).gif" alt=""  />')
+  $('#import-admin-member').append('<img src="/assets/ajax-loader(1).gif" alt="" style="margin-left: 230px;" />')
       $.ajax({
         type:"POST",
         url: "/home/import_member",

@@ -231,18 +231,19 @@ class HomeController < ApplicationController
     redirect_to :back
   end
 
-  def import_event   
+  def import_event 
+  debugger  
     @results_events=[]
-    results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=BKKRDKVUVRC5WG4HAVLT").read)
+    results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=CKUU5YHXMHKRLS7ZVIBG").read)
     results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:e_date])) }.reject(&:blank?)
     results_events.each_with_index do |event,index|
       event_exist= Event.find_by_title(event["name"]["text"])
       if event_exist.blank?           
-        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
-        @results_events[index] = @event           
+        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
+        @results_events[index] = @event.title           
       end
       if !event_exist.blank?      
-        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["organizer"]["url"],:eventbrite_id=>event["id"])
+        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
       end
     end
   end
