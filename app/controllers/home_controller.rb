@@ -1,9 +1,7 @@
 class HomeController < ApplicationController
   def index
     @events = Event.all
-    @user = current_user if user_signed_in?
-   
-    @interaction =Interaction.new
+    @user = current_user if user_signed_in?   
   end
 
   def notifications
@@ -197,7 +195,6 @@ class HomeController < ApplicationController
   end
 
   def profile
-    @interaction =Interaction.new
     @user = User.find(params[:id])
     @speakers = @partners = @attendee = []
     @speakers = EventUser.find(:all, :conditions=>["user_id = ? AND event_type = ?", @user.id, "Speaker"] )
@@ -264,47 +261,54 @@ class HomeController < ApplicationController
   def import_member
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=0&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
-      results["results"].each_with_index do |result,index|
-        user_exist= User.find_by_name(result["name"])    
-        if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
-          @user_exist[index] = @user.name
-        end
-        if  !user_exist.blank?
-         
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-          @user_exist[index] = user_exist.name
+      (0..10).each do |index|
+        results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=new-york-silicon-alley&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
+        results["results"].each_with_index do |result,index|
+          user_exist= User.find_by_name(result["name"])    
+          if user_exist.blank?
+            @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
+            @user_exist << @user.name
+          end
+          if  !user_exist.blank?           
+            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user_exist << user_exist.name
+          end
         end
       end
-    end
+    end     
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=london-silicon-roundabout&offset=0&format=json&page=500&sig_id=144415902&sig=0e72b0839e85fe89aa7f2a9e58b8fee8fb8127f7").read)
-      results["results"].each_with_index do |result,index|
-        user_exist= User.find_by_name(result["name"])    
-        if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }", :source=>"M")       
-          @user_exist[index] = @user.name
-        end
-        if  !user_exist.blank?
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-          @user_exist[index] = user_exist.name
+      (0..23).each do |index|
+        debugger
+        results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=london-silicon-roundabout&format=json&page=1000&sig_id=144713682&sig=800be9885159a42bfbef5c9295917e07de161d53").read)
+        results["results"].each_with_index do |result,index|
+          user_exist= User.find_by_id(result["id"])    
+          if user_exist.blank?
+            @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }", :source=>"M")       
+            @user_exist << @user.name
+          end
+          if  !user_exist.blank?
+            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user_exist << user_exist.name
+          end          
         end
       end
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=0&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
-      results["results"].each_with_index do |result,index|
-        user_exist= User.find_by_name(result["name"])    
-        if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
-          @user_exist[index] = @user.name
+      (0..5).each do |index|
+        results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset="+index.to_s+"&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
+        results["results"].each_with_index do |result,index|
+          user_exist= User.find_by_name(result["name"])    
+          if user_exist.blank?
+            @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
+            @user_exist << @user.name
+          end
+          if  !user_exist.blank?
+            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user_exist << user_exist.name
+          end 
         end
-        if  !user_exist.blank?
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-          @user_exist[index] = user_exist.name
-        end 
-      end
+        debugger
+      end      
     end
   end  
 
@@ -331,7 +335,6 @@ class HomeController < ApplicationController
         @partners = Event.find(@event_user.event_id).event_users.find(:all, :conditions=>["event_type = ?", "Partner"])
       end
     end
-
 
     def add_project_participants
       if project_user_param['project_type'] == "Follower"
