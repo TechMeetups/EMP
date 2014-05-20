@@ -232,15 +232,30 @@ class HomeController < ApplicationController
   end
 
   def import_event 
-  debugger  
+
     @results_events=[]
-    results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/search?token=CKUU5YHXMHKRLS7ZVIBG").read)
-    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:e_date])) }.reject(&:blank?)
+    results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG").read)
+    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)
+  
     results_events.each_with_index do |event,index|
+    debugger
       event_exist= Event.find_by_title(event["name"]["text"])
-      if event_exist.blank?           
-        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
-        @results_events[index] = @event.title           
+      if event_exist.blank?                
+        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:source=>"E")
+        @results_events[index] = @event.title       
+        @id=Event.last.eventbrite_id
+        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
+        atts=attendee_results["attendees"]
+        atts.each_with_index do |attendee,index|
+        debugger
+          attendee_exist= User.find_by_name(attendee["profile"]["first_name"])
+          if attendee_exist.blank? 
+            @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"])
+          end
+          if !attendee_exist.blank?      
+            attendee_exist.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"])
+          end
+        end           
       end
       if !event_exist.blank?      
         event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
@@ -255,12 +270,12 @@ class HomeController < ApplicationController
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")       
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
          
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")
           @user_exist[index] = user_exist.name
         end
       end
@@ -270,11 +285,11 @@ class HomeController < ApplicationController
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")       
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")
           @user_exist[index] = user_exist.name
         end
       end
@@ -284,13 +299,13 @@ class HomeController < ApplicationController
       results["results"].each_with_index do |result,index|
         user_exist= User.find_by_name(result["name"])    
         if user_exist.blank?
-          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])       
+          @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")       
           @user_exist[index] = @user.name
         end
         if  !user_exist.blank?
-          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"])
+          user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:avatar_file_name=>result["photo"]["highres_link"],:source=>"M")
           @user_exist[index] = user_exist.name
-        end
+        end 
       end
     end
   end  

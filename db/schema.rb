@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140506125051) do
+ActiveRecord::Schema.define(version: 20140520065536) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20140506125051) do
     t.text     "memo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "status",     default: false
+    t.boolean  "status"
   end
 
   create_table "meetup_groups", force: true do |t|
@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 20140506125051) do
     t.string   "expertise"
     t.string   "audience"
     t.boolean  "volunteering",           default: true
+    t.string   "source"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
