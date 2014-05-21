@@ -1,7 +1,3 @@
-<% content_for :scripts do %>
-    <%= javascript_include_tag 'upload' %>
-<% end %>
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
 <script src="http://malsup.github.com/jquery.form.js"></script>
@@ -24,20 +20,11 @@
           <br/>
           <br/> 
         <div class="modal-footer">          
-           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_event" %>
-           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-           <div id='progress' style='display: none;'>
-              File upload in progress
-              <div id='bar' style='width: 0%;'>
-                  0%
-              </div>
-            </div>
+          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;color:blue" ,:id=>"import_admin_event" %>
+          
         </div>
         <div id="import-admin-event">
-          </div>  
-           <div id="progress">
-              <div class="bar" style="width: 0%;"></div>``
-          </div>      
+        </div>       
       <% end %>
     </div>
   </div>
@@ -56,16 +43,11 @@
         <div class="modal-body">
           <label class="col-lg-2 control-label">City </label>
           <%= select_tag 'city_id', options_for_select(City.all.collect{|u| [u.name, u.city_meetup_url]}),:class=>"form-control dynamic_action" ,:id=>"city_import"%><br/><br />
-          
-           <label class="col-lg-2 control-label" style="float: left; margin-left: -260px; margin-top: 25px;">Meetup Url</label>
-           <%= text_field_tag :meetup_url,nil,:class=>"form-control dynamic_action hidden_option",:style=>"float:left;margin-left:-167px;margin-top:16px;",:id=>"meetup_url" %>
-          
           <br/>
           <br/>                 
         </div>
         <div class="modal-footer">
           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
-           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>  
         <div id="import-admin-member">
         </div>       

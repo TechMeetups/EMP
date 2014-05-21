@@ -229,7 +229,6 @@ class HomeController < ApplicationController
   end
 
   def import_event 
-
     @results_events=[]
     results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG").read)
     results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)
@@ -259,9 +258,10 @@ class HomeController < ApplicationController
   end
 
   def import_member
+    debugger
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
-      (0..10).each do |index|
+      (0..1).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=new-york-silicon-alley&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
         results["results"].each_with_index do |result,index|
           user_exist= User.find_by_name(result["name"])    
@@ -277,7 +277,7 @@ class HomeController < ApplicationController
       end
     end     
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
-      (0..23).each do |index|
+      (0..0).each do |index|
         debugger
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=london-silicon-roundabout&format=json&page=1000&sig_id=144713682&sig=800be9885159a42bfbef5c9295917e07de161d53").read)
         results["results"].each_with_index do |result,index|
@@ -294,7 +294,7 @@ class HomeController < ApplicationController
       end
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
-      (0..5).each do |index|
+      (0..0).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset="+index.to_s+"&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
         results["results"].each_with_index do |result,index|
           user_exist= User.find_by_name(result["name"])    
