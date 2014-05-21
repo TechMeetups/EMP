@@ -1,6 +1,4 @@
 <div id="masonry-container" class="transitions-enabled infinite-scroll clearfix masonry-brick">
-	
-
 	<% if !@events.blank? %>
 		<% @events.each do |event| %>
 
@@ -43,7 +41,7 @@
 				   		</div>
 				   		<p><b> City : </b>
 				   			
-					   	<%= event.event_users.where(event_type: "Venue").first.user.city.name if !event.event_users.where(event_type: "Venue").first.nil? %>       
+					   	<%= (event.event_users.where(event_type: "Venue").first.user.city.try(:name) if !event.event_users.where(event_type: "Venue").first.blank?) %>       
 				   		 <p><%= truncate(event.description, :length => 40)  %></p>
 				   	</div>	 
 

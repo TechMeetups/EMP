@@ -157,7 +157,8 @@ $(document).on("click", ".import_member", function () {
 
 
 $("#import_admin_event").click(function(){
-   $('#import-admin-event').append('<img src="/assets/ajax-loader(1).gif" alt="" style="margin-left: 230px;" />')
+   
+   $('#import_admin_member').progressbar();
       $.ajax({
         type: "POST",
         url: "/home/import_event",
@@ -203,11 +204,22 @@ $(document).ready(function(){
         }            
     });        
 });
+
+$('#import_admin_member').progressbar();
 </script>
 <style>
 .hidden_option{
  display: none; 
  width:400px;  
+}
+Progressbar.defaults = {
+    transition_delay: 300,
+    refresh_speed: 50,
+    display_text: 'none',
+    use_percentage: true,
+    update: $.noop,
+    done: $.noop,
+    fail: $.noop
 }
 </style>
 <script>
