@@ -229,17 +229,24 @@ class HomeController < ApplicationController
   end
 
   def import_event 
-
+    debugger 
     @results_events=[]
     results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG").read)
-    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)
-  
+    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)  
     results_events.each_with_index do |event,index|
       event_exist= Event.find_by_title(event["name"]["text"])
       if event_exist.blank?                
-        @event = Event.create(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
+        @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
+          if @event.save
+            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>event["venue"]["address"]["address_1"],:city_id=>3)
+            debugger
+            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
+            debuggger
+            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
+          end
         @results_events[index] = @event.title       
         @id=Event.last.eventbrite_id
+
         attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|
@@ -253,7 +260,7 @@ class HomeController < ApplicationController
         end           
       end
       if !event_exist.blank?      
-        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"])
+        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["utc"].split("T")[1],:e_time=>event["end"]["utc"].split("T")[1])
       end
     end
   end
