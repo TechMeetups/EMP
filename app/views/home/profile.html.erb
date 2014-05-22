@@ -139,8 +139,6 @@
             <td> <%= best_in_place current_user, :volunteering,:type => :checkbox, :collection => ["No", "Yes"] ,:path=> "/users",:activator => "#volunteering-#{current_user.id}" %></td>
             <td> <%= link_to "","#",:id=>"volunteering-#{current_user.id}", :class=>"fa fa-pencil-square-o" %></td>
 
-            <%#= best_in_place @user, :receive_emails, :type => :checkbox, :collection => ["No, thanks", "Yes, of course!"] %>
-
 
           </tr>
         <% end %>
@@ -313,13 +311,17 @@
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td>          
+          <%if @user.source == "M" %>
+          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td> 
+          <% end %>         
         </tr>
         <tr>
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:50px;float:right"),"#") %></td>          
+           <%if @user.source == "E" %>
+          <td><%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:50px;float:right"),"#") %></td>  
+          <% end %>        
         </tr>
       </table>
     </div>
@@ -350,13 +352,17 @@
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td>          
+          <%if @user.source == "M" %>
+          <td><%= link_to(image_tag("../assets/meetup_logo.png", :style=>"width:50px;float:right"),"#{@user.meetup_member_url}",:target=>"blank") %></td> 
+          <% end %>         
         </tr>
         <tr>
           <td><br /></td>
           </tr>
         <tr>
-          <td><%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:50px;float:right"),"#") %></td>          
+           <%if @user.source == "E" %>
+          <td><%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:50px;float:right"),"#") %></td> 
+          <% end %>         
         </tr>
       </table>
     </div>

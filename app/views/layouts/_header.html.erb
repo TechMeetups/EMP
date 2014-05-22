@@ -4,7 +4,7 @@
 <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
 <div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" style="width:780px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" >Import Events and Attendee from</h4>
@@ -157,8 +157,6 @@ $(document).on("click", ".import_member", function () {
 
 
 $("#import_admin_event").click(function(){
-   
-   $('#import_admin_member').progressbar();
       $.ajax({
         type: "POST",
         url: "/home/import_event",

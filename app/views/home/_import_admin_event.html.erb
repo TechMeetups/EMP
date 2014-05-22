@@ -1,6 +1,25 @@
 <div id="import_event"  style="background: none repeat scroll 0px 0px lightgray;">
-  <%  @results_events.each_with_index do |import_event, index|  %>
-    <lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>. <%= import_event %>..............added.</lable><br/>
-    <% end %>
+	<%  @results_events.each_with_index do |import_event, index|  %>
+		<ul class="a">
+			<li>	
+			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= index+1 %>. <%= import_event %>.......added.</lable>
+			</li>
+		</ul>
+		<%  @results_attendees.each_with_index do |import_attendee, index|  %>
+			<ul class="a">
+				<li>	
+					<lable style="margin-left:100px;font-size: 15px;"><%= index+1 %>. <%= import_attendee %>.......added.</lable>
+				</li>
+			</ul>
+		<% end %>
+		<% @results_attendees=[] %>
+	<% end %>
 </div>
+
 <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;">Done</button>
+
+<style>
+.a{
+list-style-type: none;
+}
+</style>
