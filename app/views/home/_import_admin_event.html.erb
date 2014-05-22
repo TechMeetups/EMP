@@ -1,18 +1,6 @@
-<div id="import_event">
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Title</th>
-     
-    </tr>
-  </thead>
-<tbody>
-<%  @results_events.each_with_index do |import_event, index|  %>
-<tr>
-  <td><%= index+1 %></td>
-  <td> <%= import_event %>..............added.</td>
-</tr>
-<% end %>
-</tbody>
-</table>
+<div id="import_event"  style="background: none repeat scroll 0px 0px lightgray;">
+  <%  @results_events.each_with_index do |import_event, index|  %>
+    <lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>. <%= import_event %>..............added.</lable><br/>
+    <% end %>
+</div>
+<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;">Done</button>

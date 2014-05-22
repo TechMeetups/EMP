@@ -1,22 +1,45 @@
-<div id="import_member">
-
-	<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Name</th>
-     
-     
-    </tr>
-  </thead>
-<tbody>
-<% @user_exist.each_with_index do |import_member, index|  %>
-
-<tr>
-  <td><%= index+1 %></td>
-  <td> <%= import_member  %>....added</td>
-</tr>
-<% end %>
-</tbody>
-</table>
+<script type="text/javascript" src="bootstrap-progressbar.js"></script>
+<div id="import_member" style="background: none repeat scroll 0px 0px lightgray;margin-left: 22px;width: 550px;">
+	<%if params[:city_id]=="http://www.meetup.com/TechMeetups-Berlin" %>
+		<h4 style="margin-left: 20px; font-weight: bold;padding-top: 25px;">Berlin:  Berlin Group</h4>
+	<% elsif params[:city_id]=="http://www.meetup.com/london-silicon-roundabout/" %>
+		<h4 style="margin-left: 10px; font-weight: bold;padding-top: 25px;">London:  London Silicon Roundabout Group</h4>
+	<% else %>
+		<h4 style="margin-left: 10px; font-weight: bold;padding-top: 25px;">New York:  New York Silicon Alley Group</h4>
+	<% end %>
+	<br />
+	
+	<% @user_exist.each_with_index do |import_member, index|  %>
+		<ul class="a">
+			<li>
+				<lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>.<%= import_member  %>............added</lable>
+			</li>
+		</ul>
+	<% end %>
 </div>
+<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>
+<style>
+.a{
+list-style-type: none;
+}
+
+
+Progressbar.defaults = {
+    transition_delay: 300,
+    refresh_speed: 50,
+    display_text: 'none',
+    use_percentage: true,
+    update: $.noop,
+    done: $.noop,
+    fail: $.noop
+}
+
+</style>
+<script>
+$('.bar').progressbar({
+    display_text: 'center',
+    use_percentage: false,
+    refresh_speed: 500
+});
+$('#import-admin-member').progressbar();
+</script>
