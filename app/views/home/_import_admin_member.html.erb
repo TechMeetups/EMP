@@ -1,4 +1,4 @@
-<script type="text/javascript" src="bootstrap-progressbar.js"></script>
+
 <div id="import_member" style="background: none repeat scroll 0px 0px lightgray;margin-left: 22px;width: 550px;">
 	<%if params[:city_id]=="http://www.meetup.com/TechMeetups-Berlin" %>
 		<h4 style="margin-left: 20px; font-weight: bold;padding-top: 25px;">Berlin:  Berlin Group</h4>
@@ -22,24 +22,4 @@
 .a{
 list-style-type: none;
 }
-
-
-Progressbar.defaults = {
-    transition_delay: 300,
-    refresh_speed: 50,
-    display_text: 'none',
-    use_percentage: true,
-    update: $.noop,
-    done: $.noop,
-    fail: $.noop
-}
-
 </style>
-<script>
-$('.bar').progressbar({
-    display_text: 'center',
-    use_percentage: false,
-    refresh_speed: 500
-});
-$('#import-admin-member').progressbar();
-</script>

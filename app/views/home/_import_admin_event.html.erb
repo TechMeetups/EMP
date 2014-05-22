@@ -2,13 +2,13 @@
 	<%  @results_events.each_with_index do |import_event, index|  %>
 		<ul class="a">
 			<li>	
-			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= index+1 %>. <%= import_event %>.......added.</lable>
+			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event %>.......added.</lable>
 			</li>
 		</ul>
 		<%  @results_attendees.each_with_index do |import_attendee, index|  %>
 			<ul class="a">
 				<li>	
-					<lable style="margin-left:100px;font-size: 15px;"><%= index+1 %>. <%= import_attendee %>.......added.</lable>
+					<lable style="margin-left:70px;font-size: 15px;"><%= index+1 %>. <%= import_attendee %>.......added.</lable>
 				</li>
 			</ul>
 		<% end %>
@@ -16,7 +16,7 @@
 	<% end %>
 </div>
 
-<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;">Done</button>
+<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:320px;margin-bottom:20px;">Done</button>
 
 <style>
 .a{

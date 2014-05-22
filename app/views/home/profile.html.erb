@@ -141,7 +141,24 @@
 
 
           </tr>
-        <% end %>
+          <% else %>
+          <tr>
+            <th><b style="font-size:12px;">Company </b></th>
+            <td><%=  @user.company %></td>
+          </tr>
+           <tr>
+            <th><b style="font-size:12px;">Expartise </b></th>
+            <td><%=  @user.expertise %></td>
+          </tr>
+           <tr>
+            <th><b style="font-size:12px;">Audiance </b></th>
+            <td><%=  @user.audience %></td>
+          </tr>
+          <tr>
+            <th><b style="font-size:12px;">Volunteering </b></th>
+            <td><%=  @user.volunteering %></td>
+          </tr>
+          <% end %>
 
       </table>
     </div>
@@ -158,7 +175,7 @@
         <%= link_to "","#",:id=>"description-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <div style="margin-left:1px;">
-        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:390px;"%>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:356px;"%>
         <br />
          <b style="font-size:12px;">Description </b>
         <%=  @user.description %>
@@ -327,7 +344,7 @@
     </div>
 
   <% else %>
-    <div style="margin-top:-790px;margin-left:852px; width: 25%; text-align:center;">
+    <div style="margin-top:-650px;margin-left:942px; width: 25%; text-align:center;">
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>

@@ -4,11 +4,11 @@
 <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
 <div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="width:780px;">
+    <div class="modal-content" style="width:750px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" >Import Events and Attendee from</h4>
-        <%= image_tag "/assets/eventbrite1.png",:style=>"margin-left:320px; margin-top:-40px" %>
+        <%= image_tag "/assets/eventbrite1.png",:style=>"margin-left:475px; margin-top:-40px" %>
       </div>
       <%= form_tag  home_import_event_path ,:id=>"import_admin_event_form" do %>
 
@@ -20,7 +20,7 @@
           <br/>
           <br/> 
         <div class="modal-footer">          
-          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;color:blue" ,:id=>"import_admin_event" %>
+          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 257px;width: 141px;float: left;color:blue" ,:id=>"import_admin_event" %>
           
         </div>
         <div id="import-admin-event">
@@ -41,13 +41,13 @@
       <%= form_tag home_import_member_path ,:id=>"import_admin_member_form" do %>
 
         <div class="modal-body">
-          <label class="col-lg-2 control-label">City </label>
+          <h5><label class="col-lg-2 control-label">City </label></h5>
           <%= select_tag 'city_id', options_for_select(City.all.collect{|u| [u.name, u.city_meetup_url]}),:class=>"form-control dynamic_action" ,:id=>"city_import"%><br/><br />
           <br/>
           <br/>                 
         </div>
         <div class="modal-footer">
-          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 180px;width: 141px;float: left;" ,:id=>"import_admin_member" %>
+          <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 200px;width: 141px;float:left;" ,:id=>"import_admin_member" %>
         </div>  
         <div id="import-admin-member">
         </div>       
@@ -210,21 +210,5 @@ $('#import_admin_member').progressbar();
  display: none; 
  width:400px;  
 }
-Progressbar.defaults = {
-    transition_delay: 300,
-    refresh_speed: 50,
-    display_text: 'none',
-    use_percentage: true,
-    update: $.noop,
-    done: $.noop,
-    fail: $.noop
-}
-</style>
-<script>
- $("#import_admin_member").bind("ajax:beforeSend", function(){
-     $.fancybox({ content:"Going Back to Activity...   <img src='/assets/upload1.png' width='25'>" });
-    })
-    $("#import_admin_member").bind("ajax:complete", function(){
-   })
 
-</script>
+</style>
