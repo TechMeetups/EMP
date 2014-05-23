@@ -10,11 +10,19 @@
 	<br />
 	
 	<% @user_exist.each_with_index do |import_member, index|  %>
-		<ul class="a">
-			<li>
-				<lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>.<%= import_member  %>............added</lable>
-			</li>
-		</ul>
+		<% if  import_member.created_at ==  import_member.updated_at%>
+			<ul class="a">
+				<li>
+					<lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>.<%= import_member.name  %>............added</lable>
+				</li>
+			</ul>
+		<% else %>
+			<ul class="a">
+				<li>
+					<lable style="margin-left:50px;font-size: 15px;"><%= index+1 %>.<%= import_member.name  %>............updated</lable>
+				</li>
+			</ul>
+		<% end %>
 	<% end %>
 </div>
 <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>

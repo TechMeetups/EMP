@@ -1,3 +1,6 @@
+  <%= tinymce_assets %>
+  <script type="text/javascript" src="/assets/tinymce.js">
+  </script>
   <legend>Sign up</legend>
   <form id="new_user" method="post" enctype="multipart/form-data" action="/users" accept-charset="UTF-8" class="validate-form" >
     <%= form_for(@user, :url => user_registration_path) do |f| %>
@@ -85,7 +88,7 @@
     </div>
     
     <div class="job_box" style="margin-top:15px">
-         <%=f.text_area :description,:class=>"form-control" ,:id=>"user_description"  ,:placeholder=>"Describe Yourself"  %>
+         <%=f.text_area :description,:class=>"form-control tinymce" ,:id=>"user_description" ,:rows => 40, :cols => 120,:placeholder=>"Describe Yourself"  %>
     </div>
 
     <div  class="job_box">

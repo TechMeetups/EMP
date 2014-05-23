@@ -236,39 +236,51 @@ class HomeController < ApplicationController
     results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG").read)
     results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)  
     results_events.each_with_index do |event,index|
-      event_exist= Event.find_by_title(event["name"]["text"])
-      if event_exist.blank?                
-        @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
-          if @event.save
-            debugger
-            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>7)
-            debugger
-            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
-            debugger
-            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
-          end
-        @results_events[index] = @event.title       
+      @event= Event.find_by_title(event["name"]["text"])
+      if @event.blank?                
+        @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["html"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
+        if @event.save
+          debugger
+          @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>3)
+          debugger
+          EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
+          debugger
+          EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
+           @results_events[index] = @event
+        end      
         @id=Event.last.eventbrite_id
         attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
         debugger
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|
           debugger
-          attendee_exist= User.find_by_name(attendee["profile"]["first_name"])
-          if attendee_exist.blank?
+          @attendee= User.find_by_name(attendee["profile"]["first_name"])
+          if @attendee.blank?
           debugger 
             @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
             debugger
-            @results_attendees[index]= @attendee.name
+            @results_attendees[index]= @attendee
+          else      
+            @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
           end
-          if !attendee_exist.blank?      
-            attendee_exist.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+        end 
+      else 
+        @event.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["utc"].split("T")[1],:e_time=>event["end"]["utc"].split("T")[1])      
+        @results_events[index] = @event
+        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
+        debugger
+        atts=attendee_results["attendees"]
+        atts.each_with_index do |attendee,index|
+          @attendee= User.find_by_name(attendee["profile"]["first_name"])
+          if @attendee.blank?
+          debugger 
+            @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+            @results_attendees[index]= @attendee
+          else      
+            @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
           end
-        end           
-      end
-      if !event_exist.blank?      
-        event_exist.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["utc"].split("T")[1],:e_time=>event["end"]["utc"].split("T")[1])
-      end
+        end
+      end      
     end
   end
 
@@ -276,50 +288,48 @@ class HomeController < ApplicationController
     debugger
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
-      (0..1).each do |index|
+      (0..10).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=new-york-silicon-alley&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_name(result["name"])    
-          if user_exist.blank?
+          @user= User.find_by_name(result["name"])    
+          if @user.blank?
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
-            @user_exist << @user.name
-          end
-          if  !user_exist.blank?           
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-            @user_exist << user_exist.name
+            @user_exist[index] = @user
+          else          
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+           @user_exist[index] = @user
           end
         end
       end
     end     
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
-      (0..0).each do |index|
-        debugger
+      (0..24).each do |index|
+        
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=london-silicon-roundabout&format=json&page=1000&sig_id=144713682&sig=800be9885159a42bfbef5c9295917e07de161d53").read)
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_id(result["id"])    
-          if user_exist.blank?
+          @user= User.find_by_email("#{result["id"]}@gmail.com")    
+          if @user.blank?
+
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
-            @user_exist << @user.name
-          end
-          if  !user_exist.blank?
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-            @user_exist << user_exist.name
+            @user_exist[index] = @user
+          else
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user_exist[index] = @user
           end          
         end
       end
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
-      (0..0).each do |index|
+      (0..5).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset="+index.to_s+"&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_name(result["name"])    
-          if user_exist.blank?
+          @user= User.find_by_email("#{result["id"]}@gmail.com")    
+          if @user.blank?
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")                          
-            @user_exist << @user.name
-          end
-          if  !user_exist.blank?
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
-            @user_exist << user_exist.name
+            @user_exist[index] = @user
+          else
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user_exist[index] = @user
           end 
         end
         debugger

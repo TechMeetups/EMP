@@ -77,3 +77,5 @@ gem 'jquery-colorbox-rails'
 gem 'rMeetup'
 
 gem 'ruby_meetup2'
+
+gem 'tinymce-rails'

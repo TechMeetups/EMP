@@ -1,3 +1,6 @@
+<%= tinymce_assets %>
+<script type="text/javascript" src="/assets/tinymce.js">
+</script>
 <div style="float: left; width: 72%;">
   <div style="height: 270px;">
     <h2 style="margin-top:20px;"> 
@@ -8,7 +11,7 @@
         <%= @user.name %>
       <% end %>
     </h2>
-    <h6 style="float:right;margin-top:-48px;margin-right:33px;margin-left: -143px;">
+    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 364px;">
      <b style="font-size:11px;">Joined</b>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
@@ -17,19 +20,22 @@
         <%= @user.member_since %>
       <% end %>
     </h6>
-    <h6 style="float:right;margin-top: -48px;margin-right: 311px;">
-      <i class="fa fa-user"></i>
+    <h6 style="float: right; margin-top: -26px; margin-right: -262px;">
+      
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <i class="fa fa-user"></i>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
         <%= link_to "","#",:id=>"user_type-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
+      <h6 style="float: right; margin-top: -26px; margin-right: 82px;">
+         <i class="fa fa-user"></i>
         <%= @user.user_type %>
       <% end %>
     </h6>
-    <div style="width: 50%; float: left;margin-top:-10px;">
+    <div style="width: 50%; float: left;margin-top:196px;">
       <div id="users_avatar">
         <% if !@user.avatar.blank? %>
-          <%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 265px; margin-top: 15px;"%>
+          <%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 265px; margin-top: -190px;"%>
         <% elsif user_signed_in? && params[:id].to_i == current_user.id %>
         <div class="avatar_form" style="display:none;">
           <input id="file" type="file" size="17" name="file" class="form-control" style="width: 67%;">
@@ -38,7 +44,7 @@
         </div>
         <%= link_to "","#",:id=>"edit_user_avatar",:class=>"fa fa-pencil-square-o", :style=>"width: 15px; margin-left: 83%;" %>
         <% else %>      
-          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: 15px;"%>
+          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: -181px;"%>
         <% end %>
       </div>
      </div>
@@ -171,7 +177,7 @@
         <b>Description </b>
         
         <br />
-        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}",:type => :textarea ,:html_attrs => { :cols => '100', :rows => '6' }%>
+        <%= best_in_place current_user, :description,:path=> "/users",:activator => "#description-#{current_user.id}", :class => "tinymce",:type => :textarea ,:html_attrs => { :cols => '100', :rows => '6' }%>
         <%= link_to "","#",:id=>"description-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <div style="margin-left:1px;">

@@ -129,8 +129,8 @@ class EventsController < ApplicationController
     @image_user = User.first
     @image_user = current_user if user_signed_in?
     @event=Event.new
-    @events1 = Event.where("title like ? ", "%#{params[:val]}%")
-    @events1 += Event.where("description like ?  ", "%#{params[:val]}%")
+    @events1 = Event.where("lower(title) like ? ", "%#{params[:val].downcase}%")
+    @events1 += Event.where("lower(description) like ?  ", "%#{params[:val].downcase}%")
     @events = @events1 & @events1
   end
 

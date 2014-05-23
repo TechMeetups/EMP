@@ -29,6 +29,7 @@
 //= require bootstrap-timepicker
 //= require jquery.colorbox
 //= require jquery.colorbox-pl
+//= require tinymce
 //= require_tree .
 
 
