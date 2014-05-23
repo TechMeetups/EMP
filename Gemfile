@@ -79,3 +79,5 @@ gem 'rMeetup'
 gem 'ruby_meetup2'
 
 gem 'tinymce-rails'
+
+gem "rack-timeout"
