@@ -273,48 +273,46 @@ class HomeController < ApplicationController
     debugger
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'
-      (0..1).each do |index|
+      (0..10).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=new-york-silicon-alley&format=json&page=500&sig_id=144415902&sig=eb1fc210f5bf033d44f14472cae437b3a1bcec2d").read)
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_name(result["name"])    
+          @user= User.find_by_name(result["name"])    
           if @user.blank?
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
             @user_exist << @user
           else         
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
             @user_exist << @user
           end
         end
       end
     end     
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
-      (0..0).each do |index|
+      (0..23).each do |index|
         debugger
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&offset="+index.to_s+"&group_urlname=london-silicon-roundabout&format=json&page=1000&sig_id=144713682&sig=800be9885159a42bfbef5c9295917e07de161d53").read)
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_id(result["id"])    
+          @user= User.find_by_id(result["id"])    
           if @user.blank?
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")       
             @user_exist << @user
-          end
-          if  !user_exist.blank?
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+          else
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
             @user << user_exist
           end          
         end
       end
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
-      (0..0).each do |index|
+      (0..1).each do |index|
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset="+index.to_s+"&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
         results["results"].each_with_index do |result,index|
-          user_exist= User.find_by_name(result["name"])    
+          @user= User.find_by_name(result["name"])    
           if @user.blank?
             @user = User.create(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:address=>result["city"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")                          
             @user_exist << @user
-          end
-          if  !user_exist.blank?
-            user_exist.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
+          else
+            @user.update(:name=>result["name"],:password=>result["id"],:email=>"#{result["id"]}@gmail.com",:meetup_member_url=>result["link"],:meetup_id=>result["id"],:description=>result["bio"],:meetup_photo_url=>"#{(result["photo"]["photo_link"] if !result["photo"].blank?) }",:source=>"M")
             @user_exist << @user
           end 
         end
