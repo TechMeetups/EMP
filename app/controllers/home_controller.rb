@@ -1,3 +1,4 @@
+
 class HomeController < ApplicationController
   def index
     debugger
@@ -233,39 +234,43 @@ class HomeController < ApplicationController
     debugger 
     @results_events=[]
     @results_attendees=[]
-    results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG").read)
-    results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)  
-    results_events.each_with_index do |event,index|
-      @event= Event.find_by_title(event["name"]["text"])
-      if @event.blank?                
-        @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
-        if @event.save
-          debugger
-          @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>7)
-          debugger
-          EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
-          debugger
-          EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
-           @results_events[index] = @event.title
-        end      
-        @id=Event.last.eventbrite_id
-        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
-        debugger
-        atts=attendee_results["attendees"]
-        atts.each_with_index do |attendee,index|
-          debugger
-          @attendee= User.find_by_name(attendee["profile"]["first_name"])
-          if @attendee.blank?
-          debugger 
-            @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+    (0..5).each do |page_number|
+      debugger
+      @a=page_number
+      results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG&page="+(page_number+1).to_s+"").read)
+      results_events = results["events"].sort_by{|k,v| k["created"]}.collect{|p| p if (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["created"].split("T")[0].split("-")[1]+"/"+p["created"].split("T")[0].split("-")[2]+"/"+p["created"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)  
+      results_events.each_with_index do |event,index|
+        @event= Event.find_by_title(event["name"]["text"])
+        if @event.blank?                
+          @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
+          if @event.save
             debugger
-            @results_attendees[index]= @attendee.name
-          else      
-            @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
-          end
-        end           
+            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>7)
+            debugger
+            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
+            debugger
+            EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
+             @results_events[index] = @event.title
+          end      
+          @id=Event.last.eventbrite_id
+          attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)
+          debugger
+          atts=attendee_results["attendees"]
+          atts.each_with_index do |attendee,index|
+            debugger
+            @attendee= User.find_by_name(attendee["profile"]["first_name"])
+            if @attendee.blank?
+            debugger 
+              @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+              debugger
+              @results_attendees[index]= @attendee.name
+            else      
+              @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+            end
+          end           
+        end
       end
-      
+      debugger
     end
   end
 
@@ -305,6 +310,7 @@ class HomeController < ApplicationController
     end
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
       (0..1).each do |index|
+        debugger
         results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset="+index.to_s+"&format=json&page=500&sig_id=144415902&sig=0a2d78f9ffe05215af74acc72dee352b7003d500").read)       
         results["results"].each_with_index do |result,index|
           @user= User.find_by_name(result["name"])    
