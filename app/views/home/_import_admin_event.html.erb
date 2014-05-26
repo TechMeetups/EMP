@@ -1,4 +1,12 @@
+@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap.css');
 <div id="import_event"  style="background: none repeat scroll 0px 0px lightgray;">
+	 <div class="progress progress-success">
+    <div class="bar" style="float: left; width: 0%; " data-percentage="60"></div>
+    </div>
+
+    <div class="progress progress-success">
+    <div class="bar" style="float: left; width: 0%; " data-percentage="40"></div>
+    </div>
 	<% debugger %>
 	<%  @results_events.each_with_index do |import_event, index|  %>
 		<% if  import_event.created_at ==  import_event.updated_at%>
@@ -39,4 +47,36 @@
 .a{
 list-style-type: none;
 }
+.container {
+    margin-top: 30px;
+    width: 400px;
+}
 </style>
+<script>
+    setTimeout(function(){
+
+        $('.progress .bar').each(function() {
+            var me = $(this);
+            var perc = me.attr("data-percentage");
+
+            //TODO: left and right text handling
+
+            var current_perc = 0;
+
+            var progress = setInterval(function() {
+                if (current_perc>=perc) {
+                    clearInterval(progress);
+                } else {
+                    current_perc +=1;
+                    me.css('width', (current_perc)+'%');
+                }
+
+                me.text((current_perc)+'%');
+
+            }, 50);
+
+        });
+
+    },300);
+
+</script>

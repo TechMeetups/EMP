@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
+<script type="text/javascript" src="bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 <script src="http://malsup.github.com/jquery.form.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
 <% if user_signed_in? && current_user.email == "shawn@techmeetups.com" %>
 <div class="modal fade" id="import_event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -50,6 +53,7 @@
           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 200px;width: 141px;float:left;" ,:id=>"import_admin_member" %>
         </div>  
         <div id="import-admin-member">
+
         </div>       
       <% end %>
     </div>
@@ -168,12 +172,14 @@ $("#import_admin_event").click(function(){
   });
 
 $("#import_admin_member").click(function(){
+      $("#import-admin-member").html("<%= escape_javascript(render 'home/progress_bar') %>")
       $.ajax({
         type:"POST",
         url: "/home/import_member",
         data: $("#import_admin_member_form").serialize()
-    
-    });
+      });
+
+     
       return false;
   
   });
@@ -202,6 +208,8 @@ $(document).ready(function(){
     });        
 });
 
+
+</script>
 </script>
 <style>
 .hidden_option{

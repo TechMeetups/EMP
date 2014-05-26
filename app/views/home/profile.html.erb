@@ -11,13 +11,13 @@
         <%= @user.name %>
       <% end %>
     </h2>
-    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 364px;">
+    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 318px;">
      <b style="font-size:11px;">Joined</b>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
         <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
-        <%= @user.member_since %>
+        <%= @user.member_since.strftime('%d,  %B %Y') %>
       <% end %>
     </h6>
     <h6 style="float: right; margin-top: -26px; margin-right: -262px;">
@@ -181,7 +181,7 @@
         <%= link_to "","#",:id=>"description-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <div style="margin-left:1px;">
-        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:356px;"%>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:315px;"%>
         <br />
          <b style="font-size:12px;">Description </b>
         <%=  @user.description %>
@@ -350,7 +350,7 @@
     </div>
 
   <% else %>
-    <div style="margin-top:-650px;margin-left:942px; width: 25%; text-align:center;">
+    <div style="margin-top:-640px;margin-left:895px; width: 25%; text-align:center;">
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>
