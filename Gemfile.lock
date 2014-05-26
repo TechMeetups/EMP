@@ -273,7 +273,7 @@ DEPENDENCIES
   rails_12factor
   rails_best_practices
   ruby_meetup2
-  sass-rails (= 4.0.2)
+  sass-rails
   sdoc
   therubyracer
   tinymce-rails

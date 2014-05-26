@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 gem 'mysql2'
 
 # Use SCSS for stylesheets
-gem "sass-rails", "4.0.2"
+gem 'sass-rails'
 
 gem 'devise'
 gem 'aws-sdk'
@@ -81,4 +81,3 @@ gem 'ruby_meetup2'
 gem 'tinymce-rails'
 
 gem "rack-timeout"
-
