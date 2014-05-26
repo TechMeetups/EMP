@@ -17,7 +17,7 @@
         <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
         <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
-        <%#= @user.member_since.strftime('%d,  %B %Y') %>
+        <%= @user.member_since.strftime('%d,  %B %Y') %>
       <% end %>
     </h6>
     <h6 style="float: right; margin-top: -26px; margin-right: -262px;">
