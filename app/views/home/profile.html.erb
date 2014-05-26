@@ -11,13 +11,15 @@
         <%= @user.name %>
       <% end %>
     </h2>
-    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 318px;">
+    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 294px;">
      <b style="font-size:11px;">Joined</b>
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
         <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
         <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
-        <%= @user.member_since.strftime('%d,  %B %Y') %>
+        <%if @user.source == "M" %>
+          <%= @user.member_since.strftime('%d,  %B %Y') %>
+        <% end %>
       <% end %>
     </h6>
     <h6 style="float: right; margin-top: -26px; margin-right: -262px;">
