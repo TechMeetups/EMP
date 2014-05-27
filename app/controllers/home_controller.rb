@@ -232,15 +232,14 @@ class HomeController < ApplicationController
   def import_event 
     @results_events=[]
     @results_attendees=[]
-    debugger
     @count = (params[:page].blank? ? 1 : (params[:page].to_i))
     results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG&page=#{@count}").read)
-    @total_count=3
+    @total_count=5
     results_events = results["events"].sort_by{|k,v| k["start"]["utc"]}.collect{|p| p if (string_to_datetime(p["start"]["utc"].split("T")[0].split("-")[1]+"/"+p["start"]["utc"].split("T")[0].split("-")[2]+"/"+p["start"]["utc"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["start"]["utc"].split("T")[0].split("-")[1]+"/"+p["start"]["utc"].split("T")[0].split("-")[2]+"/"+p["start"]["utc"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)      
-    debugger
     results_events.each_with_index do |event,index|       
       @event= Event.find_by_title(event["name"]["text"])
-      if @event.blank?                
+      if @event.blank? 
+        debugger               
         @event = Event.new(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
         if @event.save  
           debugger         
@@ -256,9 +255,8 @@ class HomeController < ApplicationController
           EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
           @results_events[index] = @event
           @id=@event.eventbrite_id
-        end      
-        
-        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@event.eventbrite_id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
+        end              
+        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|            
           @attendee= User.find_by_name(attendee["profile"]["first_name"])
@@ -272,6 +270,7 @@ class HomeController < ApplicationController
         end 
       else 
         debugger
+        @id=@event.eventbrite_id
         @event.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
         @results_events[index] = @event
         attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
@@ -292,7 +291,6 @@ class HomeController < ApplicationController
 
   def import_member
     @user_exist=[]
-    debugger
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'  
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
       results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=#{@count}&format=json&page=200&sig_id=144713682&sig=ba81210381f73b351d42dd5b067ab884a15053d3").read)
