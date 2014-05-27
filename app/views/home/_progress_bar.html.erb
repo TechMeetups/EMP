@@ -1,14 +1,4 @@
-<div class='progress progress-striped active'>
-  <div class='progress-bar' style='width: 0%'></div>
+	<h5 style="text-align:center;font-weight:bold;">Importing....</h5>
+<div class="progress" style="margin-left:20px;margin-right:26px;">
+  <div class="progress-bar progress-bar-info" style="width: 0%"></div>
 </div>
-<script>
-var ajax_call = function() { 
-	var bar_width = $(".progress-bar").width();
-
-	$(".progress-bar").css("width", bar_width+6)
- };
-
-var interval = 1000 * 2; // where X is your every X minutes 
-setInterval(ajax_call, interval);
-
-</script>

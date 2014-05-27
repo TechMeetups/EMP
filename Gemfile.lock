@@ -121,7 +121,7 @@ GEM
     jbuilder (2.0.7)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    jquery-colorbox-rails (0.1.5)
+    jquery-colorbox-rails (0.1.6)
       railties (>= 3.1)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
@@ -273,7 +273,7 @@ DEPENDENCIES
   rails_12factor
   rails_best_practices
   ruby_meetup2
-  sass-rails
+  sass-rails (= 4.0.2)
   sdoc
   therubyracer
   tinymce-rails

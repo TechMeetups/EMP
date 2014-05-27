@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 gem 'mysql2'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails' , "4.0.2"
 
 gem 'devise'
 gem 'aws-sdk'

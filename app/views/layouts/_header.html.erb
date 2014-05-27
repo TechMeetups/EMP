@@ -13,7 +13,7 @@
         <h4 class="modal-title" >Import Events and Attendee from</h4>
         <%= image_tag "/assets/eventbrite1.png",:style=>"margin-left:475px; margin-top:-40px" %>
       </div>
-      <%= form_tag  home_import_event_path ,:id=>"import_admin_event_form" do %>
+      <%= form_tag  home_import_event_path ,:remote=>true, :id=>"import_admin_event_form" do %>
 
         <div class="modal-body" >
           <label class="col-lg-2 control-label">Date </label>
@@ -26,6 +26,9 @@
           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 257px;width: 141px;float: left;color:blue" ,:id=>"import_admin_event" %>
           
         </div>
+        <div id="import-admin-event-bar" style="display:none;">
+          <%= render 'home/progress_bar' %> 
+        </div> 
         <div id="import-admin-event" style="height=200px;">
         </div>       
       <% end %>
@@ -41,7 +44,7 @@
         <h4 class="modal-title" style="margin-left:20px;">Import Members from</h4>
         <%= image_tag "/assets/meetup.png",:style=>"margin-left:320px; margin-top:-40px" %>
       </div>
-      <%= form_tag home_import_member_path ,:id=>"import_admin_member_form" do %>
+      <%= form_tag home_import_member_path ,:remote=>true, :id=>"import_admin_member_form" do %>
 
         <div class="modal-body">
           <h5><label class="col-lg-2 control-label">City </label></h5>
@@ -52,6 +55,9 @@
         <div class="modal-footer">
           <%= submit_tag "Import", :class=>"btn btn-primary",:style=>"margin-left: 200px;width: 141px;float:left;" ,:id=>"import_admin_member" %>
         </div>  
+        <div id="import-admin-member-bar" style="display:none;">
+          <%= render 'home/progress_bar' %> 
+        </div> 
         <div id="import-admin-member">
 
         </div>       
@@ -141,7 +147,7 @@ $(document).on("click", ".import_event", function () {
     
   });
 $(document).on("click", ".import_member", function () {
- 
+    $("#import-admin-member").empty()
     var signed_in = '<%= user_signed_in? %>'
 
     if(signed_in == "true") {
@@ -159,30 +165,15 @@ $(document).on("click", ".import_member", function () {
     
   });
 
+$("#import_admin_member").click(function(){
+      $("#import-admin-member-bar").show(); 
+  });
 
 $("#import_admin_event").click(function(){
-      $.ajax({
-        type: "POST",
-        url: "/home/import_event",
-        data: $("#import_admin_event_form").serialize()
-    
-    });
-      return false;
-  
+      $("#import-admin-event-bar").show(); 
   });
 
-$("#import_admin_member").click(function(){
-      $("#import-admin-member").html("<%= escape_javascript(render 'home/progress_bar') %>")
-      $.ajax({
-        type:"POST",
-        url: "/home/import_member",
-        data: $("#import_admin_member_form").serialize()
-      });
 
-     
-      return false;
-  
-  });
 
 $(document).ready(function(){
     $("#s_date" ).datepicker({

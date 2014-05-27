@@ -133,8 +133,6 @@
           <th>City</th>
             <td> 
               <%= f.select(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}),{},:class=>"form-control" )%> </td>
-
-              <%#= f.select(:city_id, options_for_select(City.all.collect {|a| [a.name, a.id]}), {},:class=>"form-control") %>
         </tr> 
       </table>
     </div>

@@ -10,27 +10,24 @@
       <% else %>
         <%= @user.name %>
       <% end %>
-    </h2>
-    <h6 style="float: right; margin-left: -142px; margin-top: -25px; margin-right: 294px;">
-     <b style="font-size:11px;">Joined</b>
+    </h2>     
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
+        <b style="font-size:12px;margin-left: 8px;">Joined</b>
         <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
         <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
+        <b style="font-size:12px;margin-left: 8px;">Joined</b>
         <%if @user.source == "M" %>
           <%= @user.member_since.strftime('%d,  %B %Y') %>
         <% end %>
-      <% end %>
-    </h6>
-    <h6 style="float: right; margin-top: -26px; margin-right: -262px;">
-      
+      <% end %>      
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
-        <i class="fa fa-user"></i>
+        <i class="fa fa-user" style="margin-left: 250px;"></i>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
         <%= link_to "","#",:id=>"user_type-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <h6 style="float: right; margin-top: -26px; margin-right: 82px;">
-         <i class="fa fa-user"></i>
+         <i class="fa fa-user" style="margin-top: 20px;"></i>
         <%= @user.user_type %>
       <% end %>
     </h6>
@@ -294,7 +291,7 @@
             <%= best_in_place current_user, :city_id,:path=> "/users",:activator => "#city_id-#{current_user.id}",:type => :select,:collection => City.all.collect {|a| [a.id, a.name]} %>
             <%= link_to "","#",:id=>"city_id-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
           <% else %>
-          <div>
+          <div style="margin-top: 20px; margin-left: -10px; font-size: 18px;">
             <b>City </b>
             <%= City.find(User.find(@user.id).city_id).name if !@user.city_id.nil? %>
           </div>

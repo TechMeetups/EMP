@@ -1,82 +1,14 @@
-@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap.css');
-<div id="import_event"  style="background: none repeat scroll 0px 0px lightgray;">
-	 <div class="progress progress-success">
-    <div class="bar" style="float: left; width: 0%; " data-percentage="60"></div>
-    </div>
 
-    <div class="progress progress-success">
-    <div class="bar" style="float: left; width: 0%; " data-percentage="40"></div>
-    </div>
-	<% debugger %>
-	<%  @results_events.each_with_index do |import_event, index|  %>
-		<% if  import_event.created_at ==  import_event.updated_at%>
-			<ul class="a">
-				<li>	
-				<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......added.</lable>
-				</li>
-			</ul>
-		<% else %>
-		<ul class="a">
-				<li>	
-				<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......updated.</lable>
-				</li>
-			</ul>
-		<% end %>
-		<%  @results_attendees.each_with_index do |import_attendee, index|  %>
-			<% if import_attendee.created_at == import_attendee.updated_at %>
-				<ul class="a">
-					<li>	
-						<lable style="margin-left:70px;font-size: 15px;"><%= index+1 %>. <%= import_attendee.name %>.......added.</lable>
-					</li>
-				</ul>
-			<% else %>
-			<ul class="a">
-					<li>	
-						<lable style="margin-left:70px;font-size: 15px;"><%= index+1 %>. <%= import_attendee.name %>.......updated.</lable>
-					</li>
-				</ul>
-			<% end %>
-		<% end %>
-		<% @results_attendees=[] %>
-	<% end %>
+<div id="import_event"  style="background: none repeat scroll 0px 0px lightgray;">
+	<div id="fetch-admin-event">
+	</div>
 </div>
 
-<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:320px;margin-bottom:20px;">Done</button>
+<div id="done-admin-event"></div>
 
 <style>
 .a{
 list-style-type: none;
 }
-.container {
-    margin-top: 30px;
-    width: 400px;
-}
+
 </style>
-<script>
-    setTimeout(function(){
-
-        $('.progress .bar').each(function() {
-            var me = $(this);
-            var perc = me.attr("data-percentage");
-
-            //TODO: left and right text handling
-
-            var current_perc = 0;
-
-            var progress = setInterval(function() {
-                if (current_perc>=perc) {
-                    clearInterval(progress);
-                } else {
-                    current_perc +=1;
-                    me.css('width', (current_perc)+'%');
-                }
-
-                me.text((current_perc)+'%');
-
-            }, 50);
-
-        });
-
-    },300);
-
-</script>

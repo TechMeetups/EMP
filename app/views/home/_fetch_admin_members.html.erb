@@ -1,0 +1,17 @@
+<% member_count = params[:admin_count].blank? ? 0 : params[:admin_count].to_i %>
+	<% @user_exist.each do |import_member|  %>
+	<% if  import_member.created_at ==  import_member.updated_at %>
+		<ul class="a">
+			<li>
+				<lable style="margin-left:50px;font-size: 15px;"><%= member_count+1 %>.<%= import_member.name  %>............added</lable>
+			</li>
+		</ul>
+	<% else %>
+		<ul class="a">
+			<li>
+				<lable style="margin-left:50px;font-size: 15px;"><%= member_count+1 %>.<%= import_member.name  %>............updated</lable>
+			</li>
+		</ul>
+		<% member_count = member_count+1 %>
+	<% end %>
+<% end %>
