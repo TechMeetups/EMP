@@ -1,8 +1,12 @@
 <% if @count==1 %>
-	$("#import-admin-event").html("<%= escape_javascript(render :partial => 'home/import_admin_event') %> ")
+	$("#import-admin-event").html("<div id=event_<%=@count%>><%= escape_javascript(render :partial => 'home/import_admin_event') %></div>")
 <% end %>
 
- $("#fetch-admin-event").append("<%= escape_javascript(render :partial => 'home/fetch_admin_event') %> ")
+ $("#fetch-admin-event").append("<div id=event_<%=@count%>><%= escape_javascript(render :partial => 'home/fetch_admin_event') %></div>")
+
+$("#event_<%=@count%>").hide();
+$("#event_<%=@count%>").slideDown("slow");
+
 
 <% if @count < @total_count %> 
 	<% bar_value = 100 / (@total_count) %>

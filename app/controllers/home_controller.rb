@@ -293,8 +293,8 @@ class HomeController < ApplicationController
     @user_exist=[]
     if params[:city_id]=='http://www.meetup.com/new-york-silicon-alley'  
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=#{@count}&format=json&page=200&sig_id=144713682&sig=ba81210381f73b351d42dd5b067ab884a15053d3").read)
-      @total_count=9
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=new-york-silicon-alley&offset=#{@count}&format=json&page=10&sig_id=144713682&sig=428f1436dcb9918eb2e799158a69795c5bac60ce").read)
+      @total_count=190
       results["results"].each_with_index do |result,index|
         @user= User.find_by_name(result["name"]) 
         sec = (result["joined"].to_f / 1000).to_s
@@ -310,8 +310,8 @@ class HomeController < ApplicationController
     end     
     if params[:city_id]=='http://www.meetup.com/london-silicon-roundabout/'
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=london-silicon-roundabout&offset=#{@count}&format=json&page=200&sig_id=144713682&sig=4d0739f10957bcf6fb140eb79969c9b3ca0fa452").read)
-      @total_count=22
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=london-silicon-roundabout&offset=#{@count}&format=json&page=10&sig_id=144713682&sig=570cafef19bdd22283245c01d7a06badb3f11c61").read)
+      @total_count=500
       results["results"].each_with_index do |result,index|
         @user= User.find_by_id(result["id"])
         sec = (result["joined"].to_f / 1000).to_s
@@ -328,8 +328,8 @@ class HomeController < ApplicationController
 
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
-      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=#{@count}&format=json&page=200&sig_id=144713682&sig=a3205773dfb81b9a06e7c197a96f46203994d847").read)       
-      @total_count=5
+      results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=#{@count}&format=json&page=10&sig_id=144713682&sig=7c9f37d8ae8ac7e702f6b9aa053bbe9469ecf47c").read)       
+      @total_count=80
       results["results"].each_with_index do |result,index|
         @user= User.find_by_name(result["name"]) 
         sec = (result["joined"].to_f / 1000).to_s
