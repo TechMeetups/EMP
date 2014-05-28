@@ -260,12 +260,17 @@ class HomeController < ApplicationController
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|            
           @attendee= User.find_by_name(attendee["profile"]["first_name"])
-          if @attendee.blank?          
+          if @attendee.blank?    
+          debugger      
             @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")             
+            @event_attendee = EventUser.create(:event_type=>"Attendee",:event_id=>@event.id,:user_id=>@attendee.id)             
+            
             @results_attendees[index] = @attendee
           else      
             @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
-             @results_attendees[index] = @attendee
+            @event_attendee= EventUser.create(:event_type=>"Attendee",:event_id=>@event.id,:user_id=>@attendee.id)             
+            
+            @results_attendees[index] = @attendee
           end
         end 
       else 
@@ -277,11 +282,17 @@ class HomeController < ApplicationController
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|            
           @attendee= User.find_by_name(attendee["profile"]["first_name"])
-          if @attendee.blank?          
+          if @attendee.blank?   
+          debugger       
             @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")             
+            @event_attendee = EventUser.create(:event_type=>"Attendee",:event_id=>@event.id,:user_id=>@attendee.id)             
+            
             @results_attendees[index] = @attendee
-          else      
+          else 
+          debugger     
             @attendee.update(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")
+            @event_attendee= EventUser.create(:event_type=>"Attendee",:event_id=>@event.id,:user_id=>@attendee.id)             
+            
             @results_attendees[index] = @attendee
           end
         end
