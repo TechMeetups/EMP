@@ -1,5 +1,5 @@
 <% if @count==0 %>
-	$("#import-admin-member").html("<div id=member_<%=@count%>><%= escape_javascript(render :partial => 'home/import_admin_member') %></div>")
+    $("#import-admin-member").html("<div id=member_<%=@count%>><%= escape_javascript(render :partial => 'home/import_admin_member') %></div>")
 <% end %>
 
 $("#fetch-admin-member").append("<div id=member_<%=@count%>><%= escape_javascript(render :partial => 'home/fetch_admin_members') %></div>")
@@ -7,17 +7,17 @@ $("#fetch-admin-member").append("<div id=member_<%=@count%>><%= escape_javascrip
 $("#member_<%=@count%>").hide();
 $("#member_<%=@count%>").slideDown(1000);
 
-<% if @count < @total_count %> 
-	<% bar_value = 100 / (@total_count) %>
-	$.ajax({
-		url: "/home/import_member?offset_value=<%= @count+1 %>&city_id=<%= params[:city_id] %>&admin_count=<%= (10+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>",
-		type:"POST"
-	});
-    var percent = 25;
-	var width = percent * parseInt$("#import-admin-member-bar .progress-bar").css('width')) / 100;
-	$("#import-admin-member-bar .progress-bar").css("width",width+'px');
+<% if @count < @total_count %>
+    <% bar_value = 100 / (@total_count) %>
+    $.ajax({
+        url: "/home/import_member?offset_value=<%= @count+1 %>&city_id=<%= params[:city_id] %>&admin_count=<%= (10+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>",
+        type:"POST"
+    });
+    var width = $("#import-admin-member-bar .progress-bar").width();
+    var parentWidth = $("#import-admin-member-bar .progress-bar").offsetParent().width();
+    var percent = 100*width/parentWidth;
+    $("#import-admin-member-bar .progress-bar").css("width",percent+<%=bar_value%>+2+"%")
 <% else %>
-	$("#import-admin-member-bar h5").text("Imported")
-	$("#done-admin-member").html('<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>')
+    $("#import-admin-member-bar h5").text("Imported")
+    $("#done-admin-member").html('<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>')
 <% end %>
-
