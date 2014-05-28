@@ -11,7 +11,6 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    debugger
     if params[:format] == "img"
       @img_url = EventBanner.find(params[:banner_id]).file.path
       if Rails.env == "development"
