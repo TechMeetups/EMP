@@ -245,9 +245,9 @@ class HomeController < ApplicationController
           debugger         
           @EB_user= User.find_by_name(event["venue"]["name"])
           if @EB_user.blank? 
-            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
+            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
           else
-            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
+            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
           end
           debugger             
           EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            

@@ -13,10 +13,9 @@ $("#member_<%=@count%>").slideDown(1000);
 		url: "/home/import_member?offset_value=<%= @count+1 %>&city_id=<%= params[:city_id] %>&admin_count=<%= (10+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>",
 		type:"POST"
 	});
-	var width = $("#import-admin-member-bar .progress-bar").width();
-	var parentWidth = $("#import-admin-member-bar .progress-bar").offsetParent().width();
-	var percent = 100*width/parentWidth;
-	$("#import-admin-member-bar .progress-bar").css("width",percent+<%=bar_value%>+4+"%")
+    var percent = 25;
+	var width = percent * parseInt$("#import-admin-member-bar .progress-bar").css('width')) / 100;
+	$("#import-admin-member-bar .progress-bar").css("width",width+'px');
 <% else %>
 	$("#import-admin-member-bar h5").text("Imported")
 	$("#done-admin-member").html('<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>')
