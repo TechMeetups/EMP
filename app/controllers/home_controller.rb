@@ -250,7 +250,7 @@ class HomeController < ApplicationController
             @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
           end
           debugger             
-          EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Host")            
+          EventUser.create(user_id: 5408, event_id: @event.id, event_type: "Host")            
           debugger 
           EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
           @results_events[index] = @event
