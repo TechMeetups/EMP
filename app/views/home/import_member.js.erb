@@ -5,14 +5,14 @@
 $("#fetch-admin-member").append("<%= escape_javascript(render :partial => 'home/fetch_admin_members') %> ")
 
 <% if @count < @total_count %> 
-	<% bar_value = 96 / (@total_count) %>
+	<% bar_value = 100 / (@total_count) %>
 	$.ajax({
 		url: "/home/import_member?offset_value=<%= @count+1 %>&city_id=<%= params[:city_id] %>&admin_count=<%= (200+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>",
 		type:"POST"
 	});
 	var width = $("#import-admin-member-bar .progress-bar").width();
 	var parentWidth = $("#import-admin-member-bar .progress-bar").offsetParent().width();
-	var percent = 96*width/parentWidth;
+	var percent = 100*width/parentWidth;
 	$("#import-admin-member-bar .progress-bar").css("width",percent+<%=bar_value%>+2+"%")
 <% else %>
 	$("#import-admin-member-bar h5").text("Imported")
