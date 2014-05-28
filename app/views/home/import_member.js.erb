@@ -13,7 +13,7 @@ $("#fetch-admin-member").append("<%= escape_javascript(render :partial => 'home/
 	var width = $("#import-admin-member-bar .progress-bar").width();
 	var parentWidth = $("#import-admin-member-bar .progress-bar").offsetParent().width();
 	var percent = 100*width/parentWidth;
-	$("#import-admin-member-bar .progress-bar").css("width",percent+<%=bar_value%>+2+"%")
+	$("#import-admin-member-bar .progress-bar").css("width",percent+<%=bar_value%>+4+"%")
 <% else %>
 	$("#import-admin-member-bar h5").text("Imported")
 	$("#done-admin-member").html('<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>')

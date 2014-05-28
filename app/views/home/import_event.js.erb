@@ -7,13 +7,13 @@
 <% if @count < @total_count %> 
 	<% bar_value = 100 / (@total_count) %>
 	$.ajax({
-		url: "/home/import_event?page=<%= @count+1 %>&admin_count=<%= (50+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>&s_date=<%=params[:s_date]%>&e_date=<%=params[:e_date]%>",
+		url: "/home/import_event?page=<%= @count+1 %>&admin_count=<%= (0+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>&s_date=<%=params[:s_date]%>&e_date=<%=params[:e_date]%>",
 		type:"POST"
 	});
 	var width = $("#import-admin-event-bar .progress-bar").width();
 	var parentWidth = $("#import-admin-event-bar .progress-bar").offsetParent().width();
 	var percent = 100*width/parentWidth;
-	$("#import-admin-event-bar .progress-bar").css("width",percent+<%=bar_value%>+2+"%")
+	$("#import-admin-event-bar .progress-bar").css("width",percent+<%=bar_value%>+8+"%")
 <% else %>
 	$("#import-admin-event-bar h5").text("Imported")
 	$("#done-admin-event").html('<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:250px;margin-bottom:20px;margin-top:10px;">Done</button>')
