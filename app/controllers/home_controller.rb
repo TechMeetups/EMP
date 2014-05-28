@@ -244,7 +244,7 @@ class HomeController < ApplicationController
         if @event.save  
           debugger         
           @EB_user= User.find_by_name(event["venue"]["name"])
-          if @event.blank? 
+          if @EB_user.blank? 
             @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
           else
             @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
@@ -329,7 +329,7 @@ class HomeController < ApplicationController
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
       results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=#{@count}&format=json&page=10&sig_id=144713682&sig=7c9f37d8ae8ac7e702f6b9aa053bbe9469ecf47c").read)       
-      @total_count=80
+      @total_count=90
       results["results"].each_with_index do |result,index|
         @user= User.find_by_name(result["name"]) 
         sec = (result["joined"].to_f / 1000).to_s
