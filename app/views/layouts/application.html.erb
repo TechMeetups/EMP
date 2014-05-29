@@ -87,7 +87,7 @@ $('.checkbox1').change(function() {
       });
     $.ajax({
         type: "POST",
-        url: "/events/event_search",
+        url: "/home/event_search",
         data: { id: $(this).attr('id'), checked: checked_id}
      });           
   });
@@ -101,7 +101,7 @@ $('.checkbox2').change(function() {
       });
     $.ajax({
         type: "POST",
-        url: "/events/event_search_type",
+        url: "/home/event_search_type",
         data: { id: $(this).attr('id'), checked: checked_id}
      });           
   });

@@ -31,9 +31,6 @@
 
 					    <p><b> Date : </b>
 					    <%= event.s_date.strftime("%e %b %Y") if !event.s_date.nil?  %>
-					    <b> to </b>          
-					    <%= event.e_date.strftime("%e %b %Y") if !event.e_date.nil?  %>
-
 					    <div style="time">
 					    	<b > Time : </b>
 								<%= event.s_time %><b>  to </b>
@@ -59,12 +56,14 @@
 			    </div>
 			   </div>  
 			  </div>
-			</div>		
+			</div>	
+
 		<% end %>
+		
 	<% else %>
 	<% if params[:action] == "event_search" %>
 	<h4 class="event_search">
-	There is no event for <%= City.find(params[:id]).name %>.</h6>
+	There is no event for <%= City.find(params[:id]).name %>.</h6>	
 	<% end %>
 	<% if params[:action] == "event_search_type" %>
 	<h4 class="event_search">
@@ -76,7 +75,7 @@
 	<% end %>
 	<% end %>
 </div>
-
+<%= paginate @events, :remote => :true %>	
 <div style="display:block;" >
 	<%= link_to 'Add your Event',"#", :class=>"btn btn-sm btn-danger", :id=>"add_new_event" %>
 </div>

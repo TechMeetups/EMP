@@ -2,7 +2,8 @@
 class HomeController < ApplicationController
   def index
     @events = Event.all
-    @user = current_user if user_signed_in?   
+    @user = current_user if user_signed_in? 
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(3)  
   end
 
   def notifications
@@ -228,6 +229,44 @@ class HomeController < ApplicationController
     end
     redirect_to :back
   end
+  def event_search
+    @events =[]
+    if !params[:checked].blank?
+      params[:checked].each do |id|
+        User.where(city_id: id).each do |user|
+          user.event_users.where(event_type: "Venue").each do |event_user|
+            @events += [event_user.event] if !event_user.nil?
+        end      
+    end
+     @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+    end
+    else
+      @events = Event.all
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+    end
+  end
+
+  def event_search_type
+
+    @events =[]
+    if !params[:checked].blank?
+      @events = Event.where(event_type: params[:checked]) 
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+    else
+      @events = Event.all
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+    end
+  end
+  
+  def search
+    @image_user = User.first
+    @image_user = current_user if user_signed_in?
+    @event=Event.new
+    @events1 = Event.where("lower(title) like ? ", "%#{params[:val].downcase}%")
+    @events1 += Event.where("lower(description) like ?  ", "%#{params[:val].downcase}%")
+    @events = @events1 & @events1
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+  end
 
   def import_event 
     @results_events=[]
@@ -245,9 +284,9 @@ class HomeController < ApplicationController
           debugger         
           @EB_user= User.find_by_name(event["venue"]["name"])
           if @EB_user.blank? 
-            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
+            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}fgdfgdfgdgfdg#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
           else
-            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
+            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]}jkljkljkljklkljljkl#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 4 : (event["venue"]["address"]["city"]=="Berlin" ? 2 : 3) }")
           end
           debugger             
           EventUser.create(user_id: 5408, event_id: @event.id, event_type: "Host")            

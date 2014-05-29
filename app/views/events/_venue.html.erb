@@ -7,7 +7,11 @@
   <br />
   </div>
   <br>
-  <%=  link_to(image_tag(@event_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event_user1.user.id) ) if !@event_user1.user.nil? %> <br />
+  <% if !@event_user1.user.avatar.blank? %>
+    <%=  link_to(image_tag(@event_user1.user.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @event_user1.user.id) ) if !@event_user1.user.nil? %> <br />
+  <% else %>
+    <%= image_tag "../assets/missing.png" ,:style=>"max-width: 75%; max-height: 160px;" %><br/>  
+  <% end %>
   
   <% else %>
   <% end %>

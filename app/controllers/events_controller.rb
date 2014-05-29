@@ -4,8 +4,9 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = Event.all.page(params[:page])
     @interaction =Interaction.new
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(3)
   end
 
   # GET /events/1
@@ -124,41 +125,7 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
-
-  def search
-    @image_user = User.first
-    @image_user = current_user if user_signed_in?
-    @event=Event.new
-    @events1 = Event.where("lower(title) like ? ", "%#{params[:val].downcase}%")
-    @events1 += Event.where("lower(description) like ?  ", "%#{params[:val].downcase}%")
-    @events = @events1 & @events1
-  end
-
-  def event_search
-    @events =[]
-    if !params[:checked].blank?
-      params[:checked].each do |id|
-       #
-        User.where(city_id: id).each do |user|
-          user.event_users.where(event_type: "Venue").each do |event_user|
-            @events += [event_user.event] if !event_user.nil?
-        end      
-    end
-    end
-    else
-      @events = Event.all
-    end
-  end
-
-  def event_search_type
-
-    @events =[]
-    if !params[:checked].blank?
-      @events = Event.where(event_type: params[:checked]) 
-    else
-      @events = Event.all
-    end
-  end
+  
   def event_interaction
     @flag = Interaction.find_by_user_id_and_event_id_and_action(interaction_params[:user_id],interaction_params[:event_id],interaction_params[:action]).nil?
     if @flag

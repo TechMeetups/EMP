@@ -10,7 +10,11 @@
     <%= link_to @user1.name, user_profile_path(id: @user1.id) if !@user1.nil? %>
   </div>
       <br>
+      <% if !@user1.avatar.blank? %>
       <%=  link_to(image_tag(@user1.avatar.url, :style=>"max-width: 75%; max-height: 160px;"),user_profile_path(id: @user1.id) ) if !@user1.nil? %> <br />
+      <% else %>
+        <%= image_tag "../assets/missing.png" ,:style=>"max-width: 75%; max-height: 160px;" %><br/>  
+      <% end %>
       <% if !user_signed_in?  %>
         <br/>
         <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host"  %>

@@ -31,12 +31,12 @@
         <%= @user.user_type %>
       <% end %>
     </h6>
-    <div style="width: 50%; float: left;margin-top:196px;">
+    <div style="width: 50%; float: left;margin-top:10px;">
       <div id="users_avatar">
         <% if !@user.avatar.blank? %>
-          <%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 265px; margin-top: -190px;"%>
+          <%= image_tag @user.avatar.url ,:style=>"height: 221px; width: 265px; margin-top: 0px;"%>
         <% else %>      
-          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: -181px;"%>
+          <%= image_tag"../assets/missing.png" ,:style=>"height: 221px; width: 265px; margin-top: 0px;"%>
         <% end %>
         <% if user_signed_in? && params[:id].to_i == current_user.id %>
           <div class="avatar_form" style="display:none;">
@@ -350,7 +350,7 @@
     </div>
 
   <% else %>
-    <div style="margin-top:-640px;margin-left:895px; width: 25%; text-align:center;">
+    <div style="width: 25%; text-align: center; margin-top: -744px; margin-left: 868px;">
       <h4 >  Social Media Stream </h4>
       <table align="center">
         <tr>

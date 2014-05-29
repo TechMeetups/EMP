@@ -12,11 +12,12 @@ TechMeetsUp::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'home#index'
-  post 'events/event_search'
-  get 'events/event_search'
-  post 'events/event_search_type'
-  get 'events/search'=> 'events#search'
-  post 'events/search'=> 'events#search'
+  post 'home/event_search'
+  get 'home/event_search'
+  get 'home/event_search_type'
+  post'home/event_search_type'
+  get 'home/search'=> 'home#search'
+  post 'home/search'=> 'home#search'
   get 'events/event_search_type'
   get 'notifications'=> 'home#notifications', as: :notifications
   get 'accept_proposal'=> 'home#accept_proposal', as: :accept_proposal

@@ -262,6 +262,7 @@ DEPENDENCIES
   jquery-datatables-rails!
   jquery-rails
   jquery-ui-rails
+  kaminari
   masonry-rails
   modernizr-rails
   mysql2
