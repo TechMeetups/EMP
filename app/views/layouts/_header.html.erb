@@ -117,7 +117,7 @@
           </ul>
         </li>
       <% else %>
-      <%= form_tag events_search_path, :remote=>true ,:class=>"navbar-form navbar-left" do %>
+      <%= form_tag home_search_path, :remote=>true ,:class=>"navbar-form navbar-left" do %>
       <input name="val" class="form-control col-lg-8 " placeholder="Search" type="text">
       <%end%>
         <li><%= link_to("Login", new_user_session_path) %></li>
