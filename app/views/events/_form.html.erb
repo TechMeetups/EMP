@@ -14,7 +14,7 @@
              <%= f.text_field :title, :class=>"form-control", :placeholder=>"Title of the Event" ,:required=>true %>
           </h2>
           <div class="col-lg-10 add_more_block" style="height: 150px;">
-            <label class="col-lg-2 control-label" style="margin-left: -60px;">Upload Image : </label>
+            <label class="col-lg-2 control-label" style="margin-left: -40px;">Upload Image : </label>
             <input class="form-control" id="banner__file" name="banner[][file]" style="float:left; width: 40%;" type="file">
             <label class="col-lg-2 control-label" style="width: 93px;">Featured : </label>
 
@@ -71,7 +71,11 @@
             <h4>  Host </h4>
             <%= select_tag :host_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control host_select" ,:style=>"width: 193px; margin-left: 31px;" %><br />
             <div id="host_image">
+            <% if !current_user.avatar.blank? %>
               <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            <% else %>
+            <%= image_tag "../assets/missing.png" ,:style=>"max-width: 75%; max-height: 160px;" %> <br/>
+              <% end %>
             </div>
           </div>
 
@@ -79,7 +83,11 @@
             <h4>  Venue </h4>
              <%= select_tag :venue_id, options_for_select(User.all.collect {|a| [a.name, a.id]}),:class=>"form-control venue_select",:style=>"width: 193px; margin-left: 31px;" %><br />
              <div id="venue_image">
+            <% if !current_user.avatar.blank? %>
               <%= image_tag current_user.avatar.url, :style=>"max-width: 75%; max-height: 160px;" %> 
+            <% else %>
+              <%= image_tag "../assets/missing.png" ,:style=>"max-width: 75%; max-height: 160px;" %> <br/>
+            <% end %>
             </div> <br /><br/><br/>
             <b> Address </b> <br/><%= current_user.address if !current_user.nil? %><br/><br/>
             <b> City </b> <%= City.find(current_user.city_id).name if !current_user.city_id.nil?%> <br/><br/>
