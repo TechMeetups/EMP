@@ -10,7 +10,7 @@
     <div class="modal-content" style="width:750px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" >Import Events and Attendee from</h4>
+        <h4 class="modal-title" style="margin-left:135px;">Import Events and Attendees from</h4>
         <%= image_tag "/assets/eventbrite1.png",:style=>"margin-left:475px; margin-top:-40px" %>
       </div>
       <%= form_tag  home_import_event_path ,:remote=>true, :id=>"import_admin_event_form" do %>
@@ -41,8 +41,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" style="margin-left:20px;">Import Members from</h4>
-        <%= image_tag "/assets/meetup.png",:style=>"margin-left:320px; margin-top:-40px" %>
+        <h4 class="modal-title" style="margin-left:155px;">Import Members from</h4>
+        <%= image_tag "/assets/meetup.png",:style=>"margin-left: 377px; margin-top: -36px;" %>
       </div>
       <%= form_tag home_import_member_path ,:remote=>true, :id=>"import_admin_member_form" do %>
 
