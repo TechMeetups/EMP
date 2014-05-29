@@ -1,9 +1,8 @@
-
 class HomeController < ApplicationController
   def index
     @events = Event.all
     @user = current_user if user_signed_in? 
-    @events= Kaminari.paginate_array(@events).page(params[:page]).per(3)  
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)  
   end
 
   def notifications
@@ -238,11 +237,11 @@ class HomeController < ApplicationController
             @events += [event_user.event] if !event_user.nil?
         end      
     end
-     @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+     @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
     end
     else
       @events = Event.all
-      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
     end
   end
 
@@ -251,10 +250,10 @@ class HomeController < ApplicationController
     @events =[]
     if !params[:checked].blank?
       @events = Event.where(event_type: params[:checked]) 
-      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
     else
       @events = Event.all
-      @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+      @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
     end
   end
   
@@ -265,7 +264,7 @@ class HomeController < ApplicationController
     @events1 = Event.where("lower(title) like ? ", "%#{params[:val].downcase}%")
     @events1 += Event.where("lower(description) like ?  ", "%#{params[:val].downcase}%")
     @events = @events1 & @events1
-    @events= Kaminari.paginate_array(@events).page(params[:page]).per(1)
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
   end
 
   def import_event 

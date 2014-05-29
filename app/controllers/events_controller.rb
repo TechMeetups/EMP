@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all.page(params[:page])
     @interaction =Interaction.new
-    @events= Kaminari.paginate_array(@events).page(params[:page]).per(3)
+    @events= Kaminari.paginate_array(@events).page(params[:page]).per(9)
   end
 
   # GET /events/1
