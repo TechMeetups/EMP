@@ -255,8 +255,10 @@ class HomeController < ApplicationController
           EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
           @results_events[index] = @event
           @id=@event.eventbrite_id
-        end              
-        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
+        end 
+        @count_attendee = (params[:attendee].blank? ? 1 : (params[:attendee].to_i))             
+        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG&page=#{@attendee}").read)          
+        @total_count=7
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|            
           @attendee= User.find_by_name(attendee["profile"]["first_name"])

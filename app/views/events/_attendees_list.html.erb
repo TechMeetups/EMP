@@ -1,7 +1,7 @@
 <table class="table">
   <tr>
     <% @attendee.each_with_index do |attendee, index| %>
-      <% if index+1 == 8 %> </tr><tr> 
+      <% if (index+1)%8 == 0 %> </tr><tr> 
       <script>
       var attendee_height = $("#attendee_list").height();
       $("#attendee_box").css("height", attendee_height+180)

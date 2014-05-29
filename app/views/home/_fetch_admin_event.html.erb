@@ -13,22 +13,5 @@
 			</li>
 		</ul>
 	<% end %>
-	<%  @results_attendees.each do |import_attendee|  %>
-		<% if import_attendee.created_at == import_attendee.updated_at %>
-			<ul class="a">
-				<li>	
-					<lable style="margin-left:70px;font-size: 15px;"><%= event_count+1 %>. <%= import_attendee.name %>.......added.</lable>
-				</li>
-			</ul>
-			<% event_count = event_count+1 %>
-		<% else %>
-		<ul class="a">
-				<li>	
-					<lable style="margin-left:70px;font-size: 15px;"><%= event_count+1 %>. <%= import_attendee.name %>.......updated.</lable>
-				</li>
-			</ul>
-			<% event_count = event_count+1 %>
-		<% end %>
-	<% end %>
-	<% @results_attendees=[] %>
+	<div id="fetch-event-attendee">
 <% end %>
