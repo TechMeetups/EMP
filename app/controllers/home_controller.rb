@@ -296,8 +296,7 @@ class HomeController < ApplicationController
           @results_events[index] = @event
           @id=@event.eventbrite_id
         end 
-        @count_attendee = (params[:attendee].blank? ? 1 : (params[:attendee].to_i))             
-        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG&page=#{@attendee}").read)          
+        attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
         @total_count=7
         atts=attendee_results["attendees"]
         atts.each_with_index do |attendee,index|            
@@ -319,6 +318,7 @@ class HomeController < ApplicationController
         debugger
         @id=@event.eventbrite_id
         @event.update(:title=>event["name"]["text"],:eventbrite_url=>event["url"],:eventbrite_id=>event["id"],:description=>event["description"]["text"],:s_date=>event["start"]["utc"],:e_date=>event["end"]["utc"],:s_time=>event["start"]["local"].split("T")[1],:e_time=>event["end"]["local"].split("T")[1])
+        debugger
         @results_events[index] = @event
         attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
         atts=attendee_results["attendees"]

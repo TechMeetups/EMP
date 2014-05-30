@@ -44,7 +44,7 @@
         <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= link_to "","#",:class=>"fa fa-pencil-square-o",  :id=>"edit_title" %>
       <% end %>
     </h2>
-    <h6 class="event_type">
+    <h6 class="event_type" style="margin-right: -27px; margin-top: -35px;">
      <i class="fa fa-user"></i>
     <% if !user_signed_in? %>
      <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
