@@ -1,6 +1,5 @@
 <% event_count = params[:admin_count].blank? ? 0 : params[:admin_count].to_i %>
 <%  @results_events.each do |import_event|  %>
-<% debugger %>
 	<% if  import_event.created_at ==  import_event.updated_at%>
 		<ul class="a">
 			<li>	

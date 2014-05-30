@@ -1,6 +1,4 @@
-<%= tinymce_assets %>
-<script type="text/javascript" src="/assets/tinymce.js">
-</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <div style="float: left; width: 72%;">
   <div style="height: 270px;">
     <h2 style="margin-top:20px;"> 
@@ -12,9 +10,9 @@
       <% end %>
     </h2>     
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
-        <b style="font-size:12px;margin-left: 380px;">Joined</b>
-        <%= best_in_place current_user, :member_since,:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
-        <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
+        <b style="font-size:12px;margin-left: 400px;">Joined</b>
+        <%= best_in_place current_user, :member_since,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/users",:activator => "#member_since-#{current_user.id}" %>
+        <%= link_to "","#",:id=>"member_since-#{current_user.id}", :class=>"fa fa-pencil-square-o", :style=>"margin-left:20px"%>
       <% else %>
         <b style="font-size:12px;margin-left: 8px;">Joined</b>
         <%if @user.source == "M" %>
@@ -22,9 +20,9 @@
         <% end %>
       <% end %>      
       <% if user_signed_in? && params[:id].to_i == current_user.id %>
-        <i class="fa fa-user" style="margin-left: 250px;"></i>
+        <i class="fa fa-user" style="margin-left:140px;"></i>
         <%= best_in_place current_user, :user_type,:path=> "/users",:activator => "#user_type-#{current_user.id}",:type => :select,:collection => [["Startup", "Startup"], ["Mentor", "Mentor"], ["Investor", "Investor"], ["Developer", "Developer"]] %>
-        <%= link_to "","#",:id=>"user_type-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
+        <%= link_to "","#",:id=>"user_type-#{current_user.id}", :class=>"fa fa-pencil-square-o",:style=>"margin-left: 10px;" %>
       <% else %>
       <h6 style="float: right; margin-top: -26px; margin-right: 82px;">
          <i class="fa fa-user" style="margin-top: 20px;"></i>
@@ -181,7 +179,7 @@
         <%= link_to "","#",:id=>"description-#{current_user.id}", :class=>"fa fa-pencil-square-o" %>
       <% else %>
       <div style="margin-left:1px;">
-        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-top:-220px;margin-left:315px;"%>
+        <%= link_to "Contact", "#", :class=>"btn btn-info open_my_modal", :id=>"Contact Host", :style=>"margin-left: 91px; margin-top: -107px;"%>
         <br />
          <b style="font-size:12px;">Description </b>
         <%=  @user.description %>

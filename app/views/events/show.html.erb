@@ -44,16 +44,6 @@
         <%= best_in_place @event,:title,:path=> "/events/#{@event.id}", :activator => "#edit_title"  %><%= link_to "","#",:class=>"fa fa-pencil-square-o",  :id=>"edit_title" %>
       <% end %>
     </h2>
-    <h6 class="event_type" style="margin-right: -27px; margin-top: -35px;">
-     <i class="fa fa-user"></i>
-    <% if !user_signed_in? %>
-     <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : ""  %> 
-     <% elsif @event.user_id != current_user.id %> 
-    <%= EventType.where(:id=>@event.try(@event.id)).blank? ? EventType.where(:id =>Event.find(@event.id).event_type).name : "" %> 
-    <% else %>
-      <%= best_in_place @event , :event_type,:path=> "/events/#{@event.id}",:activator => "#edit_event_type",:type => :select,:collection => EventType.all.collect {|a| [a.id, a.name]}, :class=>"form-control" %>
-      <%= link_to "","#",:id=>"edit_event_type",:class=>"edit_image fa fa-pencil-square-o" %><% end %>    
-    </h6>
     <div class="banner_block">
       <% if @banners.count == 0%>
       <%= image_tag "/assets/no_banner.png",:class=>"active",:style=>"width: 100%; height: 300px",:id=>"banner" %>    
@@ -87,27 +77,28 @@
       <p><b> Start </b>
         <% if !user_signed_in?  %>
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
+          <%= @event.s_time.to_time.strftime("%r") %>
         <% elsif @event.user_id != current_user.id %>
           <%= @event.s_date.strftime("%e %b %Y")  if !@event.s_date.nil?  %>
+          <%= @event.s_time.to_time.strftime("%r") %>
         <% else %>
           <%= best_in_place @event,:s_date, :type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_s_date" %>
           <%= link_to "","#",:class=>"fa fa-pencil-square-o",:id=>"edit_s_date" %>
         <% end %> 
-        <% if user_signed_in? && @event.user_id == current_user.id %>  
-
-        
+        <% if user_signed_in? && @event.user_id == current_user.id %>          
           <%= best_in_place @event, :s_time, :type => :input, :activator => "#edit_s_time" %>
           <%= link_to "","#",:class=>"fa fa-pencil-square-o" ,:id=>"edit_s_time" %>
         <% end %>
-        
       <b class="to"> to </b>      
     </div> 
     <div class="end">
       <b>  End </b>
         <% if !user_signed_in?  %>
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
+          <%= @event.e_time.to_time.strftime("%r") if !@event.e_time.nil?  %>
         <% elsif @event.user_id != current_user.id %>
           <%= @event.e_date.strftime("%B %d, %Y") if !@event.e_date.nil?  %>
+          <%= @event.e_time.to_time.strftime("%r") if !@event.e_time.nil?  %>
         <% else %>
           <%= best_in_place @event,:e_date,:type => :date,:display_with => Proc.new { |f| f.strftime("%B %d, %Y") },:path=> "/events/#{@event.id}", :activator => "#edit_e_date" %>
           <%= link_to "","#",:class=>"fa fa-pencil-square-o", :id=>"edit_e_date" %>
@@ -118,11 +109,7 @@
         <% end %>
         <%if !@event.eventbrite_id.blank? %>
         <%= link_to(image_tag("../assets/eventbrite_logo.png", :style=>"width:25px;float:right"),"#{@event.eventbrite_url}",:target=>"blank") %>
-
-
-        <% end %>
-
-        
+        <% end %>        
     </p>
     </div>
       

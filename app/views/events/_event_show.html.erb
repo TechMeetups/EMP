@@ -33,8 +33,8 @@
 					    <%= event.s_date.strftime("%e %b %Y") if !event.s_date.nil?  %>
 					    <div style="time">
 					    	<b > Time : </b>
-								<%= event.s_time %><b>  to </b>
-								<%= event.e_time %></p>
+								<%= event.s_time.to_time.strftime("%r") %><b>  to </b>
+								<%= event.e_time.to_time.strftime("%r") %></p>
 				   		</div>
 				   		<p><b> City : </b>
 				   			
