@@ -1,5 +1,6 @@
 <% event_count = params[:admin_count].blank? ? 0 : params[:admin_count].to_i %>
 <%  @results_events.each do |import_event|  %>
+<% debugger %>
 	<% if  import_event.created_at ==  import_event.updated_at%>
 		<ul class="a">
 			<li>	
@@ -12,7 +13,7 @@
 			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......updated.</lable>
 			</li>
 		</ul>
-		<%  @results_attendees.each do |import_attendee|  %>
+	<%  @results_attendees.each do |import_attendee|  %>
 		<% if import_attendee.created_at == import_attendee.updated_at %>
 			<ul class="a">
 				<li>	

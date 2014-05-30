@@ -321,8 +321,7 @@ class HomeController < ApplicationController
         debugger
         @results_events[index] = @event
         debugger
-        (1..7).each do |att_page|
-          attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG&page="+att_page_to.s+"").read)          
+          attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG").read)          
           atts=attendee_results["attendees"]
           atts.each_with_index do |attendee,index|            
             @attendee= User.find_by_name(attendee["profile"]["first_name"])
@@ -340,7 +339,6 @@ class HomeController < ApplicationController
               @results_attendees[index] = @attendee
             end
           end
-        end 
       end
     end
   end
@@ -383,7 +381,9 @@ class HomeController < ApplicationController
     end
 
     if params[:city_id]=='http://www.meetup.com/TechMeetups-Berlin'
+      debugger 
       @count = (params[:offset_value].blank? ? 0 : (params[:offset_value].to_i))
+      debugger 
       results = JSON.parse(open("http://api.meetup.com/2/members?order=name&group_urlname=TechMeetups-Berlin&offset=#{@count}&format=json&page=10&sig_id=144713682&sig=7c9f37d8ae8ac7e702f6b9aa053bbe9469ecf47c").read)       
       @total_count=90
       results["results"].each_with_index do |result,index|

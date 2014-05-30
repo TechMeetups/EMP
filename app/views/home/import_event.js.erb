@@ -1,4 +1,5 @@
-<% if @count==1 %>
+
+<% if @count == 0 %>
 	$("#import-admin-event").html("<div id=event_<%=@count%>><%= escape_javascript(render :partial => 'home/import_admin_event') %></div>")
 <% end %>
 
