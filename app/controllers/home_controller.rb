@@ -281,7 +281,7 @@ class HomeController < ApplicationController
     end
     
     results = JSON.parse(open("https://www.eventbriteapi.com/v3/users/me/owned_events/?token=CKUU5YHXMHKRLS7ZVIBG&page=#{@count}").read)
-    @total_count=250
+    @total_count=350
     results_events = results["events"].sort_by{|k,v| k["start"]["utc"]}.collect{|p| p if (string_to_datetime(p["start"]["utc"].split("T")[0].split("-")[1]+"/"+p["start"]["utc"].split("T")[0].split("-")[2]+"/"+p["start"]["utc"].split("T")[0].split("-")[0]) <= string_to_datetime(params[:e_date])) && (string_to_datetime(p["start"]["utc"].split("T")[0].split("-")[1]+"/"+p["start"]["utc"].split("T")[0].split("-")[2]+"/"+p["start"]["utc"].split("T")[0].split("-")[0]) >= string_to_datetime(params[:s_date])) }.reject(&:blank?)      
     results_events.each_with_index do |event,index|       
       @event= Event.find_by_title(event["name"]["text"])
@@ -292,9 +292,9 @@ class HomeController < ApplicationController
                    
           @EB_user= User.find_by_name(event["venue"]["name"])
           if @EB_user.blank? 
-            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]},#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
+            @EB_user = User.create(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]},#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7)}") if !event["venue"].blank? 
           else
-            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]},#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")
+            @EB_user.update(:email=>"#{"EB"}#{event["id"]}@techmeetups.com",:password=>event["venue"]["id"],:name=>event["venue"]["name"],:address=>"#{event["venue"]["address"]["address_1"]},#{event["venue"]["address"]["region"]}",:city_id=>"#{event["venue"]["address"]["city"]=="London" ? 5 : (event["venue"]["address"]["city"]=="Berlin" ? 6 : 7) }")  if !event["venue"].blank? 
           end
                        
           EventUser.create(user_id: 9338, event_id: @event.id, event_type: "Host")            
@@ -302,10 +302,7 @@ class HomeController < ApplicationController
           EventUser.create(user_id: @EB_user.id, event_id: @event.id, event_type: "Venue")
           @results_events[index] = @event
           @id=@event.eventbrite_id
-        end 
-         
-        
-        
+        end  
         attendee_results = JSON.parse(open("https://www.eventbriteapi.com/v3/events/#{@id}/attendees?token=CKUU5YHXMHKRLS7ZVIBG&page=#{@att_count}").read)          
         atts=attendee_results["attendees"]
         b = 0
