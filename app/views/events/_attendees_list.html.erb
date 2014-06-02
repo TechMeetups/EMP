@@ -17,7 +17,7 @@
                 <b><%=  link_to "",home_destroy_event_user_path(attendee), :class=>"confirm fa fa-trash-o", :id=>"confirm_#{attendee.user_id}" %></b>
               <% end %>
           </div>
-        <%= row = row+1%>
+        <% row = row+1%>
       <% end %>
     <% end %>
   </div>
