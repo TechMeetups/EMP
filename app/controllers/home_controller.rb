@@ -311,7 +311,7 @@ class HomeController < ApplicationController
         b = 0
         @results_attendees[index] = []
         atts.each do |attendee|            
-          @attendee= User.find_by_name(attendee["profile"]["first_name"])
+          @attendee= User.find_by_name(attendee["profile"]["email"])
           if @attendee.blank?    
                 
             @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")             
@@ -338,7 +338,7 @@ class HomeController < ApplicationController
         @att_total_count=7          
           atts=attendee_results["attendees"]
           atts.each do |attendee|            
-            @attendee= User.find_by_name(attendee["profile"]["first_name"])
+            @attendee= User.find_by_name(attendee["profile"]["email"])
             if @attendee.blank?                       
               @attendee = User.create(:name=>attendee["profile"]["first_name"],:password=>attendee["id"],:email=>attendee["profile"]["email"],:eventbrite_id=>attendee["id"],:source=>"E")             
               @event_attendee = EventUser.create(:event_type=>"Attendee",:event_id=>@event.id,:user_id=>@attendee.id)                           

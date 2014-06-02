@@ -1,26 +1,24 @@
-<table class="table">
-  <tr>
-    <% @attendee.each_with_index do |attendee, index| %>
-      <% if (index+1)%8 == 0 %> </tr><tr> 
-      <script>
-      var attendee_height = $("#attendee_list").height();
-      $("#attendee_box").css("height", attendee_height+180)
-    </script><% end %>
-      <td style="text-align:center">
-        <% if !User.where(:id => attendee.user_id ).blank?  %>  
-        <% @user = User.where(:id => attendee.user_id ).first %>
-          <% if !@user.avatar.blank?%>
-            <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 50px;height: 40px;"),user_profile_path(id: @user.id) ) %> <br/>
-          <% else %>
-            <%= image_tag "../assets/missing.png" ,:style=>"width: 50px;height: 40px;" %> <br/>
-          <% end %>
-            <b><%= link_to(truncate(@user.name, :length => 10) ,user_profile_path(id: @user.id)) %></b><br />
-            <% if user_signed_in? && @event.user_id == current_user.id %>
-              <b><%=  link_to "",home_destroy_event_user_path(attendee), :class=>"confirm fa fa-trash-o", :id=>"confirm_#{attendee.user_id}" %></b>
+<div> 
+  <div class="row">
+    <% row=0; @attendee.each do |attendee| %>
+      <% if !User.where(:id => attendee.user_id ).try(:first).blank?  %>
+        <% if (row)%8== 0 %> 
+          </div><div class="row"> 
+        <% end %>
+        <div class="col-md-1" style="width:12.333333%">
+          <% @user = User.where(:id => attendee.user_id ).first %>
+            <% if !@user.avatar.blank?%>
+              <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 50px;height: 40px;"),user_profile_path(id: @user.id) ) %> <br/>
+            <% else %>
+              <%= image_tag "../assets/missing.png" ,:style=>"width: 50px;height: 40px;" %> <br/>
             <% end %>
-
-        <%end%>
-      </td>
+              <b><%= link_to(truncate(@user.name, :length => 10) ,user_profile_path(id: @user.id)) %></b><br />
+              <% if user_signed_in? && @event.user_id == current_user.id %>
+                <b><%=  link_to "",home_destroy_event_user_path(attendee), :class=>"confirm fa fa-trash-o", :id=>"confirm_#{attendee.user_id}" %></b>
+              <% end %>
+          </div>
+        <%= row = row+1%>
+      <% end %>
     <% end %>
-  </tr>
-</table>  
+  </div>
+</div>  

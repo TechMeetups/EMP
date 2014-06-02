@@ -134,25 +134,30 @@
     <div class="table_block" id="speaker_list">
       <%= render "speakers_list" %>
     </div>
-      <% if !user_signed_in?  %>
-      <div class="button_block" id="speaker_block"> 
-        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
-        </div>
-      <% elsif @event.user_id != current_user.id %> 
-      <div class="button_block" id="speaker_block"> 
-        <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
-        </div>
+      <% if @event.e_date >= Time.now %>
+        <% if !user_signed_in? %>
+          <div class="button_block" id="speaker_block"> 
+            <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+            </div>
+          <% elsif @event.user_id != current_user.id %> 
+          <div class="button_block" id="speaker_block"> 
+            <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker" %>
+            </div>
+          <% else %>
+            <% if !@speakers.blank? %>
+              <div class="add_new" id="add_speaker">
+                <%= render"add_more_speakers"%>
+              </div> 
+            <% else %>
+              <div class="add_new" id="add_speaker">
+                <%= render"add_more_speakers"%>
+              </div>
+            <% end %>
+          <% end %>
       <% else %>
-        <% if !@speakers.blank? %>
-          <div class="add_new" id="add_speaker">
-            <%= render"add_more_speakers"%>
-          </div> 
-        <% else %>
-          <div class="add_new" id="add_speaker">
-            <%= render"add_more_speakers"%>
-          </div>
-        <% end %>
-        
+        <div class="button_block" id="speaker_block"> 
+          <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
+         </div>
       <% end %>
     
   </div>
@@ -164,7 +169,7 @@
       <%= render "partners_list" %>
     </div>
     
-    
+    <% if @event.e_date >= Time.now %>
     <% if !user_signed_in?  %>
       <div class="button_block" id="partner_block"> 
         <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Partner" %>
@@ -183,8 +188,12 @@
             <%= render"add_more_partners"%>
           </div>
         <% end %>
-
-    <% end %>
+      <% end %>
+    <% else %>
+        <div class="button_block" id="speaker_block"> 
+          <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
+         </div>
+      <% end %>
   </div>
   <br/>
   <div  class="event_box" id="attendee_box">
@@ -192,6 +201,7 @@
     <div class="table_block" id="attendee_list">
       <%= render "attendees_list" %>
     </div>
+    <% if @event.e_date >= Time.now %>
       <% if !user_signed_in?  %>
         <div class="button_block" id="attendee_block">
           <%= link_to "Attend", "#", :class=>"btn btn-success open_my_modal" , :id=>"Attend event" %>
@@ -212,7 +222,11 @@
         <% end %>
         
       <% end %>
-    
+    <% else %>
+        <div class="button_block" id="speaker_block"> 
+          <%= link_to "Attendee", "#", :class=>"btn btn-success open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
+         </div>
+      <% end %>
   </div>
 </div>
 
