@@ -179,14 +179,24 @@ $("#import_admin_event").click(function(){
 
 $(document).ready(function(){
     $("#s_date" ).datepicker({
-      
+      onSelect: function(selected) {
+
+        $("#to_time").datepicker("option","minDate", selected)
+
+      }
+ 
   });
     });
 
 $(document).ready(function(){
     $("#to_time" ).datepicker({
        
-  
+         onSelect: function(selected) {
+
+        $("#to_time").datepicker("option","minDate", selected)
+
+      }
+
   });
     });
 

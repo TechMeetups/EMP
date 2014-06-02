@@ -1,35 +1,48 @@
 <% event_count = params[:admin_count].blank? ? 0 : params[:admin_count].to_i %>
-<%  @results_events.each do |import_event|  %>
-	<% if  import_event.created_at ==  import_event.updated_at%>
+<% debugger %>
+<%  @results_events.each_with_index do |import_event,index|  %>
+	<% if  import_event.created_at ==  import_event.updated_at %>
 		<ul class="a">
 			<li>	
-			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......added.</lable>
+				<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......added.</lable>
 			</li>
 		</ul>
+		<%  @results_attendees[index].each_with_index do |import_attendee,index|  %>
+			<% if  import_attendee.created_at ==  import_attendee.updated_at %>
+				<ul class="a">
+					<li>	
+						<lable style="margin-left:70px;font-size: 15px;"><%= import_attendee.name %>.......added.</lable>
+					</li>
+				</ul>
+			<% else %>
+				<ul class="a">
+					<li>	
+						<lable style="margin-left:70px;font-size: 15px;"><%= import_attendee.name %>.......updated.</lable>
+					</li>
+				</ul>
+			<% end %>
+		<% end %>
 	<% else %>
 		<ul class="a">
 			<li>	
-			<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......updated.</lable>
+				<lable style="margin-left:30px;font-size: 15px;font-weight:bold;"><%= import_event.title %>.......updated.</lable>
 			</li>
 		</ul>
-	<%  @results_attendees.each do |import_attendee|  %>
-		<% if import_attendee.created_at == import_attendee.updated_at %>
-			<ul class="a">
-				<li>	
-					<lable style="margin-left:70px;font-size: 15px;"><%= event_count+1 %>. <%= import_attendee.name %>.......added.</lable>
-				</li>
-			</ul>
-			<% event_count = event_count+1 %>
-		<% else %>
-		<ul class="a">
-				<li>	
-					<lable style="margin-left:70px;font-size: 15px;"><%= event_count+1 %>. <%= import_attendee.name %>.......updated.</lable>
-				</li>
-			</ul>
-			<% event_count = event_count+1 %>
+		<% debugger %>
+		<%  @results_attendees[index].each_with_index do |import_attendee,index|  %>
+			<% if  import_attendee.created_at ==  import_attendee.updated_at %>
+				<ul class="a">
+					<li>	
+						<lable style="margin-left:70px;font-size: 15px;"><%= import_attendee.name %>.......added.</lable>
+					</li>
+				</ul>
+			<% else %>
+				<ul class="a">
+					<li>	
+						<lable style="margin-left:70px;font-size: 15px;"><%= import_attendee.name %>.......updated.</lable>
+					</li>
+				</ul>
+			<% end %>
 		<% end %>
 	<% end %>
-	<% @results_attendees=[] %>
-	<% end %>
-	
 <% end %>
