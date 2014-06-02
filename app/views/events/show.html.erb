@@ -155,7 +155,7 @@
             <% end %>
           <% end %>
       <% else %>
-      <% if !user_signed_in? %>
+      <% if !user_signed_in? || @event.user_id != current_user.id %>
         <div class="button_block" id="speaker_block"> 
           <%= link_to "Apply", "#", :class=>"btn btn-info open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
          </div>
@@ -192,7 +192,7 @@
         <% end %>
       <% end %>
     <% else %>
-      <% if !user_signed_in? %>
+      <%if !user_signed_in? || @event.user_id != current_user.id%>
         <div class="button_block" id="speaker_block"> 
           <%= link_to "Partner", "#", :class=>"btn btn-primary open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
         </div>
@@ -227,7 +227,7 @@
         
       <% end %>
       <% else %>
-        <% if !user_signed_in? %>
+        <% if !user_signed_in? || @event.user_id != current_user.id %>
           <div class="button_block" id="speaker_block"> 
             <%= link_to "Attendee", "#", :class=>"btn btn-success open_my_modal", :id=>"Become Speaker",:disabled=>:true %>
            </div>
