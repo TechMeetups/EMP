@@ -10,7 +10,7 @@
             <% if !@user.avatar.blank?%>
               <%=  link_to(image_tag(@user.avatar.url(:thumb), :style=>"width: 50px;height: 40px;"),user_profile_path(id: @user.id) ) %> <br/>
             <% else %>
-              <%= image_tag "../assets/missing.png" ,:style=>"width: 50px;height: 40px;" %> <br/>
+              <%= link_to(image_tag("../assets/missing.png" ,:style=>"width: 50px;height: 40px;"),user_profile_path(id: @user.id) ) %> <br/>
             <% end %>
               <b><%= link_to(truncate(@user.name, :length => 10) ,user_profile_path(id: @user.id)) %></b><br />
               <% if user_signed_in? && @event.user_id == current_user.id %>

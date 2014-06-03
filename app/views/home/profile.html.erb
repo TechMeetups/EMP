@@ -221,6 +221,9 @@
                 <% @attendee.each_with_index do |attendee, index| %>
                   <% if index+1 == 5 %> </tr><tr> <% end %>
                   <td style="text-align:center">
+                    <% if Event.find(attendee.event_id).event_banners.blank? %>
+                      <%= image_tag("../assets/missing.png", :style=>"width: 100px;height: 80px;") %>
+                    <% end %>
                     <%= participants_detail(attendee) %>
                   </td>
                 <% end %>
@@ -244,6 +247,9 @@
               <% @speakers.each_with_index do |speaker, index| %>
                 <% if index+1 == 5 %> </tr><tr> <% end %>
                 <td style="text-align:center">
+                  <% if Event.find(speaker.event_id).event_banners.blank? %>
+                      <%= image_tag("../assets/missing.png", :style=>"width: 100px;height: 80px;") %>
+                    <% end %>
                   <%= participants_detail(speaker) %>
                 </td>
               <% end %>
@@ -268,6 +274,9 @@
               <% @partners.each_with_index do |partner, index| %>
                 <% if index+1 == 5 %> </tr><tr> <% end %>
                 <td style="text-align:center">
+                   <% if Event.find(partner.event_id).event_banners.blank? %>
+                      <%= image_tag("../assets/missing.png", :style=>"width: 100px;height: 80px;") %>
+                    <% end %>
                   <%= participants_detail(partner) %>
                 </td>
               <% end %>
@@ -303,7 +312,7 @@
   <% if user_signed_in? && params[:id].to_i == current_user.id %>    
   <div style="float: right; width: 25%; text-align:center;">
     <div class="event_box">
-      <h4 >  Social Media Stream </h4>
+      <h4 >  Social Media </h4>
       <table align="center">
         <tr>
           <td><i class="fa fa-twitter fa-2x"></i></td>
@@ -348,8 +357,8 @@
     </div>
 
   <% else %>
-    <div style="width: 25%; text-align: center; margin-top: -744px; margin-left: 868px;">
-      <h4 >  Social Media Stream </h4>
+    <div style="width: 25%; text-align: center; margin-top: -724px; margin-left: 868px;">
+      <h4 >  Social Media </h4>
       <table align="center">
         <tr>
           <td><i class="fa fa-twitter fa-2x"></i></td>

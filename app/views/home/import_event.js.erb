@@ -11,7 +11,7 @@ $("#event_<%=@count%>").slideDown("slow");
 <% if @count < @total_count %> 
 	<% bar_value = 100 / (@total_count) %>
 	$.ajax({
-		url: "/home/import_event?page=<%= @count %>&att_page=<%= @att_count%>&admin_count=<%= (0+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>&s_date=<%=params[:s_date]%>&e_date=<%=params[:e_date]%>",
+		url: "/home/import_event?page=<%= @count %>&att_page=<%= @att_count %>&admin_count=<%= (0+(params[:admin_count].blank? ? 0 : params[:admin_count].to_i))%>&s_date=<%=params[:s_date]%>&e_date=<%=params[:e_date]%>",
 		type:"POST"
 	});
 	var width = $("#import-admin-event-bar .progress-bar").width();
