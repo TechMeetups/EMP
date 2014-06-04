@@ -2,7 +2,7 @@
 	$("#import-admin-event").html("<div id=event_<%=@count%>><%= escape_javascript(render :partial => 'home/import_admin_event') %></div>")
 <% end %>
 
- $("#fetch-admin-event").append("<div id=event_<%=@count%>><%= escape_javascript(render :partial => 'home/fetch_admin_event') %></div>")
+ $("#fetch-admin-event").append("<div id=event_<%=@count %>><%= escape_javascript(render :partial => 'home/fetch_admin_event') %></div>")
 
 $("#event_<%=@count%>").hide();
 $("#event_<%=@count%>").slideDown("slow");
